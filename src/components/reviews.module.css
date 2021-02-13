@@ -1,0 +1,25 @@
+.reviews {
+	margin-top: 60px;
+}
+
+.reviews__head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	padding-right: 15px;
+}
+
+.reviews__title {
+	font-size: 2em;
+	font-weight: 700;
+	margin: 0 .5em .5em 0;
+}
+
+.reviews__overall {
+	font-weight: 700;
+}
+
+.reviews__list {
+
+}
