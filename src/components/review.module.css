@@ -1,0 +1,24 @@
+.item {
+	background: #f5faff;
+	border-radius: 5px;
+	padding: 15px;
+	margin: 20px 0;
+}
+
+.item__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 10px;
+}
+
+.item__name {
+	font-weight: 700;
+	margin-right: 1em;
+}
+
+.item__body {
+	padding: 20px 0 10px;
+}

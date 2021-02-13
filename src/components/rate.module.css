@@ -1,0 +1,18 @@
+.box {
+	display: flex;
+	align-items: center;
+}
+
+.box__label {
+	margin-right: .5em;
+}
+
+.box__stars {
+	display: flex;
+}
+
+.box__star {
+	width: 23px;
+	height: 23px;
+	margin-right: 7px;
+}
