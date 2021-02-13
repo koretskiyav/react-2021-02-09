@@ -13,7 +13,7 @@ export default function Rate(props) {
   }
 
   return (
-    <div className={style.conyainer}>
+    <div className={style.container}>
       {stars.length ? stars : null}
     </div>
   )
