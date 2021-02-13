@@ -1,0 +1,14 @@
+.review_title {
+	font-size: 14px;
+	border-bottom: 1px solid rgb(221, 221, 221);
+	padding-bottom: 10px;
+}
+.review_box {
+	margin-bottom: 15px;
+	border: 1px solid rgb(221, 221, 221);
+	padding: 15px;
+}
+.user_name {
+	font-weight: bold;
+}
+
