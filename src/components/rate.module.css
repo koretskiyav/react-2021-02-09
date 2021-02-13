@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}

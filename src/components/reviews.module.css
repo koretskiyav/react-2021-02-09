@@ -1,0 +1,13 @@
+.panel {
+  margin: 12px;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.panel_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold
+}
