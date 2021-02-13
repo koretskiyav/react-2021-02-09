@@ -4,17 +4,12 @@ import Rate from './rate';
 
 export default function Restaurant(props) {
 
-  var rating = 0;
-  
-  if (props.restaurant.reviews.length > 0) {
-    rating = (props.restaurant.reviews.map((review) => review.rating)
-    .reduce((accumulator, item) => accumulator + item ) / props.restaurant.reviews.length)
-    .toFixed(1);
-  }
+  const reducer = (accumulator, item) => { return accumulator + item.rating };
+  const rating = props.restaurant.reviews.length > 0 ? (props.restaurant.reviews.reduce(reducer, 0) / props.restaurant.reviews.length) : 0;
 
   return (
     <div key={props.restaurant.id}>
-    <Rate rate={rating} />
+    <Rate rate={rating.toFixed(1)} />
     <Menu menu={props.restaurant.menu} />
     <Reviews reviews={props.restaurant.reviews}/>
     </div>
