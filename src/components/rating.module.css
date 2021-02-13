@@ -1,0 +1,9 @@
+.star {
+  width: 24px;
+  height: 24px;
+  fill: #f7f73c;
+}
+
+.star:not(:last-child) {
+  margin-right: 10px;
+}
