@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import Navigation from './navigation';
-import Restaraunt from './restaurnant';
+import Restaraunt from './restaraunt';
 
 export default function Restaurants(props) {
   const [activeId, setActiveId] = useState(props.restaurants[0].id);
