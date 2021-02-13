@@ -4,7 +4,6 @@ import Rate from './rate';
 import Reviews from './reviews';
 
 export default function Restaurant({ activeRestaurant, averageRating }) {
-  console.log(averageRating);
   return (
     <>
       <h2>{activeRestaurant.name}</h2>

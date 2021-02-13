@@ -13,7 +13,6 @@ export default function Restaurants(props) {
   );
 
   useMemo(() => {
-    console.log('usememo');
     if (activeRestaurant.reviews.length > 0) {
       let totalRating = 0;
       activeRestaurant.reviews.forEach((review) => {
