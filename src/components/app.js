@@ -6,3 +6,8 @@ export default class App extends PureComponent {
     return <Restaurants restaurants={this.props.restaurants} />;
   }
 }
+
+//  functional component
+// export default function App(props) {
+//   return <Restaurants restaurants={props.restaurants} />;
+// }
