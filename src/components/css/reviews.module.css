@@ -1,0 +1,11 @@
+.generalBlock {
+  background: #f7f7f7;
+  border-radius: 6px;
+  margin: 12px;
+  padding: 12px;
+}
+.review {
+  margin-top: 3px;
+  border: 1px silver solid;
+  border-radius: 2px;
+}
