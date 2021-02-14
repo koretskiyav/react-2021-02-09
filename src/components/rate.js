@@ -10,7 +10,7 @@ function Rate(props) {
     }
 
     return (
-        <div>Rate: {average || rating}{average ? ` from ${rating.length} review(s)` : ''}</div>
+        <div>Rating: {average || rating}{average ? ` from ${rating.length} review(s)` : ''}</div>
     );
 }
 
