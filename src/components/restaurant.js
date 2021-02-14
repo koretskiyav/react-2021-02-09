@@ -9,7 +9,7 @@ export default function Restaurant(props) {
 
   return (
     <div key={props.restaurant.id}>
-    <Rate rate={rating.toFixed(1)} />
+    <Rate rate={rating} />
     <Menu menu={props.restaurant.menu} />
     <Reviews reviews={props.restaurant.reviews}/>
     </div>

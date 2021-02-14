@@ -2,11 +2,12 @@ import React from 'react';
 
 export default function Rate(props) {
 
-  const stars = Array(Math.round(props.rate)).fill("⭐");
+  const rate = props.rate.toFixed(1)
+  const stars = Array(Math.round(rate)).fill("⭐");
 
   return (
     <div>
-      <p>{stars} ({props.rate})</p>
+      <p>{stars} ({rate})</p>
     </div>
   );
 
