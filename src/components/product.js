@@ -12,8 +12,10 @@ function Product(props) {
 
   return (
     <div className={style.card}>
-      <p>{props.product.name}</p>
-      <p>{props.product.price} $</p>
+      <div className={'row'}>
+        <p>{props.product.name}</p>
+        <p>{props.product.price} $</p>
+      </div>
       <button onClick={decrement}>
         <Minus className={style.icon} />
       </button>

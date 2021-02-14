@@ -1,8 +1,8 @@
 .card {
   margin: 12px;
   padding: 12px;
-  background-color: #ccc;
-  border: 1px solid #eee;
+  background-color: rgb(251, 251, 251);
+  border: 1px solid rgb(158, 158, 158);
   border-radius: 5px;
 }
 
