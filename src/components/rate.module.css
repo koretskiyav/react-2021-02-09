@@ -1,0 +1,15 @@
+.rate {
+    padding: 1em 0;
+}
+
+.rate__item {
+    margin-right: .5em;
+    vertical-align: top;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    fill: gold;
+}
+

@@ -1,0 +1,20 @@
+.reviews {
+    color: #fff;
+}
+
+.reviews__title {
+    color: #000;
+}
+
+.reviews__wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.review {
+    width: 25%;
+    padding: 1em;
+    margin: 12px;
+    background-color: #757575;
+    border-radius: 5px;
+}
