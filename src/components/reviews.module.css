@@ -1,0 +1,16 @@
+.review {
+  margin: 12px;
+}
+
+.user {
+  margin: 10px 0 5px 0;
+}
+
+.rating {
+  margin: 0 0 10px 0;
+}
+
+.hr {
+  border-color: rgb(240, 240, 240);
+  margin: 2em 0 1em 0;
+}
