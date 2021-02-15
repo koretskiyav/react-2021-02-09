@@ -1,19 +1,24 @@
 import React from 'react';
 
-import counter from '../hocs/counter';
+import counter from '../../hocs/counter';
 
 import style from './product.module.css';
 
-import { ReactComponent as Minus } from '../icons/minus.svg';
-import { ReactComponent as Plus } from '../icons/plus.svg';
+import { ReactComponent as Minus } from '../../icons/minus.svg';
+import { ReactComponent as Plus } from '../../icons/plus.svg';
 
 function Product(props) {
-  const { decrement, increment, amount } = props;
+  const {
+    decrement,
+    increment,
+    amount,
+    product: { name, price },
+  } = props;
 
   return (
     <div className={style.card}>
-      <p>{props.product.name}</p>
-      <p>{props.product.price} $</p>
+      <p>{name}</p>
+      <p>{price}$</p>
       <button onClick={decrement}>
         <Minus className={style.icon} />
       </button>
