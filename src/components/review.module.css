@@ -1,0 +1,28 @@
+.review {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  -webkit-box-shadow: -1px 4px 9px 4px rgba(0,0,0,0.1); 
+  box-shadow: -1px 4px 9px 4px rgba(0,0,0,0.1);
+}
+
+.review__title {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.review__rating {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  color: #fec901;
+}
+
+.review__text {
+  font-size: 16px;
+  font-style: italic;
+}
