@@ -1,0 +1,15 @@
+.review {
+  margin-bottom: 20px;
+}
+
+.review__text {
+  width: 100%;
+  resize: none;
+}
+
+.review__user-rate {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 33px;
+}

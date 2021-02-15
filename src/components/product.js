@@ -11,7 +11,7 @@ function Product(props) {
   const { decrement, increment, amount } = props;
 
   return (
-    <div className={style.card}>
+    <div className={'container ' + style.card}>
       <p>{props.product.name}</p>
       <p>{props.product.price} $</p>
       <button onClick={decrement}>

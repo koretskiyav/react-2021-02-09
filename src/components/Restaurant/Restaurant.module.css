@@ -1,0 +1,9 @@
+.restaurant__header {
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.restaurant__rate {
+  display: flex;
+  justify-content: center;
+}

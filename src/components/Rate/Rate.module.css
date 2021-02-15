@@ -1,8 +1,8 @@
-.rating-result {
-  width: 265px;
-  margin: 0 auto;
+.rate {
+  display: flex;
+  align-items: center;
 }
-.rating-result span {
+.rate__stars span {
   padding: 0;
   font-size: 32px;
   margin: 0 3px;
@@ -10,10 +10,18 @@
   color: lightgrey;
   text-shadow: 1px 1px #bbb;
 }
-.rating-result > span:before {
+.rate__stars > span:before {
   content: '★';
 }
-.rating-result > span.active {
+.rate__stars > span.active {
   color: gold;
   text-shadow: 1px 1px #c60;
+}
+.rate__text {
+  padding: 0;
+  font-size: 25px;
+  margin: 0 3px;
+  line-height: 1;
+  color: lightgrey;
+  text-shadow: 1px 1px #bbb;
 }

@@ -1,15 +1,28 @@
 import React from 'react';
+
 import Rate from '../Rate/Rate';
 
+import style from './Review.module.css';
+
 export default function Review(props) {
-  let { id, user, text, rating } = props.review;
+  let { user: userName, text, rating } = props.review;
 
   return (
-    <div>
-      {!!id && <div>Id: {id}</div>}
-      {!!user && <div>Name: {user}</div>}
-      {!!text && <div>Text: {text}</div>}
-      <Rate rate={rating} />
+    <div className={style.review}>
+      <div className={style['review__user-rate']}>
+        {!!userName && <div>User: {userName}</div>}
+        <Rate rate={rating} />
+      </div>
+      {!!text && (
+        <div>
+          <span>Review:</span>
+          <textarea
+            className={style['review__text']}
+            disabled
+            value={text}
+          ></textarea>
+        </div>
+      )}
     </div>
   );
 }

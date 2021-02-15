@@ -16,3 +16,9 @@ code {
 button {
   outline: none;
 }
+
+.container {
+  margin: 12px;
+  padding: 12px;
+  border-radius: 5px;
+}

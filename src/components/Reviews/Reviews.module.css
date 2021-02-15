@@ -1,0 +1,8 @@
+.reviews {
+  background-color: darkseagreen;
+}
+
+.reviews__text {
+  margin-bottom: 10px;
+  text-align: center;
+}
