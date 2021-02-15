@@ -4,7 +4,6 @@ import Restaurant from './restaurant';
 
 export default function Restaurants(props) {
   const [activeId, setActiveId] = useState(props.restaurants[0].id);
-  console.log(props);
   
   const activeRestaurant = useMemo(
     () => props.restaurants.find((restaurant) => restaurant.id === activeId),
