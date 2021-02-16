@@ -9,3 +9,21 @@
 .icon {
   fill: green;
 }
+.cardReviews {
+  background-color: #ffffe0;
+  margin: 12px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+.rating {
+  color: #f00;
+}
+.averageReview {
+  margin: 12px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: orange;
+}
