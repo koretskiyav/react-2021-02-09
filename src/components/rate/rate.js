@@ -12,6 +12,7 @@ const Rate = ({ value }) => (
       <Star
         key={i}
         className={cn(styles.star, { [styles.checked]: i <= value - 1 })}
+        data-type={i <= value - 1 ? 'rate-star-full' : 'rate-star'}
       />
     ))}
   </div>
