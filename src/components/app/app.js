@@ -1,8 +1,19 @@
 import React, { PureComponent } from 'react';
 import Restaurants from '../restaurants';
 import Header from '../header';
+import PropTypes from 'prop-types';
 
 export default class App extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  static propTypes = {
+    props: PropTypes.shape({
+      restaurants: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+    }),
+  };
+
   render() {
     return (
       <div>
