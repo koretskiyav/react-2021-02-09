@@ -1,8 +1,14 @@
 import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Navigation from '../navigation';
 
 const Restaurants = ({ restaurants }) => {
+
+  Restaurants.protoType = {
+    restaurants: PropTypes.array.isRequired
+  }
+
   const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id);
 
   const activeRestaurant = useMemo(
