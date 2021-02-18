@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
@@ -6,7 +7,7 @@ import Rate from '../rate';
 import styles from './restaurant.module.css';
 
 const Restaurant = ({ restaurant }) => {
-  const { name, menu, reviews } = restaurant;
+  const { id, name, menu, reviews } = restaurant;
 
   const averageRating = useMemo(() => {
     const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
@@ -19,11 +20,24 @@ const Restaurant = ({ restaurant }) => {
         <Rate value={averageRating} />
       </Banner>
       <div className={styles.restaurant}>
-        <Menu menu={menu} key={restaurant.id} />
+        <Menu menu={menu} key={id} />
         <Reviews reviews={reviews} />
       </div>
     </div>
   );
+};
+
+Restaurant.propTypes = {
+  restaurant: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    menu: PropTypes.array,
+    reviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        rating: PropTypes.number.isRequired,
+      }).isRequired
+    ).isRequired,
+  }).isRequired,
 };
 
 export default Restaurant;
