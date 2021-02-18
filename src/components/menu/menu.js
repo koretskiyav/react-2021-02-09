@@ -13,10 +13,14 @@ class Menu extends React.Component {
     ).isRequired,
   };
 
-  state = { error: null };
+  state = {
+    error: null,
+  };
 
   componentDidCatch(error) {
-    this.setState({ error });
+    this.setState({
+      error,
+    });
   }
 
   render() {
