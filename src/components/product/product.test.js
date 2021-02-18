@@ -27,4 +27,27 @@ describe('Product', () => {
     mount(<Product product={product} fetchData={fn} />);
     expect(fn).toBeCalledWith(product.id);
   });
+  it('should decrement amount', () => {
+    const wrapper = mount(<Product product={product} />);
+    const incrementBtn = wrapper.find('[data-id="product-increment"]');
+    incrementBtn.simulate('click');
+    incrementBtn.simulate('click');
+
+    const amount = wrapper.find('[data-id="product-amount"]');
+
+    expect(amount.text()).toBe('2');
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+    expect(amount.text()).toBe('1');
+  });
+  it('should decrement button click', () => {
+    const fn = jest.fn();
+    const wrapper = mount(<Product product={product} decrement={fn} />);
+    const amount = wrapper.find('[data-id="product-amount"]');
+    const beforeClickText = amount.text();
+
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+
+    const afterClickText = amount.text();
+    expect(beforeClickText).toEqual(afterClickText);
+  });
 });

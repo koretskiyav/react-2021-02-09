@@ -13,26 +13,31 @@ class Menu extends React.Component {
     ).isRequired,
   };
 
-  state = { error: null };
+  state = {
+    error: null,
+  };
 
   componentDidCatch(error) {
-    this.setState({ error });
+    this.setState({
+      error,
+    });
   }
 
   render() {
     const { menu } = this.props;
 
     if (this.state.error) {
-      return <p>Сейчас меню этого ресторана недоступно :(</p>;
+      return <p> Сейчас меню этого ресторана недоступно: ( </p>;
     }
 
     return (
       <div className={styles.menu}>
         <div>
+          {' '}
           {menu.map((product) => (
             <Product key={product.id} product={product} />
-          ))}
-        </div>
+          ))}{' '}
+        </div>{' '}
       </div>
     );
   }
