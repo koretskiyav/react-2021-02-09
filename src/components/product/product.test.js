@@ -27,4 +27,21 @@ describe('Product', () => {
     mount(<Product product={product} fetchData={fn} />);
     expect(fn).toBeCalledWith(product.id);
   });
+
+  it('should decriment amount', () => {
+    const wrapper = mount(<Product product={product} amount={5} />);
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('5');
+
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('4');
+  });
+
+  it('should decriment without minus value', () => {
+    const wrapper = mount(<Product product={product} amount={1} />);
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+    wrapper.find('[data-id="product-decrement"]').simulate('click');
+
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
+  });
 });
