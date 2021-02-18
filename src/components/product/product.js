@@ -25,13 +25,19 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button className={styles.button} onClick={decrement}>
+              <button
+                className={styles.button}
+                onClick={decrement}
+                data-id="product-decrement"
+                type="button"
+              >
                 <Minus />
               </button>
               <button
                 className={styles.button}
                 onClick={increment}
                 data-id="product-increment"
+                type="button"
               >
                 <Plus />
               </button>
