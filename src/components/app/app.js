@@ -8,12 +8,12 @@ export default class App extends PureComponent {
     return (
       <div>
         <Header />
-        <Restaurants restaurants={this.props.restaurants} />{' '}
+        <Restaurants restaurants={this.props.restaurants} />
       </div>
     );
   }
 }
 
 App.propTypes = {
-  restaurants: PropTypes.array,
+  restaurants: PropTypes.arrayOf(PropTypes.object),
 };
