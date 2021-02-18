@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import PropTypes, { any } from 'prop-types';
+import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
@@ -34,7 +34,7 @@ Restaurant.propTypes = {
         rating: PropTypes.number.isRequired,
       }).isRequired
     ).isRequired,
-  }),
+  }).isRequired,
 };
 
 export default Restaurant;

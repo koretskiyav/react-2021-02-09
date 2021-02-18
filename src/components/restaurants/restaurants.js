@@ -25,7 +25,7 @@ const Restaurants = ({ restaurants }) => {
 Restaurants.propTypes = {
   restaurants: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.any,
+      id: PropTypes.any.isRequired,
     }).isRequired
   ).isRequired,
 };

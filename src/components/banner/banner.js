@@ -17,8 +17,8 @@ const Banner = ({ heading, description, children }) => (
 );
 
 Banner.propTypes = {
-  heading: PropTypes.string,
-  description: PropTypes.string,
+  heading: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   children: PropTypes.any,
 };
 

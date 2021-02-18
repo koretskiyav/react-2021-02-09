@@ -5,7 +5,7 @@ import styles from './reviews.module.css';
 
 const Reviews = ({ reviews }) => {
   return (
-    <div className={styles.reviews}>
+    <div className={styles.reviews} data-id="reviews">
       {reviews.map((review) => (
         <Review key={review.id} {...review} />
       ))}
@@ -14,7 +14,11 @@ const Reviews = ({ reviews }) => {
 };
 
 Reviews.propTypes = {
-  reviews: PropTypes.array.isRequired,
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.any.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Reviews;
