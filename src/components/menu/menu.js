@@ -27,7 +27,7 @@ class Menu extends React.Component {
     const { menu } = this.props;
 
     if (this.state.error) {
-      return <p> Сейчас меню этого ресторана недоступно: ( </p>;
+      return <p>Сейчас меню этого ресторана недоступно :(</p>;
     }
 
     return (
