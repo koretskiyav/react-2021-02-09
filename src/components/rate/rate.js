@@ -7,13 +7,18 @@ import { ReactComponent as Star } from '../../icons/star.svg';
 import styles from './rate.module.css';
 
 const Rate = ({ value }) => (
-  <div>
-    {[...Array(5)].map((_, i) => (
-      <Star
-        key={i}
-        className={cn(styles.star, { [styles.checked]: i <= value - 1 })}
-      />
-    ))}
+  <div data-id="rate">
+    {[...Array(5)].map((_, i) => {
+      const isActive = (i <= value - 1);
+
+      return (
+        <Star
+          key={i}
+          className={cn(styles.star, {[styles.checked]: isActive})}
+          data-id={`rate-star${isActive ? '-active' : ''}`}
+        />
+      )
+    })}
   </div>
 );
 
