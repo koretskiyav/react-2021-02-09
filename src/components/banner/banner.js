@@ -1,4 +1,5 @@
 import React from 'react';
+import * as pt from 'prop-types';
 
 import styles from './banner.module.css';
 
@@ -14,5 +15,11 @@ const Banner = ({ heading, description, children }) => (
     </div>
   </div>
 );
+
+Banner.propTypes = {
+  children: pt.oneOfType([pt.element, pt.arrayOf(pt.element)]),
+  description: pt.string,
+  heading: pt.string,
+}
 
 export default Banner;

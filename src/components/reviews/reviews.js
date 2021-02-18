@@ -1,4 +1,5 @@
 import React from 'react';
+import * as pt from 'prop-types';
 import Review from './review';
 import styles from './reviews.module.css';
 
@@ -6,10 +7,16 @@ const Reviews = ({ reviews }) => {
   return (
     <div className={styles.reviews}>
       {reviews.map((review) => (
-        <Review key={review.id} {...review} />
+        <Review key={review.id} {...review}/>
       ))}
     </div>
   );
 };
+
+Reviews.propTypes  = {
+  reviews: pt.arrayOf(pt.shape({
+    id: pt.string.isRequired,
+    }).isRequired)
+}
 
 export default Reviews;
