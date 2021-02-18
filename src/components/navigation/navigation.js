@@ -1,4 +1,5 @@
 import React from 'react';
+import * as pt from 'prop-types';
 import styles from './navigation.module.css';
 
 const Navigation = ({ restaurants, onRestaurantClick }) => (
@@ -14,5 +15,14 @@ const Navigation = ({ restaurants, onRestaurantClick }) => (
     ))}
   </div>
 );
+
+Navigation.propTypes = {
+  onRestaurantClick: pt.func,
+  restaurants: pt.arrayOf(
+    pt.shape({
+      id: pt.string.isRequired,
+    }).isRequired
+  ).isRequired,
+}
 
 export default Navigation;

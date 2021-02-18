@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import * as pt from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
@@ -25,5 +26,12 @@ const Restaurant = ({ restaurant }) => {
     </div>
   );
 };
+
+Restaurant.propTypes = {
+  restaurant: pt.shape({
+    id: pt.string.isRequired,
+    reviews: pt.array.isRequired,
+  }).isRequired,
+}
 
 export default Restaurant;
