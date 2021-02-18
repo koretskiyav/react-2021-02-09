@@ -3,7 +3,7 @@ import React from 'react';
 import Rate from '../../rate';
 import styles from './review.module.css';
 
-const Review = ({ user, text, rating, id }) => (
+const Review = ({ user, text, rating }) => (
   <div className={styles.review} data-id="review">
     <div className={styles.content}>
       <div>
