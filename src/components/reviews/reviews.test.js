@@ -15,6 +15,6 @@ describe('Reviews', () => {
   });
   it('should has children', () => {
     const wrapper = mount(<Reviews reviews={reviews} />);
-    expect(wrapper.find('[data-id="reviews"]').children().length).toBe(reviews.length);
+    expect(wrapper.find('Review').length).toBe(reviews.length);
   });
 });
