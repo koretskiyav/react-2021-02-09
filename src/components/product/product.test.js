@@ -26,7 +26,7 @@ describe('Product', () => {
     expect(amount.text()).toBe('0');
   });
   it('should increment amount', () => {
-    increment.simulate('click');
+    simulateIncrement()
     expect(amount.text()).toBe('1');
   });
   it('should decrement amount until 0', () => {
