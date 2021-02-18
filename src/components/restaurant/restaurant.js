@@ -3,9 +3,15 @@ import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
+import PropTypes from 'prop-types';
 import styles from './restaurant.module.css';
 
 const Restaurant = ({ restaurant }) => {
+
+  Restaurant.protoType = {
+    restaurant : PropTypes.array.isRequired
+  }
+
   const { name, menu, reviews } = restaurant;
 
   const averageRating = useMemo(() => {
