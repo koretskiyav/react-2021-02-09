@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Product from '../product';
 
 import styles from './menu.module.css';
+
+import PropTypes from 'prop-types';
 
 class Menu extends React.Component {
   static propTypes = {
