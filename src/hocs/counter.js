@@ -6,6 +6,7 @@ export default (WrappedComponent) => (props) => {
   const amountProps = useAmount(0);
   return <WrappedComponent {...props} {...amountProps} />;
 };
+<<<<<<< HEAD
 
 // export default (WrappedComponent) => {
 //   const HocComponent = (props) => {
@@ -23,3 +24,5 @@ export default (WrappedComponent) => (props) => {
 
 //   return HocComponent;
 // };
+=======
+>>>>>>> master
