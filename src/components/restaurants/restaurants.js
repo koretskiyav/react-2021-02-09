@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import propTypes from 'prop-types'
 import Restaurant from '../restaurant';
 import Navigation from '../navigation';
 
@@ -21,4 +22,7 @@ const Restaurants = ({ restaurants }) => {
   );
 };
 
+Restaurants.propTypes = {
+  restaurants: propTypes.arrayOf(propTypes.object)
+}
 export default Restaurants;
