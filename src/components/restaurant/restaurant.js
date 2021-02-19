@@ -13,7 +13,7 @@ const Restaurant = ({ restaurant }) => {
     const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
     return Math.round(total / reviews.length);
   }, [reviews]);
-  console.log(restaurant);
+
   return (
     <div>
       <Banner heading={name}>
@@ -32,7 +32,7 @@ Restaurant.propTypes = {
     id: PropTypes.string.isRequired,
   }),
   menu: PropTypes.array,
-  reviews: PropTypes.array.isRequired,
+  reviews: PropTypes.array,
 };
 
 export default Restaurant;
