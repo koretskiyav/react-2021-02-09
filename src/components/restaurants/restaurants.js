@@ -13,8 +13,13 @@ const Restaurants = ({ restaurants }) => {
   );
 
   const menu = useMemo(
-    () => restaurants.reduce((acc, { menu }) => acc.concat(menu), []),
-    [restaurants]
+    () => restaurants.reduce((acc, { menu }) => {
+      menu.forEach((product) => {
+        acc[product.id] = {...product};
+      });
+      return acc;
+    }, {}),
+    [restaurants],
   );
 
   return (

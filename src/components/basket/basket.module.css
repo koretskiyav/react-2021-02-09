@@ -1,1 +1,12 @@
 .basket {}
+
+.basket th,
+.basket td {
+  padding: 3px 5px;
+  text-align: center;
+}
+
+.basket th:first-child,
+.basket td:first-child {
+  text-align: left;
+}

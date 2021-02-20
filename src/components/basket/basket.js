@@ -1,55 +1,65 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import style from './basket.module.css';
 
-import { decrement, increment, clear } from '../../redux/actions';
+import Item from './item';
 
-const Basket = ({ menu, order, increment, decrement, clear }) => {
-  let total = 0;
+const getBasketData = (menu, order) => {
+  const idsInBasket = Object.keys(order).filter((id) => order[id] > 0);
+  return idsInBasket.reduce((acc, id) => {
+    const product = menu[id];
+    acc.total += order[id] * product.price;
+    acc.items.push(<Item product={product} key={id} />);
+    return acc;
+  }, {
+    total: 0,
+    items: [],
+  })
+}
+
+const Basket = ({ menu, order }) => {
+  const basketData = useMemo(
+    () => getBasketData(menu, order),
+    [menu, order],
+  );
+
+  if (!basketData.items.length) {
+    return null;
+  }
 
   return (
-    <div className={style.basket}>
-      {Object.keys(order).map((productId) => {
-        const amount = order[productId];
-
-        if (amount <= 0) {
-          return null;
-        }
-
-        const product = menu.find(({ id }) => id === productId);
-        const cost = amount * product.price;
-        total += cost;
-
-        return (
-          <div key={productId}>
-            {product.name}: {product.price}$ * {amount} = {cost}$
-            <button onClick={() => decrement(productId)}>-</button>
-            <button onClick={() => increment(productId)}>+</button>
-            <button onClick={() => clear(productId)}>X</button>
-          </div>
-        );
-      })}
-      {!!total && (
-        <div className="basket-total">Total: {total}$</div>
-      )}
-    </div>
+    <table className={style.basket}>
+      <thead>
+      <tr>
+        <th>Product</th>
+        <th>Amount</th>
+        <th>Sum</th>
+        <th />
+      </tr>
+      </thead>
+      <tbody>
+        {basketData.items}
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colSpan={2}>Total</th>
+        <th>{basketData.total}$</th>
+        <th />
+      </tr>
+      </tfoot>
+    </table>
   );
 };
 
 Basket.propTypes = {
-  menu: PropTypes.array.isRequired,
+  menu: PropTypes.object.isRequired,
   // from connect
-  order: PropTypes.object,
-  increment: PropTypes.func,
-  decrement: PropTypes.func,
-  clear: PropTypes.func,
+  order: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   order: state.order,
 });
 
-export default connect(mapStateToProps, {
-  increment, decrement, clear
-})(Basket);
+export default connect(mapStateToProps)(Basket);
