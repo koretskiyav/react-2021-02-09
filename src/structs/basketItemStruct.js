@@ -1,7 +1,8 @@
 class BasketItemStruct {
 
-  constructor(amount) {
-    this.amount = amount
+  constructor(product, amount) {
+    this.product = product;
+    this.amount = amount;
   }
 
   increment() {
@@ -11,6 +12,10 @@ class BasketItemStruct {
   decrement() {
     this.amount--;
   }
+
+  price() {
+    return this.amount * this.product.price;
+  };
 
 };
 

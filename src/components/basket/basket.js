@@ -9,12 +9,15 @@ class Basket extends React.Component {
     var items = this.props.items;
     var keys = Object.keys(items);
 
+    var sum = 0;
+    keys.forEach(key => {
+      sum += items[key].price();
+    });
+
     return (
       <div>
-        Basket:
+        Basket ({sum})$
         <div>
-          {console.log(items)}
-          {console.log(keys)}
           {
             keys.map((id) => (
               <BasketItem key={id} props={items[id]} />
