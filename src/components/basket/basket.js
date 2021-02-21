@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import style from './basket.module.css';
-
 import Item from './item';
+
+import style from './basket.module.css';
 
 const getBasketData = (menu, order) => {
   const idsInBasket = Object.keys(order).filter((id) => order[id] > 0);
@@ -53,9 +53,13 @@ const Basket = ({ menu, order }) => {
 };
 
 Basket.propTypes = {
-  menu: PropTypes.object.isRequired,
+  menu: PropTypes.objectOf(
+    PropTypes.shape({
+      price: PropTypes.number.isRequired,
+    }).isRequired
+  ).isRequired,
   // from connect
-  order: PropTypes.object.isRequired,
+  order: PropTypes.objectOf(PropTypes.number.isRequired).isRequired,
 };
 
 const mapStateToProps = (state) => ({

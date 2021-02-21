@@ -25,7 +25,7 @@ Item.propTypes = {
     price: PropTypes.number.isRequired,
   }).isRequired,
   // from HOC
-  amount: PropTypes.number,
+  amount: PropTypes.number.isRequired,
   decrement: PropTypes.func,
   increment: PropTypes.func,
   clear: PropTypes.func,
