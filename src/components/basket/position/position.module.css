@@ -1,0 +1,25 @@
+.container {
+  padding: 4px 0;
+}
+
+.flex_container {
+  display: flex;
+  width: 100%;
+}
+
+.name {
+  width: 60%;
+}
+.count,
+.price {
+  width: 20%;
+}
+
+.count,
+.price {
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+}
