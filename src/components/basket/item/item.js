@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { decrement, increment, clear } from '../../../redux/actions';
-import { connect } from 'react-redux';
+import withStore from '../../../hocs/withStore';
 
 const Item = ({ product, amount, decrement, increment, clear }) => {
   const { name, price } = product;
@@ -25,21 +24,11 @@ Item.propTypes = {
     name: PropTypes.string,
     price: PropTypes.number.isRequired,
   }).isRequired,
-  // from connect
+  // from HOC
   amount: PropTypes.number,
   decrement: PropTypes.func,
   increment: PropTypes.func,
   clear: PropTypes.func,
 };
 
-const mapStateToProps = (state, props) => ({
-  amount: state.order[props.product.id] || 0,
-});
-
-const mapDispatchToProps = (dispatch, props) => ({
-  increment: () => dispatch(increment(props.product.id)),
-  decrement: () => dispatch(decrement(props.product.id)),
-  clear: () => dispatch(clear(props.product.id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Item);
+export default withStore(Item);
