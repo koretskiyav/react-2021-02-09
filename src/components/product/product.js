@@ -62,7 +62,7 @@ Product.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  amount: state.order[props.product.id] || 0,
+  amount: state.order[props.product.id]?.amount || 0
 });
 
 // const mapDispatchToProps = {
@@ -71,8 +71,8 @@ const mapStateToProps = (state, props) => ({
 // };
 
 const mapDispatchToProps = (dispatch, props) => ({
-  increment: () => dispatch(increment(props.product.id)),
-  decrement: () => dispatch(decrement(props.product.id)),
+  increment: () => dispatch(increment(props.product)),
+  decrement: () => dispatch(decrement(props.product)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
