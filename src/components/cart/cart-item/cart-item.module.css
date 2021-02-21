@@ -1,0 +1,43 @@
+.item {
+  border-bottom: 1px solid var(--grey-dark);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.btn {
+  background-color: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  cursor: pointer;
+  transition: 0.2s all;
+  color: var(--white);
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active {
+  border-color: var(--yellow-light);
+  background-color: var(--yellow-light);
+}

@@ -68,3 +68,16 @@
   box-shadow: none;
   cursor: pointer;
 }
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}

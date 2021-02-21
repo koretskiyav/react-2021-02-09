@@ -16,12 +16,8 @@ export default class App extends PureComponent {
         }}
       >
         <Header />
-        <Restaurants restaurants={this.props.restaurants} />
+        <Restaurants />
       </div>
     );
   }
 }
-
-App.propTypes = {
-  restaurants: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
