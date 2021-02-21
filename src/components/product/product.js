@@ -12,6 +12,8 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
 
+  console.log("rerender");
+
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
@@ -62,7 +64,7 @@ Product.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  amount: state.order[props.product.id] || 0,
+  amount: state.order[props.product.id]?.amount || 0
 });
 
 // const mapDispatchToProps = {
