@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { decrement, increment, clear } from '../redux/actions';
+import { decrement, increment, remove } from '../redux/actions';
 
 const mapStateToProps = (state, props) => ({
   amount: state.order[props.product.id] || 0,
@@ -9,7 +9,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch, props) => ({
   increment: () => dispatch(increment(props.product.id)),
   decrement: () => dispatch(decrement(props.product.id)),
-  clear: () => dispatch(clear(props.product.id)),
+  remove: () => dispatch(remove(props.product.id)),
 });
 
 export default (WrappedComponent) => {
