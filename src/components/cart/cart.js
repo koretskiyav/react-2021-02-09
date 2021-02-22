@@ -28,15 +28,21 @@ const Cart = ({ active, closeCart, toggleCart, order, restaurants }) => {
       (prev, next) => prev + next.subtotal,
       0
     );
+    const counter = currentCartItems.reduce(
+      (prev, next) => prev + next.amount,
+      0
+    );
     return {
       items: currentCartItems,
       total,
+      counter,
     };
   }, [restaurants, order]);
   return (
     <div className="cart-wrapper">
       <button className={styles.button} onClick={toggleCart}>
         <CartIcon className={styles.icon} />
+        <span className={styles.counter}>{currentCart.counter}</span>
       </button>
       <div
         className={styles.cart}
