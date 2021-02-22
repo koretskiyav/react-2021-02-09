@@ -1,0 +1,100 @@
+.button {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  background-color: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-radius: 4px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+  border-color: var(--yellow-light);
+  background-color: var(--yellow-light);
+}
+
+.icon {
+  fill: var(--white);
+  width: 20px;
+}
+
+.cart {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--white);
+  border-right: 1px solid var(--grey);
+  z-index: 5;
+  transition: 0.2s all;
+  box-sizing: border-box;
+}
+
+.open {
+  left: 0;
+}
+
+.container {
+  position: relative;
+  max-height: 100%;
+  height: 100%;
+  padding: 24px 12px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.close {
+  position: absolute;
+  top: 6px;
+  right: 4px;
+  background-color: var(--white);
+  border: 1px solid var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.counter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--white);
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--yellow);
+}
