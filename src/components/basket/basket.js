@@ -10,7 +10,7 @@ const Basket = ({ restaurants, order }) => {
 
   return (
     <div className={styles.basketContainer}>
-      <h1>Your order:</h1>
+      <h1>Your order</h1>
       <table className={styles.tableOrder}>
         <thead>
           <tr>
@@ -18,6 +18,7 @@ const Basket = ({ restaurants, order }) => {
             <th>Quantity</th>
             <th>Price</th>
             <th>Total</th>
+            <th>Change order</th>
           </tr>
         </thead>
         <tbody>
