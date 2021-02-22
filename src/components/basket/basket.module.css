@@ -1,0 +1,7 @@
+.basket {
+  padding: 20px 26px;
+  border: 1px solid var(--grey);
+  background-color: var(--white);
+  color: var(--black);
+  transition: 0.2s all;
+}

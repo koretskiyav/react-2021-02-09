@@ -1,5 +1,9 @@
 import { DECREMENT, INCREMENT } from '../constants';
 
+const decrementAmount = (amount = 0) => {
+  return amount > 0 ? amount - 1 : 0;
+};
+
 // { [productId]: amount }
 export default (state = {}, action) => {
   const { type, id } = action;
@@ -7,7 +11,7 @@ export default (state = {}, action) => {
     case INCREMENT:
       return { ...state, [id]: (state[id] || 0) + 1 };
     case DECREMENT:
-      return { ...state, [id]: (state[id] || 0) - 1 };
+      return { ...state, [id]: decrementAmount(state[id]) };
     default:
       return state;
   }
