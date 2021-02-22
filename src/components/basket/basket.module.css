@@ -1,0 +1,64 @@
+.basket {
+  min-height: 100vh;
+  flex-basis: 0;
+  overflow: hidden;
+  background: var(--white);
+  z-index: 10000;
+  box-shadow: -5px 0px 5px 0px rgba(0,0,0,.5);
+  transition: flex-basis ease 0.5s;
+}
+
+.opened {
+  flex-basis: 400px;
+}
+
+.header {
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+}
+
+.headerName {
+  flex-grow: 1;
+  margin-left: 1rem;
+  font-size: 2rem;
+  font-weight: 100;
+}
+
+.closeButton {
+  float: right;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.closeButton:active {
+  outline: none;
+}
+
+.hr {
+  border-color: var(--grey);
+  width: 85%;
+}
+
+.total {
+  display: flex;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.totalHeader {
+  flex-grow: 1;
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 0;
+
+}
+
+.totalValue {
+  font-size: 1.5rem;
+  text-decoration: underline;
+}
