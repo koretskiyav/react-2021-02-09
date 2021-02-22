@@ -5,3 +5,17 @@
   height: 60px;
   background: var(--black);
 }
+
+.cartButton {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  font-size: 2em;
+  background: var(--black);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 2em;
+  height: 2em;
+  z-index: 9900;
+}
