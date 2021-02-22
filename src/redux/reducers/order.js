@@ -1,4 +1,4 @@
-import { DECREMENT, INCREMENT } from '../constants';
+import { DECREMENT, INCREMENT, CLEAR } from '../constants';
 
 const decrementAmount = (amount = 0) => {
   return amount > 0 ? amount - 1 : 0;
@@ -12,6 +12,10 @@ export default (state = {}, action) => {
       return { ...state, [id]: (state[id] || 0) + 1 };
     case DECREMENT:
       return { ...state, [id]: decrementAmount(state[id]) };
+    case CLEAR:
+      let newState = { ...state };
+      delete newState[id];
+      return newState;
     default:
       return state;
   }

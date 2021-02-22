@@ -1,24 +1,51 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ReactComponent as Minus } from '../../icons/minus.svg';
-import { ReactComponent as Plus } from '../../icons/plus.svg';
+import PropTypes from 'prop-types';
 
-import { increment, decrement, clear } from '../../redux/actions';
 import OrderPosition from '../orderPosition';
 import styles from './basket.module.css';
 
-const Basket = ({ increment, decrement, clear, order, restaurants = [] }) => {
+const Basket = ({ order = {}, restaurants = [] }) => {
   const allMenu = getAllMenu(restaurants);
-  const orderPositions = getPositions(order, allMenu);
+  const orderPositions = getOrderPositions(order, allMenu);
   const totalCost = countTotalCost(orderPositions);
 
   return (
-    <div className={styles.basket}>
-      <h2>Basket:</h2>
-      {orderPositions}
-      {orderPositions.length > 0 && 'Total cost: ' + totalCost}
-    </div>
+    orderPositions.length > 0 && (
+      <div className={styles.basket}>
+        <h3>Basket:</h3>
+        {orderPositions}
+        <div className={styles['basket__price']}>
+          Total cost: <span className={styles['price']}>{totalCost}$</span>
+        </div>
+      </div>
+    )
   );
+};
+
+Basket.propTypes = {
+  restaurants: PropTypes.arrayOf(
+    PropTypes.shape({
+      menu: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          name: PropTypes.string,
+          price: PropTypes.number,
+          ingredients: PropTypes.arrayOf(PropTypes.string.isRequired),
+        })
+      ),
+      id: PropTypes.string,
+      name: PropTypes.string,
+      image: PropTypes.string,
+      location: PropTypes.shape({
+        lat: PropTypes.number,
+        lng: PropTypes.number,
+      }),
+      reviews: PropTypes.array,
+    }).isRequired
+  ),
+  // From connect
+  order: PropTypes.object,
 };
 
 const getAllMenu = (restaurants = []) => {
@@ -30,7 +57,7 @@ const getAllMenu = (restaurants = []) => {
   return allMenu;
 };
 
-const getPositions = (order = {}, allproducts = []) => {
+const getOrderPositions = (order = {}, allproducts = []) => {
   const positions = [];
   for (const [productId, count] of Object.entries(order)) {
     const product = allproducts.find((product) => product.id === productId);
@@ -55,10 +82,4 @@ const mapStateToProps = (state) => ({
   order: state.order || {},
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
-  increment: () => dispatch(increment(props.product.id)),
-  decrement: () => dispatch(decrement(props.product.id)),
-  clear: () => dispatch(clear(props.product.id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Basket);
+export default connect(mapStateToProps, null)(Basket);

@@ -5,3 +5,11 @@
   color: var(--black);
   transition: 0.2s all;
 }
+
+.basket__price {
+  border-top: 1px solid var(--grey);
+}
+
+.price {
+  color: var(--yellow);
+}
