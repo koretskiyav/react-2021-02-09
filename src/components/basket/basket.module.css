@@ -1,0 +1,23 @@
+.basketContainer {
+  padding: 2em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.tableOrder {
+  margin: auto;
+  padding: 5px;
+  width: 60%;
+}
+
+.tableOrder th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: wheat;
+}
+
+.tableOrder td {
+  border: 1px solid wheat;
+  text-align: left;
+  padding: 8px;
+}
