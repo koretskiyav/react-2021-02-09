@@ -7,7 +7,14 @@ import { ReactComponent as Plus } from '../../icons/plus.svg';
 
 import { increment, decrement } from '../../redux/actions';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
+const Product = ({
+  product,
+  amount,
+  increment,
+  decrement,
+  total,
+  fetchData,
+}) => {
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line

@@ -12,22 +12,26 @@ const Basket = ({ restaurants, order }) => {
     <div className={styles.basketContainer}>
       <h1>Your order:</h1>
       <table className={styles.tableOrder}>
-        <tr>
-          <th>Name</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-        {orderFromClient.map((el) => {
-          const product = products.find((prod) => prod.id === el[0]);
-          return (
-            <ProductInBasket
-              key={product.id}
-              product={product}
-              quantity={el[1]}
-            />
-          );
-        })}
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orderFromClient.map((el) => {
+            const product = products.find((prod) => prod.id === el[0]);
+            return (
+              <ProductInBasket
+                key={product.id}
+                product={product}
+                quantity={el[1]}
+              />
+            );
+          })}
+        </tbody>
       </table>
     </div>
   );
@@ -36,10 +40,5 @@ const Basket = ({ restaurants, order }) => {
 const mapStateToProps = (state) => ({
   order: state.order,
 });
-
-// const mapDispatchToProps = (dispatch, props) => ({
-//   increment: () => dispatch(increment(props.product.id)),
-//   decrement: () => dispatch(decrement(props.product.id)),
-// });
 
 export default connect(mapStateToProps)(Basket);

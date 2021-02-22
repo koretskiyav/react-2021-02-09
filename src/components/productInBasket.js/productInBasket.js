@@ -4,8 +4,8 @@ const ProductInBasket = ({ product, quantity }) => (
   <tr>
     <td>{product.name}</td>
     <td>{quantity}</td>
-    <td>{product.price}</td>
-    <td></td>
+    <td>{product.price}$</td>
+    <td>{quantity * product.price}</td>
   </tr>
 );
 
