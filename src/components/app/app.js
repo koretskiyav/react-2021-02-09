@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import Restaurants from '../restaurants';
 import Header from '../header';
-import store from '../../redux/store';
-import { CARTCLOSE } from '../../redux/constants';
+import { connect } from 'react-redux';
 
-export default class App extends PureComponent {
+import { closeCart } from '../../redux/actions';
+
+class App extends PureComponent {
   render() {
     return (
       <div
         onClick={(e) => {
           if (!e.target.closest('.cart-wrapper')) {
-            store.dispatch({ type: CARTCLOSE });
+            this.props.closeCart();
           }
         }}
       >
@@ -21,3 +21,9 @@ export default class App extends PureComponent {
     );
   }
 }
+
+const mapDispatchToProps = {
+  closeCart,
+};
+
+export default connect(null, mapDispatchToProps)(App);
