@@ -22,7 +22,10 @@ const Restaurant = ({ restaurant, allReviews }) => {
 
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={reviews} /> },
+    {
+      title: 'Reviews',
+      content: <Reviews reviews={reviews} restaurantID={restaurant.id} />,
+    },
   ];
 
   return (

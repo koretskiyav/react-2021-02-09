@@ -7,13 +7,13 @@ import styles from './reviews.module.css';
 
 import { reviewsSelector } from '../../redux/selectors';
 
-const Reviews = ({ reviews, allReviews }) => {
+const Reviews = ({ reviews, allReviews, restaurantID }) => {
   return (
     <div className={styles.reviews}>
       {reviews.map((review) => (
         <Review key={review} review={allReviews[review]} />
       ))}
-      <ReviewForm />
+      <ReviewForm restaurantID={restaurantID} />
     </div>
   );
 };

@@ -6,14 +6,16 @@ import styles from './review-form.module.css';
 import { connect } from 'react-redux';
 import Button from '../../button';
 
+import { publish } from '../../../redux/actions';
+
 const INITIAL_VALUES = { name: '', text: '', rating: 3 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ publish, restaurantID }) => {
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onSubmit(values);
+    publish(values, restaurantID);
     reset();
   };
 
@@ -25,6 +27,7 @@ const ReviewForm = ({ onSubmit }) => {
           <input
             placeholder="Your name"
             className={styles.message}
+            required
             {...handlers.name}
           />
         </div>
@@ -32,6 +35,7 @@ const ReviewForm = ({ onSubmit }) => {
           <textarea
             placeholder="Your review"
             className={styles.message}
+            required
             {...handlers.text}
           />
         </div>
@@ -51,6 +55,10 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
-}))(ReviewForm);
+const mapDispatchToProps = (dispatch) => ({
+  publish: (values, id) => {
+    dispatch(publish(values, id));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(ReviewForm);
