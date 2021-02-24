@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
+import { getRestaurantsTabs } from '../../redux/selectors';
 
 const Restaurants = ({ restaurants }) => {
-  const tabs = restaurants.map((restaurant) => ({
-    title: restaurant.name,
-    content: <Restaurant restaurant={restaurant} />,
+  const tabs = restaurants.map(({ id, name }) => ({
+    title: name,
+    content: <Restaurant id={id} />,
   }));
   return <Tabs tabs={tabs} />;
 };
@@ -15,11 +16,12 @@ const Restaurants = ({ restaurants }) => {
 Restaurants.propTypes = {
   restaurants: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired
+      id: PropTypes.string,
+      name: PropTypes.string,
+    })
   ).isRequired,
 };
 
 export default connect((state) => ({
-  restaurants: state.restaurants,
+  restaurants: getRestaurantsTabs(state),
 }))(Restaurants);
