@@ -9,7 +9,7 @@ import Tabs from '../tabs';
 const Restaurant = ({ restaurant }) => {
   const { name, menu, reviews } = restaurant;
 
-  const averageRating = useMemo(() => {
+  const averageRating = useMemo(() => { // TODO fix calculation
     const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
     return Math.round(total / reviews.length);
   }, [reviews]);
@@ -33,11 +33,7 @@ Restaurant.propTypes = {
   restaurant: PropTypes.shape({
     name: PropTypes.string,
     menu: PropTypes.array,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        rating: PropTypes.number.isRequired,
-      }).isRequired
-    ).isRequired,
+    reviews: PropTypes.array.isRequired,
   }).isRequired,
 };
 
