@@ -35,8 +35,8 @@ Review.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-  const review = state.reviews.find((review) => review.id === props.id);
-  const user = state.users.find((user) => user.id === review.userId);
+  const review = state.reviews[props.id];
+  const user = state.users[review.userId];
   return { review, user };
 };
 
