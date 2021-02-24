@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
 
-const Restaurants = ({ restaurants }) => {
-  const tabs = restaurants.map((restaurant) => ({
+const Restaurants = ({ restaurants = {} }) => {
+  const tabs = Object.entries(restaurants).map(([, restaurant]) => ({
     title: restaurant.name,
     content: <Restaurant restaurant={restaurant} />,
   }));
@@ -13,11 +13,7 @@ const Restaurants = ({ restaurants }) => {
 };
 
 Restaurants.propTypes = {
-  restaurants: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  restaurants: PropTypes.object,
 };
 
 export default connect((state) => ({
