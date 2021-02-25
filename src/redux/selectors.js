@@ -27,14 +27,14 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-export const restaurantSelector = createSelector(
+export const restaurantByIdSelector = createSelector(
   restaurantsSelector,
   (_, props) => props.id,
   (restaurants, id) => restaurants[id],
 );
 
 export const averageRatingSelector = createSelector(
-  restaurantSelector,
+  restaurantByIdSelector,
   reviewsSelector,
   (restaurant, reviews) => {
     const total = restaurant.reviews.reduce((acc, id) => acc + reviews[id].rating, 0);
