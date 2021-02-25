@@ -6,6 +6,8 @@ const productsSelector = (state) => state.products;
 const reviewsSelector = (state) => state.reviews;
 const usersSelector = (state) => state.users;
 
+const idFromPropsSelector = (_, props) => props.id;
+
 export const orderProductsSelector = createSelector(
   orderSelector,
   productsSelector,
@@ -28,7 +30,7 @@ export const totalSelector = createSelector(
 
 export const restaurantByIdSelector = createSelector(
   restaurantsSelector,
-  (_, props) => props.id,
+  idFromPropsSelector,
   (restaurants, id) => restaurants[id],
 );
 
@@ -43,7 +45,7 @@ export const averageRatingSelector = createSelector(
 
 export const reviewByIdSelector = createSelector(
   reviewsSelector,
-  (_, props) => props.id,
+  idFromPropsSelector,
   usersSelector,
   (reviews, reviewId, users) => {
     const review = reviews[reviewId];
