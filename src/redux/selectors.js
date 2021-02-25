@@ -4,8 +4,7 @@ export const restaurantsSelector = (state) => state.restaurants;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) => state.products;
 const reviewsSelector = (state) => state.reviews;
-
-export const reviewSelector = (state, { id }) => state.reviews[id]; // TODO rewrite
+const usersSelector = (state) => state.users;
 
 export const orderProductsSelector = createSelector(
   orderSelector,
@@ -39,5 +38,15 @@ export const averageRatingSelector = createSelector(
   (restaurant, reviews) => {
     const total = restaurant.reviews.reduce((acc, id) => acc + reviews[id].rating, 0);
     return Math.round(total / restaurant.reviews.length);
+  }
+);
+
+export const reviewByIdSelector = createSelector(
+  reviewsSelector,
+  (_, props) => props.id,
+  usersSelector,
+  (reviews, reviewId, users) => {
+    const review = reviews[reviewId];
+    return { ...review, user: users[review.userId]?.name };
   }
 );
