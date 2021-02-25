@@ -1,10 +1,29 @@
 import {createSelector} from 'reselect';
 
+const restaurantsSelector = (state) => state.restaurants;
 const reviewsSelector = (state) => state.reviews;
 const usersSelector = (state) => state.users;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) => state.products;
 
+export const restaurantItemSelector = (state, restaurantItemId) => {
+
+	const selectorData = createSelector(
+		restaurantsSelector,
+		reviewsSelector,
+		(restaurants, reviewsStore) => {
+			return {
+				reviews: Object.keys(reviewsStore)
+					.filter((reviewItemId) => restaurants[restaurantItemId].reviews
+						.filter((review) => review === reviewItemId).length > 0
+					).map((reviewItemId) => reviewsStore[reviewItemId])
+					.map((review) => review),
+				restaurant: restaurants[restaurantItemId],
+			}
+		}
+	);
+	return selectorData(state);
+}
 export const productItemSelector = (state, productItemId) => {
 	const selectorData = createSelector(
 		orderSelector,
