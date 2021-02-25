@@ -3,7 +3,9 @@ import { createSelector } from 'reselect';
 export const restaurantsSelector = (state) => state.restaurants;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) => state.products;
-export const reviewSelector = (state, { id }) => state.reviews[id];
+const reviewsSelector = (state) => state.reviews;
+
+export const reviewSelector = (state, { id }) => state.reviews[id]; // TODO rewrite
 
 export const orderProductsSelector = createSelector(
   orderSelector,
@@ -29,4 +31,13 @@ export const restaurantSelector = createSelector(
   restaurantsSelector,
   (_, props) => props.id,
   (restaurants, id) => restaurants[id],
+);
+
+export const averageRatingSelector = createSelector(
+  restaurantSelector,
+  reviewsSelector,
+  (restaurant, reviews) => {
+    const total = restaurant.reviews.reduce((acc, id) => acc + reviews[id].rating, 0);
+    return Math.round(total / restaurant.reviews.length);
+  }
 );
