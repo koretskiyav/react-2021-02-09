@@ -5,6 +5,9 @@ import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 
 const Reviews = ({ reviews }) => {
+  reviews.map((review) => {
+    console.log('{...review}', {...review})
+  })
   return (
     <div className={styles.reviews}>
       {reviews.map((review) => (
@@ -16,11 +19,7 @@ const Reviews = ({ reviews }) => {
 };
 
 Reviews.propTypes = {
-  reviews: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  reviews: PropTypes.array
 };
 
 export default Reviews;
