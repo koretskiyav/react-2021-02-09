@@ -31,7 +31,7 @@ export const totalSelector = createSelector(
 export const restaurantByIdSelector = createSelector(
   restaurantsSelector,
   idFromPropsSelector,
-  (restaurants, id) => restaurants[id],
+  (restaurants, id) => restaurants[id]
 );
 
 export const averageRatingSelector = createSelector(
@@ -51,4 +51,16 @@ export const reviewByIdSelector = createSelector(
     const review = reviews[reviewId];
     return { ...review, user: users[review.userId]?.name };
   }
+);
+
+export const makeProductByIdSelector = () => createSelector(
+  productsSelector,
+  idFromPropsSelector,
+  (products, id) => products[id]
+);
+
+export const productAmountSelector = createSelector(
+  orderSelector,
+  idFromPropsSelector,
+  (order, productId) => order[productId] || 0
 );
