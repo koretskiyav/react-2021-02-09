@@ -11,11 +11,14 @@ export default (reviews = defaultReviews, action) => {
 
   switch (type) {
     case ADD_REVIEW:
-      // Add review to state and to restaurant
+      // Add review to state and to restaurant, and user
+      // How to add review id to restaurant?
+      // Add user if not exist?
       console.log(
         'Here adding review to state and to restaurant. Action: ',
         action
       );
+      defaultReviews[action.payload.id] = action.payload;
       return reviews;
       break;
     default:
