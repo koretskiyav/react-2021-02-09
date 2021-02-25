@@ -10,10 +10,8 @@ import { sendReview } from '../../../redux/actions'
 const INITIAL_VALUES = { name: '', text: '', rating: 3 };
 
 const ReviewForm = (props) => {
-
   const onSubmit = props.onSubmit;
-  console.log(props);
-
+  
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
