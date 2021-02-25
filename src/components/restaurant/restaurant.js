@@ -6,7 +6,7 @@ import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
-import { restaurants } from '../../fixtures';
+import { restaurantsSelector } from '../../redux/selectors';
 
 const Restaurant = ({ restaurant }) => {
 
@@ -47,10 +47,7 @@ Restaurant.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  restaurant: state.restaurants[props.id]
+  restaurant: restaurantsSelector(state)[props.id]
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Restaurant);
+export default connect(mapStateToProps, null)(Restaurant);

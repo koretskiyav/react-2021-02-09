@@ -56,13 +56,8 @@ const ReviewForm = (props) => {
   );
 };
 
-const mapStateToProps = (state, props) => ({
-  restId: props.restId
-});
-
-
 const mapDispatchToProps = (dispatch, props) => ({
   onSubmit: (values) => dispatch(sendReview({"values" : values, "restId" : props.restId}))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
+export default connect(null, mapDispatchToProps)(ReviewForm);
