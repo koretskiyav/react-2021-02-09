@@ -25,9 +25,11 @@ const Restaurant = ({ name, menu, reviews, averageRating }) => {
 };
 
 Restaurant.propTypes = {
+  // from connect
   name: PropTypes.string,
   menu: PropTypes.array,
-  reviews: PropTypes.array.isRequired,
+  reviews: PropTypes.array,
+  averageRating: PropTypes.number,
 };
 
 const mapStateToProps = (state, props) => ({

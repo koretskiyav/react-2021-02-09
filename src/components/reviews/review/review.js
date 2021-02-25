@@ -24,6 +24,7 @@ const Review = ({ user, text, rating }) => (
 );
 
 Review.propTypes = {
+  // from connect
   user: PropTypes.string,
   text: PropTypes.string,
   rating: PropTypes.number.isRequired,
