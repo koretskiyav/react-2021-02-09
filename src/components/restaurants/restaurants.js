@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { restaurantsSelector } from '../../redux/selectors';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
@@ -17,5 +18,5 @@ Restaurants.propTypes = {
 };
 
 export default connect((state) => ({
-  restaurants: state.restaurants,
+  restaurants: restaurantsSelector(state),
 }))(Restaurants);
