@@ -1,25 +1,31 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo } from 'react';
 import Restaurant from '../restaurant';
-import Tabs from '../tabs';
+import Navigation from '../navigation';
+import PropTypes from 'prop-types';
 
 const Restaurants = ({ restaurants }) => {
-  const tabs = restaurants.map((restaurant) => ({
-    title: restaurant.name,
-    content: <Restaurant restaurant={restaurant} />,
-  }));
-  return <Tabs tabs={tabs} />;
+  const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id);
+
+  const activeRestaurant = useMemo(
+    () => restaurants.find(({ id }) => id === activeRestaurantId),
+    [activeRestaurantId, restaurants]
+  );
+
+  return (
+    <div>
+      <Navigation
+        restaurants={restaurants}
+        onRestaurantClick={setActiveRestaurant}
+      />
+      <Restaurant restaurant={activeRestaurant} />
+    </div>
+  );
 };
 
 Restaurants.propTypes = {
-  restaurants: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  restaurants: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
-export default connect((state) => ({
-  restaurants: state.restaurants,
-}))(Restaurants);
+export default Restaurants;

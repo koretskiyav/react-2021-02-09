@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
-import Tabs from '../tabs';
+import styles from './restaurant.module.css';
+import PropTypes from 'prop-types';
 
 const Restaurant = ({ restaurant }) => {
   const { name, menu, reviews } = restaurant;
@@ -14,31 +14,33 @@ const Restaurant = ({ restaurant }) => {
     return Math.round(total / reviews.length);
   }, [reviews]);
 
-  const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={reviews} /> },
-  ];
-
   return (
     <div>
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
-      <Tabs tabs={tabs} />
+      <div className={styles.restaurant}>
+        <Menu menu={menu} key={restaurant.id} />
+        <Reviews reviews={reviews} />
+      </div>
     </div>
   );
 };
 
+Restaurant.defaultProps = {
+  name: 'Name of restaurant'
+};
+
 Restaurant.propTypes = {
   restaurant: PropTypes.shape({
-    name: PropTypes.string,
-    menu: PropTypes.array,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        rating: PropTypes.number.isRequired,
-      }).isRequired
-    ).isRequired,
-  }).isRequired,
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    menu: PropTypes.arrayOf(PropTypes.object),
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+      rating: PropTypes.number.isRequired
+    }).isRequired
+    ).isRequired
+  }).isRequired
 };
 
 export default Restaurant;
