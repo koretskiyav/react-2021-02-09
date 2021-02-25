@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useForm from '../../../hooks/use-form';
 
 import Rate from '../../rate';
@@ -8,7 +9,7 @@ import Button from '../../button';
 
 const INITIAL_VALUES = { name: '', text: '', rating: 3 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ restaurant, onSubmit }) => {
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
@@ -49,6 +50,12 @@ const ReviewForm = ({ onSubmit }) => {
       </form>
     </div>
   );
+};
+
+ReviewForm.propTypes = {
+  restaurant: PropTypes.string.isRequired,
+  // from connect
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default connect(null, () => ({

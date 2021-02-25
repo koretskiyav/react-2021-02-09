@@ -8,10 +8,10 @@ import Rate from '../rate';
 import Tabs from '../tabs';
 import { restaurantByIdSelector, averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ name, menu, reviews, averageRating }) => {
+const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={reviews} /> },
+    { title: 'Reviews', content: <Reviews reviews={reviews} restaurant={id} /> },
   ];
 
   return (
@@ -26,6 +26,7 @@ const Restaurant = ({ name, menu, reviews, averageRating }) => {
 
 Restaurant.propTypes = {
   // from connect
+  id: PropTypes.string,
   name: PropTypes.string,
   menu: PropTypes.array,
   reviews: PropTypes.array,
