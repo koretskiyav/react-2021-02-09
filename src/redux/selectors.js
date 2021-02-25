@@ -3,6 +3,9 @@ import { createSelector } from 'reselect';
 // const restaurantsSelector = (state) => state.restaurants;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) => state.products;
+const reviewsSelector = (state) => state.reviews;
+const restaurantReviewsIdsSelector = (_, props) => props.reviewsIds;
+const usersSelector = (state) => state.users;
 
 export const orderProductsSelector = createSelector(
   orderSelector,
@@ -22,4 +25,18 @@ export const totalSelector = createSelector(
   orderProductsSelector,
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
+);
+
+export const restaurantReviewsSelector = createSelector(
+  reviewsSelector,
+  restaurantReviewsIdsSelector,
+  usersSelector,
+  (allReviews, restaurantReviewsIds = [], users = {}) =>
+    Object.values(allReviews)
+      .filter((value) => restaurantReviewsIds.indexOf(value.id) > -1)
+      .reduce((restaurantReviews, review) => {
+        restaurantReviews[review.id] = review;
+        restaurantReviews[review.id].user = users[review.userId].name;
+        return restaurantReviews;
+      }, {})
 );
