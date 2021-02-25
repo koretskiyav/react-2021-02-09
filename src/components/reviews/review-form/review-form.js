@@ -1,56 +1,80 @@
 import React from 'react';
 import useForm from '../../../hooks/use-form';
+import {v4 as uuidv4} from 'uuid';
 
 import Rate from '../../rate';
 import styles from './review-form.module.css';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import {addUser, addReview, addReviewToRestaurant} from '../../../redux/actions';
+
 import Button from '../../button';
 
-const INITIAL_VALUES = { name: '', text: '', rating: 3 };
+const INITIAL_VALUES = {name: '', text: '', rating: 3};
 
-const ReviewForm = ({ onSubmit }) => {
-  const { values, handlers, reset } = useForm(INITIAL_VALUES);
+const ReviewForm = ({onSubmit}) => {
+	const {values, handlers, reset} = useForm(INITIAL_VALUES);
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-    onSubmit(values);
-    reset();
-  };
+	const handleSubmit = (ev) => {
+		ev.preventDefault();
+		onSubmit(values);
+		reset();
+	};
 
-  return (
-    <div className={styles.reviewForm}>
-      <h4 className={styles.addReviewTitle}>Leave your review</h4>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.reviewFormItem}>
-          <input
-            placeholder="Your name"
-            className={styles.message}
-            {...handlers.name}
-          />
-        </div>
-        <div className={styles.reviewFormItem}>
-          <textarea
-            placeholder="Your review"
-            className={styles.message}
-            {...handlers.text}
-          />
-        </div>
-        <div className={styles.rateWrap}>
-          <span>Rating: </span>
-          <span>
-            <Rate {...handlers.rating} />
-          </span>
-        </div>
-        <div className={styles.publish}>
-          <Button primary block>
-            PUBLISH REVIEW
+	return (
+		<div className={styles.reviewForm}>
+			<h4 className={styles.addReviewTitle}>Leave your review</h4>
+			<form onSubmit={handleSubmit}>
+				<div className={styles.reviewFormItem}>
+					<input
+						placeholder="Your name"
+						className={styles.message}
+						{...handlers.name}
+					/>
+				</div>
+				<div className={styles.reviewFormItem}>
+					<textarea
+						placeholder="Your review"
+						className={styles.message}
+						{...handlers.text}
+					/>
+				</div>
+				<div className={styles.rateWrap}>
+					<span>Rating: </span>
+					<span>
+						<Rate {...handlers.rating} />
+					</span>
+				</div>
+				<div className={styles.publish}>
+					<Button primary block>
+						PUBLISH REVIEW
           </Button>
-        </div>
-      </form>
-    </div>
-  );
+				</div>
+			</form>
+		</div>
+	);
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
+export default connect(null, (dispatch, props) => ({
+	// onSubmit: (values) => console.log(values), // TODO
+	onSubmit: (formData) => {
+		if (!formData.name || !formData.text) {
+			alert('Name and review are mandatory. Please fill the necessary fields')
+			return
+		}
+		const userId = uuidv4();
+		const ratingId = uuidv4();
+		let reviewData = {
+			id: ratingId,
+			userId: userId,
+			text: formData.text,
+			rating: formData.rating
+		}
+		let userData = {
+			id: userId,
+			name: formData.name
+		}
+		dispatch(addUser(userData));
+		dispatch(addReview(reviewData));
+		dispatch(addReviewToRestaurant({reviewData, restaurantId: props.restaurantId}));
+	},
 }))(ReviewForm);
