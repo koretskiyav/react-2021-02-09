@@ -1,5 +1,6 @@
 import React from 'react';
 import useForm from '../../../hooks/use-form';
+import {v4 as uuidv4} from 'uuid';
 
 import Rate from '../../rate';
 import styles from './review-form.module.css';
@@ -56,8 +57,12 @@ const ReviewForm = ({onSubmit}) => {
 export default connect(null, (dispatch, props) => ({
 	// onSubmit: (values) => console.log(values), // TODO
 	onSubmit: (formData) => {
-		const userId = 'userIdDump';
-		const ratingId = 'restaurantIdDump';
+		if (!formData.name || !formData.text) {
+			alert('Name and review are mandatory. Please fill the necessary fields')
+			return
+		}
+		const userId = uuidv4();
+		const ratingId = uuidv4();
 		let reviewData = {
 			id: ratingId,
 			userId: userId,

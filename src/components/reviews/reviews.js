@@ -8,7 +8,7 @@ const Reviews = ({restaurantId, reviews}) => {
 	return (
 		<div className={styles.reviews}>
 			{reviews.map((review) => (
-				<Review key={review} {...review} />
+				<Review key={review.userId} {...review} />
 			))}
 			<ReviewForm restaurantId={restaurantId} />
 		</div>
