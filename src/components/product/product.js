@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styles from './product.module.css';
 
 import { increment, decrement } from '../../redux/actions';
-import { productAmountSelector, makeProductByIdSelector } from '../../redux/selectors';
+import { makeProductAmountSelector, makeProductByIdSelector } from '../../redux/selectors';
 
 import Button from '../button';
 
@@ -51,6 +51,7 @@ Product.propTypes = {
 };
 
 const mapStateToProps = () => {
+  const productAmountSelector = makeProductAmountSelector();
   const productByIdSelector = makeProductByIdSelector();
 
   return (state, props) => ({

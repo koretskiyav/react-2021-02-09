@@ -43,7 +43,7 @@ export const averageRatingSelector = createSelector(
   }
 );
 
-export const reviewByIdSelector = createSelector(
+export const makeReviewByIdSelector = () => createSelector(
   reviewsSelector,
   idFromPropsSelector,
   usersSelector,
@@ -59,7 +59,7 @@ export const makeProductByIdSelector = () => createSelector(
   (products, id) => products[id]
 );
 
-export const productAmountSelector = createSelector(
+export const makeProductAmountSelector = () => createSelector(
   orderSelector,
   idFromPropsSelector,
   (order, productId) => order[productId] || 0
