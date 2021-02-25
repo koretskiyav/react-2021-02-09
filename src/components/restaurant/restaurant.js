@@ -18,7 +18,7 @@ const Restaurant = ({restaurant, reviews}) => {
 
 	const tabs = [
 		{title: 'Menu', content: <Menu menu={menu} />},
-		{title: 'Reviews', content: <Reviews reviews={reviews} />},
+		{title: 'Reviews', content: <Reviews restaurantId={restaurant.id} reviews={reviews} />},
 	];
 
 	return (
