@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-export const restaurantsSelector = (state) => state.restaurants;
+const restaurantsSelector = (state) => state.restaurants;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) => state.products;
 const reviewsSelector = (state) => state.reviews;
@@ -63,4 +63,12 @@ export const makeProductAmountSelector = () => createSelector(
   orderSelector,
   idFromPropsSelector,
   (order, productId) => order[productId] || 0
+);
+
+export const restaurantsTabsSelector = createSelector(
+  restaurantsSelector,
+  (restaurants) => Object.entries(restaurants).map(([id, { name }]) => ({
+    id,
+    title: name,
+  }))
 );

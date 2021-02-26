@@ -12,11 +12,14 @@ export default (restaurants = defaultRestaurants, action) => {
   switch (type) {
     case CREATE_REVIEW:
       const { reviewId, restaurantId } = action;
-      // TODO Perhaps there is a better way
-      const newRestaurants = { ...restaurants };
-      newRestaurants[restaurantId] = { ...restaurants[restaurantId] };
-      newRestaurants[restaurantId].reviews = [ ...restaurants[restaurantId].reviews, reviewId ];
-      return newRestaurants;
+      const restaurant = restaurants[restaurantId];
+      return {
+        ...restaurants,
+        [restaurantId]: {
+          ...restaurant,
+          reviews: [ ...restaurant.reviews, reviewId ],
+        },
+      };
     default:
       return restaurants;
   }
