@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
+import { makeReviewByIdSelector } from '../../../redux/selectors';
 import Rate from '../../rate';
 import styles from './review.module.css';
 
@@ -23,6 +24,7 @@ const Review = ({ user, text, rating }) => (
 );
 
 Review.propTypes = {
+  // from connect
   user: PropTypes.string,
   text: PropTypes.string,
   rating: PropTypes.number.isRequired,
@@ -32,4 +34,12 @@ Review.defaultProps = {
   user: 'Anonymous',
 };
 
-export default Review;
+const mapStateToProps = () => {
+  const reviewByIdSelector = makeReviewByIdSelector();
+
+  return (state, props) => ({
+    ...reviewByIdSelector(state, props)
+  });
+};
+
+export default connect(mapStateToProps)(Review);

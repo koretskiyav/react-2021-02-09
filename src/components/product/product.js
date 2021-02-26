@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styles from './product.module.css';
 
 import { increment, decrement } from '../../redux/actions';
+import { makeProductAmountSelector, makeProductByIdSelector } from '../../redux/selectors';
 
 import Button from '../button';
 
@@ -37,22 +38,27 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
 };
 
 Product.propTypes = {
+  fetchData: PropTypes.func,
+  // from connect
   product: PropTypes.shape({
     name: PropTypes.string,
     price: PropTypes.number,
     ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   }).isRequired,
-  fetchData: PropTypes.func,
-  // from connect
   amount: PropTypes.number,
   increment: PropTypes.func,
   decrement: PropTypes.func,
 };
 
-const mapStateToProps = (state, props) => ({
-  amount: state.order[props.id] || 0,
-  product: state.products[props.id],
-});
+const mapStateToProps = () => {
+  const productAmountSelector = makeProductAmountSelector();
+  const productByIdSelector = makeProductByIdSelector();
+
+  return (state, props) => ({
+    amount: productAmountSelector(state, props),
+    product: productByIdSelector(state, props),
+  });
+}
 
 // const mapDispatchToProps = {
 //   increment,
