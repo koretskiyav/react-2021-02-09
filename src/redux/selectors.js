@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
+const restaurantProductsSelector = (state) => state.products.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
 const reviewsSelector = (state) => state.reviews;
 const usersSelector = (state) => state.users;
 
@@ -15,12 +15,14 @@ export const restaurantsListSelector = createSelector(
 );
 
 export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
-export const productSelector = (state, { id }) => productsSelector(state)[id];
+export const productSelector = (state, { id }) => {
+  return restaurantProductsSelector(state)[id];
+};
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
 
 export const orderProductsSelector = createSelector(
   orderSelector,
-  productsSelector,
+  restaurantProductsSelector,
   (order, products) =>
     Object.keys(order)
       .filter((productId) => order[productId] > 0)
@@ -56,4 +58,12 @@ export const averageRatingSelector = createSelector(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
   }
+);
+
+export const productsLoadingSelector = (state) => state.products.loading;
+export const productsLoadedSelector = (state) => state.products.loaded;
+
+export const productsListSelector = createSelector(
+  restaurantProductsSelector,
+  Object.values
 );
