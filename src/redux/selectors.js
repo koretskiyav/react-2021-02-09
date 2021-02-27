@@ -8,6 +8,7 @@ const usersSelector = (state) => state.users;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+export const restaurantsErrorSelector = (state) => state.restaurants.error;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,

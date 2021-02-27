@@ -8,12 +8,19 @@ import {
   restaurantsListSelector,
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
+  restaurantsErrorSelector,
 } from '../../redux/selectors';
 import { loadRestaurants } from '../../redux/actions';
 
-const Restaurants = ({ loading, loaded, restaurants, loadRestaurants }) => {
+const Restaurants = ({
+  loading,
+  loaded,
+  error,
+  restaurants,
+  loadRestaurants,
+}) => {
   useEffect(() => {
-    if (!loading && !loaded) loadRestaurants();
+    if (!loading && !(loaded || error)) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
 
   if (loading) return <Loader />;
@@ -32,6 +39,10 @@ Restaurants.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
+  loading: PropTypes.bool.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+  loadRestaurants: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -39,6 +50,7 @@ export default connect(
     restaurants: restaurantsListSelector(state),
     loading: restaurantsLoadingSelector(state),
     loaded: restaurantsLoadedSelector(state),
+    error: restaurantsErrorSelector(state),
   }),
   { loadRestaurants }
 )(Restaurants);
