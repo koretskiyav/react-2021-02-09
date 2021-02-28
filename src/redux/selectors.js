@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
+const productsSelector = (state) => state.products.entities;
+const reviewsSelector = (state) => state.reviews.entities;
+const usersSelector = (state) => state.users.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -13,6 +13,19 @@ export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
 );
+
+export const productsLoadingSelector = (state) => state.products.loading;
+export const productsLoadedSelector = (state) => state.products.loaded;
+export const productsLoadedByRestaurant = (state, { restaurantId }) =>
+  state.restaurants.productsLoaded.includes(restaurantId);
+
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const reviewsLoadedSelector = (state) => state.reviews.loaded;
+export const reviewsLoadedByRestaurant = (state, { restaurantId }) =>
+  state.restaurants.reviewsLoaded.includes(restaurantId);
+
+export const usersLoadedSelector = (state) => state.users.loaded;
+export const usersLoadingSelector = (state) => state.users.loading;
 
 export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
 export const productSelector = (state, { id }) => productsSelector(state)[id];
@@ -51,7 +64,12 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { restaurant }) => restaurant.reviews,
   (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
+    const ratings = ids.map((id) => reviews[id] && reviews[id].rating);
+
+    if (!ratings) {
+      return 0;
+    }
+
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
