@@ -21,7 +21,7 @@ class Menu extends React.Component {
     restaurantId: PropTypes.string.isRequired,
     // from connect
     loading: PropTypes.bool.isRequired,
-    loaded: PropTypes.objectOf(PropTypes.bool.isRequired).isRequired,
+    loaded: PropTypes.bool,
     error: PropTypes.object,
     loadProducts: PropTypes.func.isRequired,
   };
@@ -43,15 +43,14 @@ class Menu extends React.Component {
   getProducts() {
     const { restaurantId, loading, loaded, error, loadProducts } = this.props;
 
-    if (!loading && !(loaded[restaurantId] || error))
-      loadProducts(restaurantId);
+    if (!loading && !(loaded || error)) loadProducts(restaurantId);
   }
 
   render() {
-    const { menu, loading, loaded, error, restaurantId } = this.props;
+    const { menu, loading, loaded, error } = this.props;
 
     if (loading) return <Loader />;
-    if (!loaded[restaurantId]) {
+    if (!loaded) {
       error && console.log(error);
       return 'No data :(';
     }
@@ -76,9 +75,9 @@ class Menu extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state, props) => ({
     loading: productsLoadingSelector(state),
-    loaded: productsLoadedSelector(state),
+    loaded: productsLoadedSelector(state, props),
     error: productsErrorSelector(state),
   }),
   { loadProducts }

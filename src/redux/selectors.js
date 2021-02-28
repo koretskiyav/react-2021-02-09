@@ -11,7 +11,8 @@ export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 export const restaurantsErrorSelector = (state) => state.restaurants.error;
 
 export const productsLoadingSelector = (state) => state.products.loading;
-export const productsLoadedSelector = (state) => state.products.loaded;
+export const productsLoadedSelector = (state, { restaurantId }) =>
+  state.products.loaded[restaurantId];
 export const productsErrorSelector = (state) => state.products.error;
 
 export const reviewsLoadingSelector = (state) => state.reviews.loading;
