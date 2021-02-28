@@ -1,16 +1,37 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Review from './review';
-import ReviewForm from './review-form';
-import styles from './reviews.module.css';
 
 import { loadReviews } from '../../redux/actions';
-import { connect } from 'react-redux';
+import {
+  reviewsLoadingSelector,
+  reviewsLoadedSelector,
+  reviewsErrorSelector,
+} from '../../redux/selectors';
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
+import Loader from '../loader';
+import Review from './review';
+import ReviewForm from './review-form';
+
+import styles from './reviews.module.css';
+
+const Reviews = ({
+  loading,
+  loaded,
+  error,
+  reviews,
+  restaurantId,
+  loadReviews,
+}) => {
   useEffect(() => {
-    loadReviews(restaurantId);
-  }, [loadReviews, restaurantId]);
+    if (!loading && !(loaded[restaurantId] || error)) loadReviews(restaurantId);
+  }, [loading, loaded, error, loadReviews, restaurantId]);
+
+  if (loading) return <Loader />;
+  if (!loaded[restaurantId]) {
+    error && console.log(error);
+    return 'No data :(';
+  }
 
   return (
     <div className={styles.reviews}>
@@ -25,6 +46,18 @@ const Reviews = ({ reviews, restaurantId, loadReviews }) => {
 Reviews.propTypes = {
   restaurantId: PropTypes.string,
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  // from connect
+  loading: PropTypes.bool.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+  loadReviews: PropTypes.func.isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+export default connect(
+  (state) => ({
+    loading: reviewsLoadingSelector(state),
+    loaded: reviewsLoadedSelector(state),
+    error: reviewsErrorSelector(state),
+  }),
+  { loadReviews }
+)(Reviews);
