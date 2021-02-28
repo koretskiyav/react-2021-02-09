@@ -4,6 +4,7 @@ import {
   REMOVE,
   ADD_REVIEW,
   LOAD_RESTAURANTS,
+  LOAD_MENU,
   LOAD_REVIEWS,
   REQUEST,
   SUCCESS,
@@ -25,6 +26,14 @@ export const loadRestaurants = () => ({
   type: LOAD_RESTAURANTS,
   CallAPI: '/api/restaurants',
 });
+
+export const loadMenu = (id) => { 
+  console.log(id);
+  return ({
+  type: LOAD_MENU,
+  id: id,
+  CallAPI: `/api/products?id=${id}`,
+}) };
 
 export const loadReviews = (restaurantId) => async (dispatch) => {
   dispatch({ type: LOAD_REVIEWS + REQUEST, restaurantId });
