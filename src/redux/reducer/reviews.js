@@ -1,5 +1,5 @@
 import { ADD_REVIEW, LOAD_REVIEWS, STATE_LOADING, STATE_LOADED, SUCCESS, REQUEST } from '../constants';
-import { arrToMap } from '../utils';
+import { arrToMap, copyObject } from '../utils';
 
 export default (state = {}, action) => {
   const { type, review, reviewId, userId } = action;
@@ -13,10 +13,9 @@ export default (state = {}, action) => {
 
     case ADD_REVIEW:
       const { text, rating } = review;
-      return {
-        ...state,
-        [reviewId]: { id: reviewId, userId, text, rating },
-      };
+      var restaurantReviews = copyObject(state[action.restaurantId]);
+      restaurantReviews.entities = {...restaurantReviews.entities, [reviewId]: { id: reviewId, userId, text, rating }}
+      return {...state, [action.restaurantId]: restaurantReviews};
     default:
       return state;
   }
