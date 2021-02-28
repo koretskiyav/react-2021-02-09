@@ -8,13 +8,27 @@ import {
   restaurantsListSelector,
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
+  restaurantsErrorSelector,
 } from '../../redux/selectors';
 import { loadRestaurants } from '../../redux/actions';
+import ErrorComponent from '../errorComponent';
 
-const Restaurants = ({ loading, loaded, restaurants, loadRestaurants }) => {
+const Restaurants = ({
+  loading,
+  loaded,
+  error,
+  restaurants,
+  loadRestaurants,
+}) => {
   useEffect(() => {
-    if (!loading && !loaded) loadRestaurants();
-  }, [loading, loaded, loadRestaurants]);
+    if (!loading && !loaded && !error) loadRestaurants();
+  }, [loading, loaded, error, loadRestaurants]);
+
+  const onButtonClick = () => {
+    loadRestaurants();
+  };
+
+  if (error) return <ErrorComponent reload={onButtonClick} />;
 
   if (loading) return <Loader />;
   if (!loaded) return 'No data :(';
@@ -39,6 +53,7 @@ export default connect(
     restaurants: restaurantsListSelector(state),
     loading: restaurantsLoadingSelector(state),
     loaded: restaurantsLoadedSelector(state),
+    error: restaurantsErrorSelector(state),
   }),
   { loadRestaurants }
 )(Restaurants);

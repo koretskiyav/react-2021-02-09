@@ -27,11 +27,12 @@ const Review = ({ user, text, rating }) => (
 Review.propTypes = {
   user: PropTypes.string,
   text: PropTypes.string,
-  rating: PropTypes.number.isRequired,
+  rating: PropTypes.number,
 };
 
 Review.defaultProps = {
   user: 'Anonymous',
+  rating: 0,
 };
 
 export default connect((state, props) => ({

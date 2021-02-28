@@ -4,7 +4,9 @@ import {
   REMOVE,
   ADD_REVIEW,
   LOAD_RESTAURANTS,
+  LOAD_USERS,
   LOAD_REVIEWS,
+  LOAD_PRODUCTS,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -25,6 +27,24 @@ export const loadRestaurants = () => ({
   type: LOAD_RESTAURANTS,
   CallAPI: '/api/restaurants',
 });
+
+export const loadUsers = () => ({
+  type: LOAD_USERS,
+  CallAPI: '/api/users',
+});
+
+export const loadProducts = (restaurantId) => async (dispatch) => {
+  dispatch({ type: LOAD_PRODUCTS + REQUEST, restaurantId });
+
+  try {
+    const data = await fetch(`/api/products?id=${restaurantId}`).then((res) =>
+      res.json()
+    );
+    dispatch({ type: LOAD_PRODUCTS + SUCCESS, restaurantId, data });
+  } catch (error) {
+    dispatch({ type: LOAD_PRODUCTS + FAILURE, restaurantId, error });
+  }
+};
 
 export const loadReviews = (restaurantId) => async (dispatch) => {
   dispatch({ type: LOAD_REVIEWS + REQUEST, restaurantId });
