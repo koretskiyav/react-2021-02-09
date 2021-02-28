@@ -24,11 +24,11 @@ const Reviews = ({
   loadReviews,
 }) => {
   useEffect(() => {
-    if (!loading && !(loaded[restaurantId] || error)) loadReviews(restaurantId);
+    if (!loading && !(loaded || error)) loadReviews(restaurantId);
   }, [loading, loaded, error, loadReviews, restaurantId]);
 
   if (loading) return <Loader />;
-  if (!loaded[restaurantId]) {
+  if (!loaded) {
     error && console.log(error);
     return 'No data :(';
   }
@@ -48,15 +48,15 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   // from connect
   loading: PropTypes.bool.isRequired,
-  loaded: PropTypes.bool.isRequired,
+  loaded: PropTypes.bool,
   error: PropTypes.object,
   loadReviews: PropTypes.func.isRequired,
 };
 
 export default connect(
-  (state) => ({
+  (state, props) => ({
     loading: reviewsLoadingSelector(state),
-    loaded: reviewsLoadedSelector(state),
+    loaded: reviewsLoadedSelector(state, props),
     error: reviewsErrorSelector(state),
   }),
   { loadReviews }

@@ -15,7 +15,8 @@ export const productsLoadedSelector = (state) => state.products.loaded;
 export const productsErrorSelector = (state) => state.products.error;
 
 export const reviewsLoadingSelector = (state) => state.reviews.loading;
-export const reviewsLoadedSelector = (state) => state.reviews.loaded;
+export const reviewsLoadedSelector = (state, { restaurantId }) =>
+  state.reviews.loaded[restaurantId];
 export const reviewsErrorSelector = (state) => state.reviews.error;
 
 export const restaurantsListSelector = createSelector(
@@ -60,7 +61,7 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { restaurant }) => restaurant.reviews,
   (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
+    const ratings = ids.map((id) => reviews[id]?.rating);
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
