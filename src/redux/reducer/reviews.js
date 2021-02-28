@@ -1,5 +1,4 @@
 import { ADD_REVIEW, LOAD_REVIEWS, SUCCESS } from '../constants';
-import { normalizedReviews } from '../../fixtures';
 import { arrToMap } from '../utils';
 
 export default (state = {}, action) => {

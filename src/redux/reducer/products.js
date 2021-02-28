@@ -1,4 +1,3 @@
-import { normalizedProducts } from '../../fixtures';
 import { LOAD_MENU, STATE_LOADED, SUCCESS } from "../constants";
 import { arrToMap } from "../utils"
 
