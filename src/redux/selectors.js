@@ -43,7 +43,7 @@ export const reviewWitUserSelector = createSelector(
   usersSelector,
   (review, users) => ({
     ...review,
-    user: users[review.userId]?.name,
+    user: users[review?.userId]?.name || "-",
   })
 );
 
@@ -51,7 +51,7 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { restaurant }) => restaurant.reviews,
   (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
+    const ratings = ids.map((id) => reviews[id]?.rating || 0);
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );

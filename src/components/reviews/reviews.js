@@ -6,11 +6,18 @@ import styles from './reviews.module.css';
 
 import { loadReviews } from '../../redux/actions';
 import { connect } from 'react-redux';
+import Loader from '../loader';
 
 const Reviews = ({ reviews, restaurantId, loadReviews }) => {
   useEffect(() => {
     loadReviews(restaurantId);
   }, [loadReviews, restaurantId]);
+
+  if (reviews == null) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <div className={styles.reviews}>
