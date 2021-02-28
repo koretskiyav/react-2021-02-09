@@ -21,10 +21,13 @@ const Restaurants = ({
 }) => {
   useEffect(() => {
     if (!loading && !(loaded || error)) loadRestaurants();
-  }, [loading, loaded, loadRestaurants]);
+  }, [loading, loaded, error, loadRestaurants]);
 
   if (loading) return <Loader />;
-  if (!loaded) return 'No data :(';
+  if (!loaded) {
+    error && console.log(error);
+    return 'No data :(';
+  }
 
   const tabs = restaurants.map((restaurant) => ({
     title: restaurant.name,
@@ -34,6 +37,7 @@ const Restaurants = ({
 };
 
 Restaurants.propTypes = {
+  // from connect
   restaurants: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
