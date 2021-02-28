@@ -58,14 +58,13 @@ class Menu extends React.Component {
     return (
       <div className={styles.menu}>
         <div>
-          {' '}
           {menu.map((id) => (
             <Product key={id} id={id} />
-          ))}{' '}
-        </div>{' '}
+          ))}
+        </div>
         <div>
           <Basket />
-        </div>{' '}
+        </div>
       </div>
     );
   }

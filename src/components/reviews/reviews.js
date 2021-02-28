@@ -64,18 +64,12 @@ Reviews.propTypes = {
 };
 
 export default connect(
-  (state, props) => {
-    const usersLoaded = usersLoadedSelector(state, props);
-    const usersLoading = usersLoadingSelector(state, props);
-    const loadedByRestaurant = reviewsLoadedByRestaurant(state, props);
-
-    return {
-      loaded: reviewsLoadedSelector(state, props),
-      loading: reviewsLoadingSelector(state, props),
-      loadedByRestaurant,
-      usersLoaded,
-      usersLoading,
-    };
-  },
+  (state, props) => ({
+    loaded: reviewsLoadedSelector(state, props),
+    loading: reviewsLoadingSelector(state, props),
+    usersLoaded: usersLoadedSelector(state, props),
+    usersLoading: usersLoadingSelector(state, props),
+    loadedByRestaurant: reviewsLoadedByRestaurant(state, props),
+  }),
   { loadReviews, loadUsers }
 )(Reviews);
