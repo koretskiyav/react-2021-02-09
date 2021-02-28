@@ -14,7 +14,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
     { title: 'Menu', content: <Menu id={id} /> },
     {
       title: 'Reviews',
-      content: <Reviews reviews={reviews} restaurantId={id} />,
+      content: <Reviews restaurantId={id} />,
     },
   ];
 

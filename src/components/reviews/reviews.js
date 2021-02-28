@@ -7,13 +7,20 @@ import styles from './reviews.module.css';
 import { loadReviews } from '../../redux/actions';
 import { connect } from 'react-redux';
 import Loader from '../loader';
+import { STATE_LOADING } from '../../redux/constants';
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
+const Reviews = (props) => {
+
+  const restaurantId = props.restaurantId;
+  const reviews = props.reviews;
+
   useEffect(() => {
-    loadReviews(restaurantId);
-  }, [loadReviews, restaurantId]);
+    if (props.reviews == null) {
+      props.dispatch(loadReviews(props.restaurantId));
+    }
+  }, [restaurantId]);
 
-  if (reviews == null) {
+  if (reviews == null || reviews.state === STATE_LOADING) {
     return (
       <Loader />
     );
@@ -21,8 +28,8 @@ const Reviews = ({ reviews, restaurantId, loadReviews }) => {
 
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
-        <Review key={id} id={id} />
+      {Object.keys(props.reviews.entities).map((id) => (
+        <Review key={id} id={id} restaurantId={restaurantId} />
       ))}
       <ReviewForm restaurantId={restaurantId} />
     </div>
@@ -34,4 +41,6 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+export default connect((state, props) => ({
+  reviews: state.reviews[props.restaurantId],
+}))(Reviews);
