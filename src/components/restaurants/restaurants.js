@@ -9,12 +9,15 @@ import {
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
 } from '../../redux/selectors';
-import { loadRestaurants } from '../../redux/actions';
+import { loadRestaurants, loadUsers } from '../../redux/actions';
 
-const Restaurants = ({ loading, loaded, restaurants, loadRestaurants }) => {
+const Restaurants = ({ loading, loaded, restaurants, loadRestaurants, loadUsers }) => {
   useEffect(() => {
-    if (!loading && !loaded) loadRestaurants();
-  }, [loading, loaded, loadRestaurants]);
+    if (!loading && !loaded) {
+      loadRestaurants();
+      loadUsers();
+    }
+  }, [loading, loaded, loadRestaurants, loadUsers]);
 
   if (loading) return <Loader />;
   if (!loaded) return 'No data :(';
@@ -40,5 +43,5 @@ export default connect(
     loading: restaurantsLoadingSelector(state),
     loaded: restaurantsLoadedSelector(state),
   }),
-  { loadRestaurants }
+  { loadRestaurants, loadUsers }
 )(Restaurants);
