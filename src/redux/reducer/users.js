@@ -8,7 +8,6 @@ export default produce((draft = {}, action) => {
   switch (type) {
 
     case LOAD_USERS + SUCCESS:
-      //console.log(action.data);
       return {...draft, ...arrToMap(action.data)};
 
     case ADD_REVIEW:
