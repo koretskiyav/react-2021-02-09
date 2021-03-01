@@ -3,14 +3,22 @@ import PropTypes from 'prop-types';
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
+import Loader from '../loader';
 
 import { loadReviews } from '../../redux/actions';
 import { connect } from 'react-redux';
+import {
+  reviewsLoadedSelector,
+  reviewsLoadingSelector,
+} from '../../redux/selectors';
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
+const Reviews = ({ loading, loaded, reviews, restaurantId, loadReviews }) => {
   useEffect(() => {
-    loadReviews(restaurantId);
-  }, [loadReviews, restaurantId]);
+    if (!loading && !loaded) loadReviews(restaurantId);
+  }, [loading, loaded, loadReviews, restaurantId]);
+
+  if (loading) return <Loader />;
+  if (!loaded) return 'No data ...';
 
   return (
     <div className={styles.reviews}>
@@ -27,4 +35,10 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+export default connect(
+  (state) => ({
+    loading: reviewsLoadingSelector(state),
+    loaded: reviewsLoadedSelector(state),
+  }),
+  { loadReviews }
+)(Reviews);
