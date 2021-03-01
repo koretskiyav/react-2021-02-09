@@ -6,12 +6,13 @@ import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
-import { averageRatingSelector } from '../../redux/selectors';
+import { averageRatingSelector, reviewsLoadingSelector } from '../../redux/selectors';
+import Loader from '../loader';
 
-const Restaurant = ({ restaurant, averageRating }) => {
-  const { id, name, menu, reviews } = restaurant;
+const Restaurant = ({ restaurant, averageRating, reviewsLoading }) => {
+  const { id, name, reviews } = restaurant;
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} /> },
+    { title: 'Menu', content: <Menu restaurantId={id} /> },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
@@ -21,7 +22,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
   return (
     <div>
       <Banner heading={name}>
-        <Rate value={averageRating} />
+        {averageRating ? <Rate value={averageRating} /> : reviewsLoading ? <Loader /> : null}
       </Banner>
       <Tabs tabs={tabs} />
     </div>
@@ -39,5 +40,6 @@ Restaurant.propTypes = {
 };
 
 export default connect((state, props) => ({
+  reviewsLoading: reviewsLoadingSelector(state),
   averageRating: averageRatingSelector(state, props),
 }))(Restaurant);
