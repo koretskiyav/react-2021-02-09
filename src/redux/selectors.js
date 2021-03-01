@@ -45,17 +45,20 @@ export const reviewsListSelector = createSelector(
   }
 )
 
+const plainProductsSelector = createSelector(
+  productsSelector,
+  (products) => Object.keys(products)
+    .map((restaurantId) => products[restaurantId])
+    .reduce((acc, nextProducts) => ({...acc, ...nextProducts}), [])
+)
+
 export const orderProductsSelector = createSelector(
   orderSelector,
-  productsSelector,
+  plainProductsSelector,
   (order, products) => {
-    const allProducts = Object.keys(products)
-      .map((restaurantId) => products[restaurantId])
-      .reduce((acc, nextProducts) => ({...acc, ...nextProducts}), []);
-
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
-      .map((productId) => allProducts[productId])
+      .map((productId) => products[productId])
       .map((product) => ({
         product,
         amount: order[product.id],
