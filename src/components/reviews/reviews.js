@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -8,6 +8,7 @@ import {
   reviewsLoadedSelector,
   reviewsErrorSelector,
 } from '../../redux/selectors';
+import useLoader from '../../hooks/use-loader';
 
 import Loader from '../loader';
 import Review from './review';
@@ -15,23 +16,11 @@ import ReviewForm from './review-form';
 
 import styles from './reviews.module.css';
 
-const Reviews = ({
-  loading,
-  loaded,
-  error,
-  reviews,
-  restaurantId,
-  loadReviews,
-}) => {
-  useEffect(() => {
-    if (!loading && !(loaded || error)) loadReviews(restaurantId);
-  }, [loading, loaded, error, loadReviews, restaurantId]);
+const Reviews = (props) => {
+  const { reviews, restaurantId } = props;
 
-  if (loading) return <Loader />;
-  if (!loaded) {
-    error && console.log(error);
-    return 'No data :(';
-  }
+  const loader = useLoader(props, 'loadReviews', restaurantId);
+  if (loader) return loader;
 
   return (
     <div className={styles.reviews}>

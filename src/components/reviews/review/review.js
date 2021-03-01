@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -9,22 +9,18 @@ import {
   usersLoadedSelector,
   usersErrorSelector,
 } from '../../../redux/selectors';
+import useLoader from '../../../hooks/use-loader';
 
 import Loader from '../../loader';
 import Rate from '../../rate';
 
 import styles from './review.module.css';
 
-const Review = ({ loading, loaded, error, user, text, rating, loadUsers }) => {
-  useEffect(() => {
-    if (!loading && !(loaded || error)) loadUsers();
-  }, [loading, loaded, error, loadUsers]);
+const Review = (props) => {
+  const { user, text, rating } = props;
 
-  if (loading) return <Loader />;
-  if (!loaded) {
-    error && console.log(error);
-    return 'No data :(';
-  }
+  const loader = useLoader(props, 'loadUsers');
+  if (loader) return loader;
 
   return (
     <div className={styles.review} data-id="review">
