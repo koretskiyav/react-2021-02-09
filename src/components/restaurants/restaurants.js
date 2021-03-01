@@ -21,9 +21,11 @@ const Restaurants = ({ loading, loaded, restaurants, loadRestaurants }) => {
 
   const tabs = restaurants.map((restaurant) => ({
     title: restaurant.name,
+    entityId: restaurant.id,
+    //onChangeTab: loadRestaurants,
     content: <Restaurant restaurant={restaurant} />,
   }));
-  return <Tabs tabs={tabs} />;
+  return <Tabs tabs={tabs} entityTabsNames="restaurants-content" />;
 };
 
 Restaurants.propTypes = {

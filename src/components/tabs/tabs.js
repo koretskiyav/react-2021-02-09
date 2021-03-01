@@ -5,24 +5,30 @@ import cn from 'classnames';
 import styles from './tabs.module.css';
 
 const Tabs = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTabId, setActiveTab] = useState(tabs[0].entityId);
 
-  const { content } = tabs[activeTab];
+  const activeTab = tabs.filter((tab) => tab.entityId === activeTabId)[0] || {};
+
+  const onClick = (entityId) => {
+    setActiveTab(entityId);
+  };
 
   return (
     <>
       <div className={styles.tabs}>
-        {tabs.map(({ title }, index) => (
+        {tabs.map(({ title, entityId }) => (
           <span
             key={title}
-            className={cn(styles.tab, { [styles.active]: index === activeTab })}
-            onClick={() => setActiveTab(index)}
+            className={cn(styles.tab, {
+              [styles.active]: entityId === activeTabId,
+            })}
+            onClick={() => onClick(entityId)}
           >
             {title}
           </span>
         ))}
       </div>
-      {content}
+      {activeTab.content}
     </>
   );
 };

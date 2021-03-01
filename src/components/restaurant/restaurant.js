@@ -11,9 +11,16 @@ import { averageRatingSelector } from '../../redux/selectors';
 const Restaurant = ({ restaurant, averageRating = null }) => {
   const { id, name } = restaurant;
   const tabs = [
-    { title: 'Menu', content: <Menu restaurantId={id} /> },
+    {
+      title: 'Menu',
+      entityId: 'Menu',
+      //onChangeTab: loadRestaurants,
+      content: <Menu restaurantId={id} />,
+    },
     {
       title: 'Reviews',
+      entityId: 'Reviews',
+      //onChangeTab: loadRestaurants,
       content: <Reviews restaurantId={id} />,
     },
   ];
@@ -23,7 +30,7 @@ const Restaurant = ({ restaurant, averageRating = null }) => {
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
-      <Tabs tabs={tabs} />
+      <Tabs tabs={tabs} entityTabsNames="restaurant-content" />
     </div>
   );
 };
