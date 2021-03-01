@@ -11,7 +11,7 @@ import { averageRatingSelector } from '../../redux/selectors';
 const Restaurant = ({ restaurant, averageRating }) => {
   const { id, name, menu, reviews } = restaurant;
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} /> },
+    { title: 'Menu', content: <Menu restaurantId={id} menu={menu} /> },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
