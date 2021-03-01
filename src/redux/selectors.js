@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 const restaurantsSelector = (state) => state.restaurants.entities;
 const restaurantProductsSelector = (state) => state.products.entities;
 const orderSelector = (state) => state.order;
-const reviewsSelector = (state) => state.reviews;
+const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
@@ -19,6 +19,9 @@ export const productSelector = (state, { id }) => {
   return restaurantProductsSelector(state)[id];
 };
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
+
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const reviewsLoadedSelector = (state) => state.reviews.loaded;
 
 export const orderProductsSelector = createSelector(
   orderSelector,
@@ -45,7 +48,7 @@ export const reviewWitUserSelector = createSelector(
   usersSelector,
   (review, users) => ({
     ...review,
-    user: users[review.userId]?.name,
+    user: users[review?.userId]?.name,
   })
 );
 
@@ -53,7 +56,7 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { restaurant }) => restaurant.reviews,
   (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
+    const ratings = ids.map((id) => reviews[id]?.rating);
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
