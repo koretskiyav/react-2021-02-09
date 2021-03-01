@@ -10,7 +10,6 @@ import {
 } from '../../redux/selectors';
 import useLoader from '../../hooks/use-loader';
 
-import Loader from '../loader';
 import Review from './review';
 import ReviewForm from './review-form';
 
