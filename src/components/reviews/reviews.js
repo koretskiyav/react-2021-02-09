@@ -1,16 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Review from './review';
-import ReviewForm from './review-form';
-import styles from './reviews.module.css';
+import { createStructuredSelector } from 'reselect';
 
 import { loadReviews } from '../../redux/actions';
-import { connect } from 'react-redux';
+import {
+  reviewsLoadingSelector,
+  reviewsLoadedSelector,
+  reviewsErrorSelector,
+} from '../../redux/selectors';
+import useLoader from '../../hooks/use-loader';
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
-  useEffect(() => {
-    loadReviews(restaurantId);
-  }, [loadReviews, restaurantId]);
+import Review from './review';
+import ReviewForm from './review-form';
+
+import styles from './reviews.module.css';
+
+const Reviews = (props) => {
+  const { reviews, restaurantId } = props;
+
+  const loader = useLoader(props, 'loadReviews', restaurantId);
+  if (loader) return loader;
 
   return (
     <div className={styles.reviews}>
@@ -25,6 +35,17 @@ const Reviews = ({ reviews, restaurantId, loadReviews }) => {
 Reviews.propTypes = {
   restaurantId: PropTypes.string,
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  // from connect
+  loading: PropTypes.bool,
+  loaded: PropTypes.bool,
+  error: PropTypes.object,
+  loadReviews: PropTypes.func.isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+const mapStateToProps = createStructuredSelector({
+  loading: reviewsLoadingSelector,
+  loaded: reviewsLoadedSelector,
+  error: reviewsErrorSelector,
+});
+
+export default connect(mapStateToProps, { loadReviews })(Reviews);

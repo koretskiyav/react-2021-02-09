@@ -1,23 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Restaurant from '../restaurant';
-import Tabs from '../tabs';
-import Loader from '../loader';
+import { createStructuredSelector } from 'reselect';
+
+import { loadRestaurants } from '../../redux/actions';
 import {
   restaurantsListSelector,
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
+  restaurantsErrorSelector,
 } from '../../redux/selectors';
-import { loadRestaurants } from '../../redux/actions';
+import useLoader from '../../hooks/use-loader';
 
-const Restaurants = ({ loading, loaded, restaurants, loadRestaurants }) => {
-  useEffect(() => {
-    if (!loading && !loaded) loadRestaurants();
-  }, [loading, loaded, loadRestaurants]);
+import Restaurant from '../restaurant';
+import Tabs from '../tabs';
 
-  if (loading) return <Loader />;
-  if (!loaded) return 'No data :(';
+const Restaurants = (props) => {
+  const { restaurants } = props;
+
+  const loader = useLoader(props, 'loadRestaurants');
+  if (loader) return loader;
 
   const tabs = restaurants.map((restaurant) => ({
     title: restaurant.name,
@@ -27,18 +29,23 @@ const Restaurants = ({ loading, loaded, restaurants, loadRestaurants }) => {
 };
 
 Restaurants.propTypes = {
+  // from connect
   restaurants: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
+  loading: PropTypes.bool.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+  loadRestaurants: PropTypes.func.isRequired,
 };
 
-export default connect(
-  (state) => ({
-    restaurants: restaurantsListSelector(state),
-    loading: restaurantsLoadingSelector(state),
-    loaded: restaurantsLoadedSelector(state),
-  }),
-  { loadRestaurants }
-)(Restaurants);
+const mapStateToProps = createStructuredSelector({
+  restaurants: restaurantsListSelector,
+  loading: restaurantsLoadingSelector,
+  loaded: restaurantsLoadedSelector,
+  error: restaurantsErrorSelector,
+});
+
+export default connect(mapStateToProps, { loadRestaurants })(Restaurants);
