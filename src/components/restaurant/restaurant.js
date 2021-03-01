@@ -9,9 +9,9 @@ import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
 
 const Restaurant = ({ restaurant, averageRating }) => {
-  const { id, name, menu, reviews } = restaurant;
+  const { id, name, reviews } = restaurant;
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} /> },
+    { title: 'Menu', content: <Menu restaurantId={id} /> },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,

@@ -1,42 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import Product from '../product';
 import Basket from '../basket';
+import Loader from '../loader';
+import { productsListSelector } from '../../redux/selectors';
+import { loadRestaurantProducts } from '../../redux/actions';
 
 import styles from './menu.module.css';
 
-class Menu extends React.Component {
-  static propTypes = {
-    menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  };
+const Menu = ({ products, restaurantId, loadRestaurantProducts }) => {
+  useEffect(() => {
+    if (products.length === 0) loadRestaurantProducts(restaurantId);
+  }, [restaurantId]);
 
-  state = { error: null };
-
-  componentDidCatch(error) {
-    this.setState({ error });
-  }
-
-  render() {
-    const { menu } = this.props;
-
-    if (this.state.error) {
-      return <p>Сейчас меню этого ресторана недоступно :(</p>;
-    }
-
-    return (
-      <div className={styles.menu}>
-        <div>
-          {menu.map((id) => (
-            <Product key={id} id={id} />
-          ))}
-        </div>
-        <div>
-          <Basket />
-        </div>
+  return (
+    <div className={styles.menu}>
+      <div>
+        {products.length !== 0 ? (
+          products.map(({ id }) => <Product key={id} id={id} />)
+        ) : (
+          <Loader />
+        )}
       </div>
-    );
-  }
-}
+      <div>
+        <Basket />
+      </div>
+    </div>
+  );
+};
 
-export default Menu;
+Menu.propTypes = {
+  restaurantId: PropTypes.string.isRequired.isRequired,
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loadRestaurantProducts: PropTypes.func.isRequired,
+};
+
+export default connect(
+  (state) => ({
+    products: productsListSelector(state),
+  }),
+  { loadRestaurantProducts }
+)(Menu);
