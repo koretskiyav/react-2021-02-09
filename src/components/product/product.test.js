@@ -13,6 +13,8 @@ const getAmount = (wr) => getByDataId(wr, 'product-amount').text();
 const increase = (wr) => getByDataId(wr, 'product-increment').simulate('click');
 const decrease = (wr) => getByDataId(wr, 'product-decrement').simulate('click');
 
+// TODO: fix tests -- remove fixtures and implement data-attrs fro components
+
 describe('Product', () => {
   it('should render', () => {
     const wrapper = mount(<Product product={product} />);
