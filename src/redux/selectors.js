@@ -4,7 +4,7 @@ const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
 const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
-const usersSelector = (state) => state.users;
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -19,6 +19,10 @@ export const reviewsLoadingSelector = (state) => state.reviews.loading;
 export const reviewsLoadedSelector = (state, { restaurantId }) =>
   state.reviews.loaded[restaurantId];
 export const reviewsErrorSelector = (state) => state.reviews.error;
+
+export const usersLoadingSelector = (state) => state.users.loading;
+export const usersLoadedSelector = (state) => state.users.loaded;
+export const usersErrorSelector = (state) => state.users.error;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,

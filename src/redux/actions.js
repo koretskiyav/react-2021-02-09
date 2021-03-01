@@ -5,6 +5,7 @@ import {
   ADD_REVIEW,
   LOAD_RESTAURANTS,
   LOAD_REVIEWS,
+  LOAD_USERS,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -43,5 +44,18 @@ export const loadReviews = (restaurantId) => async (dispatch) => {
     dispatch({ type: LOAD_REVIEWS + SUCCESS, restaurantId, data });
   } catch (error) {
     dispatch({ type: LOAD_REVIEWS + FAILURE, restaurantId, error });
+  }
+};
+
+export const loadUsers = () => async (dispatch, getState) => {
+  if (getState().users.loading) return;
+
+  dispatch({ type: LOAD_USERS + REQUEST });
+
+  try {
+    const data = await fetch('/api/users').then((res) => res.json());
+    dispatch({ type: LOAD_USERS + SUCCESS, data });
+  } catch (error) {
+    dispatch({ type: LOAD_USERS + FAILURE, error });
   }
 };
