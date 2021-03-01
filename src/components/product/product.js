@@ -4,15 +4,32 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
 
-import { increment, decrement } from '../../redux/actions';
+import { increment, decrement, loadProducts } from '../../redux/actions';
 
 import Button from '../button';
-import { amountSelector, productSelector } from '../../redux/selectors';
+import Loader from '../loader';
+import {
+  amountSelector,
+  productSelector,
+  productsLoadedSelector,
+  productsLoadingSelector,
+} from '../../redux/selectors';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
+const Product = ({
+  product,
+  amount,
+  increment,
+  decrement,
+  loadProducts,
+  loading,
+  loaded,
+}) => {
   useEffect(() => {
-    fetchData && fetchData(product.id);
+    if (!loading && !loaded) loadProducts();
   }, []); // eslint-disable-line
+
+  if (loading) return <Loader />;
+  if (!loaded) return 'No data :(';
 
   return (
     <div className={styles.product} data-id="product">
@@ -44,7 +61,6 @@ Product.propTypes = {
     price: PropTypes.number,
     ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   }).isRequired,
-  fetchData: PropTypes.func,
   // from connect
   amount: PropTypes.number,
   increment: PropTypes.func,
@@ -52,6 +68,8 @@ Product.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  loading: productsLoadingSelector,
+  loaded: productsLoadedSelector,
   amount: amountSelector,
   product: productSelector,
 });
@@ -59,6 +77,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch, props) => ({
   increment: () => dispatch(increment(props.id)),
   decrement: () => dispatch(decrement(props.id)),
+  loadProducts: () => dispatch(loadProducts(props.id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
