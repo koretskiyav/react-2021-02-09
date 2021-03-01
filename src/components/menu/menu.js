@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 
 import { loadProducts } from '../../redux/actions';
 import {
@@ -74,11 +75,10 @@ class Menu extends React.Component {
   }
 }
 
-export default connect(
-  (state, props) => ({
-    loading: productsLoadingSelector(state),
-    loaded: productsLoadedSelector(state, props),
-    error: productsErrorSelector(state),
-  }),
-  { loadProducts }
-)(Menu);
+const mapStateToProps = createStructuredSelector({
+  loading: productsLoadingSelector,
+  loaded: productsLoadedSelector,
+  error: productsErrorSelector,
+});
+
+export default connect(mapStateToProps, { loadProducts })(Menu);

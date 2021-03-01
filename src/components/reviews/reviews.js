@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 
 import { loadReviews } from '../../redux/actions';
 import {
@@ -41,11 +42,10 @@ Reviews.propTypes = {
   loadReviews: PropTypes.func.isRequired,
 };
 
-export default connect(
-  (state, props) => ({
-    loading: reviewsLoadingSelector(state),
-    loaded: reviewsLoadedSelector(state, props),
-    error: reviewsErrorSelector(state),
-  }),
-  { loadReviews }
-)(Reviews);
+const mapStateToProps = createStructuredSelector({
+  loading: reviewsLoadingSelector,
+  loaded: reviewsLoadedSelector,
+  error: reviewsErrorSelector,
+});
+
+export default connect(mapStateToProps, { loadReviews })(Reviews);

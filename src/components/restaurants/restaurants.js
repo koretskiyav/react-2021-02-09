@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 
 import { loadRestaurants } from '../../redux/actions';
 import {
@@ -40,12 +41,11 @@ Restaurants.propTypes = {
   loadRestaurants: PropTypes.func.isRequired,
 };
 
-export default connect(
-  (state) => ({
-    restaurants: restaurantsListSelector(state),
-    loading: restaurantsLoadingSelector(state),
-    loaded: restaurantsLoadedSelector(state),
-    error: restaurantsErrorSelector(state),
-  }),
-  { loadRestaurants }
-)(Restaurants);
+const mapStateToProps = createStructuredSelector({
+  restaurants: restaurantsListSelector,
+  loading: restaurantsLoadingSelector,
+  loaded: restaurantsLoadedSelector,
+  error: restaurantsErrorSelector,
+});
+
+export default connect(mapStateToProps, { loadRestaurants })(Restaurants);

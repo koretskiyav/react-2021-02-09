@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
@@ -38,6 +40,8 @@ Restaurant.propTypes = {
   averageRating: PropTypes.number,
 };
 
-export default connect((state, props) => ({
-  averageRating: averageRatingSelector(state, props),
-}))(Restaurant);
+const mapStateToProps = createStructuredSelector({
+  averageRating: averageRatingSelector,
+});
+
+export default connect(mapStateToProps)(Restaurant);
