@@ -9,18 +9,32 @@ import styles from './reviews.module.css';
 import {
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  usersLoadingSelector,
+  usersLoadedSelector,
 } from '../../redux/selectors';
-import { loadReviews } from '../../redux/actions';
+import { loadReviews, loadUsers } from '../../redux/actions';
 import { connect } from 'react-redux';
 
-const Reviews = ({ reviews, restaurantId, loadReviews, loading, loaded }) => {
+const Reviews = ({
+  reviews,
+  restaurantId,
+  loadReviews,
+  loading,
+  loaded,
+  loadUsers,
+  loadingUsers,
+  loadedUsers,
+}) => {
   useEffect(() => {
+    if (!loadingUsers && !loadedUsers) {
+      loadUsers();
+    }
     if (!loading[restaurantId] && !loaded[restaurantId]) {
       loadReviews(restaurantId);
     }
   }, [loadReviews, restaurantId]);
 
-  if (loading[restaurantId]) return <Loader />;
+  if (loading[restaurantId] || loadingUsers) return <Loader />;
   if (!loading[restaurantId] && !loaded[restaurantId]) return 'No data :(';
 
   return (
@@ -42,6 +56,8 @@ export default connect(
   (state) => ({
     loading: reviewsLoadingSelector(state),
     loaded: reviewsLoadedSelector(state),
+    loadingUsers: usersLoadingSelector(state),
+    loadedUsers: usersLoadedSelector(state),
   }),
-  { loadReviews }
+  { loadReviews, loadUsers }
 )(Reviews);
