@@ -12,7 +12,7 @@ import styles from './menu.module.css';
 const Menu = ({ products, restaurantId, loadRestaurantProducts }) => {
   useEffect(() => {
     if (products.length === 0) loadRestaurantProducts(restaurantId);
-  }, [restaurantId]);
+  }, [restaurantId, products, loadRestaurantProducts]);
 
   return (
     <div className={styles.menu}>
@@ -31,7 +31,7 @@ const Menu = ({ products, restaurantId, loadRestaurantProducts }) => {
 };
 
 Menu.propTypes = {
-  restaurantId: PropTypes.string.isRequired.isRequired,
+  restaurantId: PropTypes.string.isRequired,
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   loadRestaurantProducts: PropTypes.func.isRequired,
 };

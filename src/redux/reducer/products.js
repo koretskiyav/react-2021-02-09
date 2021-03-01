@@ -6,7 +6,6 @@ export default (state = {}, action) => {
 
   switch (type) {
     case LOAD_RESTAURANT_PRODUCTS + SUCCESS:
-      console.log('LOAD_RESTAURANT_PRODUCTS SUCCESS reducer: ', data);
       const temp = {
         ...state,
         entities: arrToMap(data),
@@ -14,14 +13,12 @@ export default (state = {}, action) => {
       };
       return temp;
     case LOAD_RESTAURANT_PRODUCTS + FAILURE:
-      console.log('LOAD_RESTAURANT_PRODUCTS FAILURE reducer: ', data);
       return {
         ...state,
         entities: arrToMap(data),
         error,
       };
     default:
-      console.log('LOAD_RESTAURANT_PRODUCTS default reducer');
       return state;
   }
 };

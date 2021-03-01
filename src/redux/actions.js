@@ -6,6 +6,7 @@ import {
   LOAD_RESTAURANTS,
   LOAD_REVIEWS,
   LOAD_RESTAURANT_PRODUCTS,
+  LOAD_USERS,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -32,15 +33,33 @@ export const loadRestaurantProducts = (restaurantId) => ({
   CallAPI: `api/products?id=${restaurantId}`,
 });
 
-export const loadReviews = (restaurantId) => async (dispatch) => {
+export const loadReviews = (restaurantId) => async (dispatch, getState) => {
   dispatch({ type: LOAD_REVIEWS + REQUEST, restaurantId });
 
   try {
     const data = await fetch(`/api/reviews?id=${restaurantId}`).then((res) =>
       res.json()
     );
+
+    const { users } = getState();
+    if (!users) {
+      dispatch(loadUsers());
+    }
+
     dispatch({ type: LOAD_REVIEWS + SUCCESS, restaurantId, data });
   } catch (error) {
     dispatch({ type: LOAD_REVIEWS + FAILURE, restaurantId, error });
+  }
+};
+
+export const loadUsers = () => async (dispatch) => {
+  dispatch({ type: LOAD_USERS + REQUEST });
+
+  try {
+    const data = await fetch(`/api/users`).then((res) => res.json());
+    dispatch({ type: LOAD_USERS + SUCCESS, data });
+  } catch (error) {
+    dispatch({ type: LOAD_USERS + FAILURE, error });
+    throw error;
   }
 };

@@ -23,7 +23,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     case LOAD_RESTAURANTS + SUCCESS:
       return {
@@ -31,6 +30,7 @@ export default (state = initialState, action) => {
         entities: arrToMap(data),
         loading: false,
         loaded: true,
+        error: null,
       };
     case LOAD_RESTAURANTS + FAILURE:
       return {
