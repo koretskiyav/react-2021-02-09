@@ -1,36 +1,63 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Product from '../product';
 import Basket from '../basket';
+import Loader from '../loader';
+
+import { loadProducts } from '../../redux/actions';
+import {
+  productsListSelector,
+  productsLoadedSelector,
+  productsLoadingSelector,
+} from '../../redux/selectors';
 
 import styles from './menu.module.css';
 
 class Menu extends React.Component {
   static propTypes = {
-    menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    products: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      }).isRequired
+    ).isRequired,
   };
 
   state = { error: null };
 
+  componentDidMount() {
+    const { restaurantId, loadProducts } = this.props;
+    loadProducts(restaurantId);
+  }
+  componentDidUpdate(prevProps) {
+    const { restaurantId, loadProducts } = this.props;
+    if (prevProps.restaurantId !== restaurantId) loadProducts(restaurantId);
+  }
   componentDidCatch(error) {
     this.setState({ error });
   }
 
   render() {
-    const { menu } = this.props;
+    const { loading, loaded, products } = this.props;
 
     if (this.state.error) {
       return <p>Сейчас меню этого ресторана недоступно :(</p>;
     }
 
-    return (
-      <div className={styles.menu}>
+    let productList;
+    if (loading) productList = <Loader />;
+    if (loaded)
+      productList = (
         <div>
-          {menu.map((id) => (
-            <Product key={id} id={id} />
+          {products.map((product) => (
+            <Product key={product.id} id={product.id} />
           ))}
         </div>
+      );
+    return (
+      <div className={styles.menu}>
+        {productList}
         <div>
           <Basket />
         </div>
@@ -39,4 +66,11 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+export default connect(
+  (state) => ({
+    products: productsListSelector(state),
+    loading: productsLoadingSelector(state),
+    loaded: productsLoadedSelector(state),
+  }),
+  { loadProducts }
+)(Menu);
