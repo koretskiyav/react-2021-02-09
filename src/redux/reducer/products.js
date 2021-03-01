@@ -5,9 +5,9 @@ import { arrToMap } from '../utils';
 
 const initialState = {
   entities: {},
-  loading: false,
+  loading: {},
   loaded: {},
-  error: null,
+  error: {},
 };
 
 export default produce((draft, action) => {
@@ -15,17 +15,17 @@ export default produce((draft, action) => {
 
   switch (type) {
     case LOAD_PRODUCTS + REQUEST:
-      draft.loading = true;
-      draft.error = null;
+      draft.loading[restaurantId] = true;
+      draft.error[restaurantId] = null;
       break;
     case LOAD_PRODUCTS + SUCCESS:
       draft.entities = { ...draft.entities, ...arrToMap(data) };
-      draft.loading = false;
+      draft.loading[restaurantId] = false;
       draft.loaded[restaurantId] = true;
       break;
     case LOAD_PRODUCTS + FAILURE:
-      draft.loading = false;
-      draft.error = error;
+      draft.loading[restaurantId] = false;
+      draft.error[restaurantId] = error;
       break;
   }
 }, initialState);

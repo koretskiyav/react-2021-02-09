@@ -10,15 +10,19 @@ export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 export const restaurantsErrorSelector = (state) => state.restaurants.error;
 
-export const productsLoadingSelector = (state) => state.products.loading;
+export const productsLoadingSelector = (state, { restaurantId }) =>
+  state.products.loading[restaurantId];
 export const productsLoadedSelector = (state, { restaurantId }) =>
   state.products.loaded[restaurantId];
-export const productsErrorSelector = (state) => state.products.error;
+export const productsErrorSelector = (state, { restaurantId }) =>
+  state.products.error[restaurantId];
 
-export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const reviewsLoadingSelector = (state, { restaurantId }) =>
+  state.reviews.loading[restaurantId];
 export const reviewsLoadedSelector = (state, { restaurantId }) =>
   state.reviews.loaded[restaurantId];
-export const reviewsErrorSelector = (state) => state.reviews.error;
+export const reviewsErrorSelector = (state, { restaurantId }) =>
+  state.reviews.error[restaurantId];
 
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;

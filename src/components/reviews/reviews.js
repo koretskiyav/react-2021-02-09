@@ -36,7 +36,7 @@ Reviews.propTypes = {
   restaurantId: PropTypes.string,
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   // from connect
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   loaded: PropTypes.bool,
   error: PropTypes.object,
   loadReviews: PropTypes.func.isRequired,

@@ -21,7 +21,7 @@ class Menu extends React.Component {
     menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     restaurantId: PropTypes.string.isRequired,
     // from connect
-    loading: PropTypes.bool.isRequired,
+    loading: PropTypes.bool,
     loaded: PropTypes.bool,
     error: PropTypes.object,
     loadProducts: PropTypes.func.isRequired,
