@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
     case ADD_REVIEW:
       const { text, rating } = review;
       return produce(state, (draft) => {
-        draft[reviewId] = { id: reviewId, userId, text, rating };
+        draft.entities[reviewId] = { id: reviewId, userId, text, rating };
       });
     default:
       return state;
