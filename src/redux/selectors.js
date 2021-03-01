@@ -6,13 +6,19 @@ const productsSelector = (state) => state.products.entities || {};
 const reviewsSelector = (state) => state.reviews.entities || {};
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
 const usersSelector = (state) => state.users?.entities || {};
-
+export const usersLoadingSelector = (state) => state.users?.loading;
+export const usersLoadedSelector = (state) => state.users?.loaded;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
 export const restaurantReviewsLoadingSelector = (state) =>
   state.reviews.loading;
 export const restaurantReviewsLoadedSelector = (state) => state.reviews.loaded;
+export const restaurantReviewsAndUsersLoadedSelector = createSelector(
+  usersLoadedSelector,
+  restaurantReviewsLoadedSelector,
+  (usersLoaded, reviewsLoaded) => usersLoaded && reviewsLoaded
+);
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -61,14 +67,4 @@ export const reviewWithUserSelector = createSelector(
   })
 );
 
-// export const averageRatingSelector = createSelector(
-//   restaurantReviewsSelector,
-//   (reviews = []) => {
-//     const ratings = reviews.map((review) => review.rating);
-//     return Math.round(
-//       reviews.reduce((acc, rating) => acc + rating, 0) / ratings.length
-//     );
-//   }
-// );
-
-export const averageRatingSelector = (state) => 3;
+export const averageRatingSelector = (state) => state.averageRating || null;

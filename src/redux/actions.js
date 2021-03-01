@@ -7,6 +7,7 @@ import {
   LOAD_REVIEWS,
   LOAD_RESTAURANT_PRODUCTS,
   LOAD_USERS,
+  COUNT_AVERATE_RATING,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -45,8 +46,8 @@ export const loadReviews = (restaurantId) => async (dispatch, getState) => {
     if (!users) {
       dispatch(loadUsers());
     }
-
     dispatch({ type: LOAD_REVIEWS + SUCCESS, restaurantId, data });
+    dispatch({ type: COUNT_AVERATE_RATING, reviews: data });
   } catch (error) {
     dispatch({ type: LOAD_REVIEWS + FAILURE, restaurantId, error });
   }

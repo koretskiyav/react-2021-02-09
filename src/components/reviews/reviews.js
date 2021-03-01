@@ -8,6 +8,7 @@ import {
   reviewsListSelector,
   restaurantReviewsLoadingSelector,
   restaurantReviewsLoadedSelector,
+  restaurantReviewsAndUsersLoadedSelector,
 } from '../../redux/selectors';
 import { loadReviews } from '../../redux/actions';
 import { connect } from 'react-redux';
@@ -39,7 +40,7 @@ export default connect(
   (state) => ({
     reviews: reviewsListSelector(state),
     loading: restaurantReviewsLoadingSelector(state),
-    loaded: restaurantReviewsLoadedSelector(state),
+    loaded: restaurantReviewsAndUsersLoadedSelector(state),
   }),
   { loadReviews }
 )(Reviews);

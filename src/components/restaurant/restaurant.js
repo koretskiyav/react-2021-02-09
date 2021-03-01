@@ -8,7 +8,7 @@ import Rate from '../rate';
 import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({ restaurant, averageRating = null }) => {
   const { id, name } = restaurant;
   const tabs = [
     { title: 'Menu', content: <Menu restaurantId={id} /> },
@@ -21,7 +21,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
   return (
     <div>
       <Banner heading={name}>
-        <Rate value={averageRating} />
+        {!!averageRating && <Rate value={averageRating} />}
       </Banner>
       <Tabs tabs={tabs} />
     </div>
@@ -38,6 +38,6 @@ Restaurant.propTypes = {
   averageRating: PropTypes.number,
 };
 
-export default connect((state, props) => ({
-  averageRating: averageRatingSelector(state, props),
+export default connect((state) => ({
+  averageRating: averageRatingSelector(state),
 }))(Restaurant);
