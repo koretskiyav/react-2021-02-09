@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: null,
+        error: null, // TODO: useless, try to remove and check
       };
     case LOAD_RESTAURANTS + SUCCESS:
       return {

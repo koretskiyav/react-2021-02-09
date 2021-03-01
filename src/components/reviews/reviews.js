@@ -4,13 +4,36 @@ import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 
-import { loadReviews } from '../../redux/actions';
+import {loadReviews, loadUsers} from '../../redux/actions';
 import { connect } from 'react-redux';
+import Loader from '../loader'
+import {
+  reviewsLoadedSelector,
+  reviewsLoadingSelector,
+  usersLoadingSelector,
+  usersLoadedSelector
+} from '../../redux/selectors'
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
+import {includesNewItem} from '../../utils'
+
+const Reviews = ({ reviews, restaurantId, loadReviews, loadingReviews, loadedReviews, loadingUsers, loadedUsers, loadUsers }) => {
   useEffect(() => {
-    loadReviews(restaurantId);
-  }, [loadReviews, restaurantId]);
+    if (!loadingReviews && includesNewItem(reviews, loadedReviews)) loadReviews(restaurantId);
+    if (!loadingUsers && !loadedUsers) loadUsers()
+  }, [
+    loadReviews,
+    restaurantId,
+    loadingReviews,
+    loadedReviews,
+    reviews,
+    loadingUsers,
+    loadedUsers,
+    loadUsers
+  ]);
+
+
+  if (loadingReviews || loadingUsers) return <Loader />;
+  if (includesNewItem(reviews, loadedReviews) || !loadedUsers) return 'No data :(';
 
   return (
     <div className={styles.reviews}>
@@ -27,4 +50,10 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+export default connect(
+  (state, props) => ({
+    loadingReviews: reviewsLoadingSelector(state),
+    loadedReviews: reviewsLoadedSelector(state),
+    loadingUsers: usersLoadingSelector(state),
+    loadedUsers: usersLoadedSelector(state)
+  }), { loadReviews, loadUsers })(Reviews);

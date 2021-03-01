@@ -12,6 +12,7 @@ import {
 import { loadRestaurants } from '../../redux/actions';
 
 const Restaurants = ({ loading, loaded, restaurants, loadRestaurants }) => {
+  // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
@@ -39,6 +40,6 @@ export default connect(
     restaurants: restaurantsListSelector(state),
     loading: restaurantsLoadingSelector(state),
     loaded: restaurantsLoadedSelector(state),
-  }),
-  { loadRestaurants }
+  }), // mapStateToProps
+  { loadRestaurants } // mapDispatchToProps
 )(Restaurants);

@@ -10,6 +10,7 @@ const Tabs = ({ tabs }) => {
   const { content } = tabs[activeTab];
 
   return (
+    // Why do we need this empty???
     <>
       <div className={styles.tabs}>
         {tabs.map(({ title }, index) => (
