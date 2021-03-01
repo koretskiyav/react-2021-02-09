@@ -11,7 +11,6 @@ import {
 } from '../../../redux/selectors';
 import useLoader from '../../../hooks/use-loader';
 
-import Loader from '../../loader';
 import Rate from '../../rate';
 
 import styles from './review.module.css';
