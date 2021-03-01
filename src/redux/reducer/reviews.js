@@ -16,32 +16,26 @@ const initialState = {
   error: null,
 };
 
-export default (state = initialState, action) => {
+export default produce((draft, action) => {
   const { type, data, error, restaurantId, review, reviewId, userId } = action;
 
   switch (type) {
     case LOAD_REVIEWS + REQUEST:
-      return produce(state, (draft) => {
-        draft.loading = true;
-        draft.error = null;
-      });
+      draft.loading = true;
+      draft.error = null;
+      break;
     case LOAD_REVIEWS + SUCCESS:
-      return produce(state, (draft) => {
-        draft.entities = { ...draft.entities, ...arrToMap(data) };
-        draft.loading = false;
-        draft.loaded[restaurantId] = true;
-      });
+      draft.entities = { ...draft.entities, ...arrToMap(data) };
+      draft.loading = false;
+      draft.loaded[restaurantId] = true;
+      break;
     case LOAD_REVIEWS + FAILURE:
-      return produce(state, (draft) => {
-        draft.loading = false;
-        draft.error = error;
-      });
+      draft.loading = false;
+      draft.error = error;
+      break;
     case ADD_REVIEW:
       const { text, rating } = review;
-      return produce(state, (draft) => {
-        draft.entities[reviewId] = { id: reviewId, userId, text, rating };
-      });
-    default:
-      return state;
+      draft.entities[reviewId] = { id: reviewId, userId, text, rating };
+      break;
   }
-};
+}, initialState);

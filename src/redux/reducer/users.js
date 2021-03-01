@@ -38,7 +38,5 @@ export default produce((draft, action) => {
       const { name } = review;
       draft.entities[userId] = { id: userId, name };
       break;
-    default:
-      return draft;
   }
 }, initialState);
