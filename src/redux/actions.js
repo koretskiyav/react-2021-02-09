@@ -5,9 +5,12 @@ import {
   ADD_REVIEW,
   LOAD_RESTAURANTS,
   LOAD_REVIEWS,
+  LOAD_PRODUCTS,
+  LOAD_USERS,
   REQUEST,
   SUCCESS,
   FAILURE,
+  SET_CURRENT_REST_ID,
 } from './constants';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -38,3 +41,23 @@ export const loadReviews = (restaurantId) => async (dispatch) => {
     dispatch({ type: LOAD_REVIEWS + FAILURE, restaurantId, error });
   }
 };
+
+export const loadProducts = (restaurantId) => ({
+  type: LOAD_PRODUCTS,
+  CallAPI: `/api/products?id=${restaurantId}`,
+});
+
+export const loadUsers = () => async (dispatch) => {
+  dispatch({ type: LOAD_USERS + REQUEST });
+
+  try {
+    const data = await fetch('/api/users').then((res) =>
+      res.json()
+    );
+    dispatch({ type: LOAD_USERS + SUCCESS, data });
+  } catch (error) {
+    dispatch({ type: LOAD_USERS + FAILURE, error });
+  }
+};
+
+export const setCurrentRestId = (id) => ({ type: SET_CURRENT_REST_ID, id });

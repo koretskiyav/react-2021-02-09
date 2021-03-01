@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
@@ -7,11 +7,13 @@ import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
+import { setCurrentRestId } from '../../redux/actions';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({ restaurant, averageRating, setCurrentRestId }) => {
   const { id, name, menu, reviews } = restaurant;
+  useEffect(() => {setCurrentRestId(id)}, [id]);
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} /> },
+    { title: 'Menu', content: <Menu menu={menu} restaurantId={id}/> },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
@@ -21,7 +23,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
   return (
     <div>
       <Banner heading={name}>
-        <Rate value={averageRating} />
+        {reviews? <Rate value={averageRating} /> : null}
       </Banner>
       <Tabs tabs={tabs} />
     </div>
@@ -40,4 +42,4 @@ Restaurant.propTypes = {
 
 export default connect((state, props) => ({
   averageRating: averageRatingSelector(state, props),
-}))(Restaurant);
+}), {setCurrentRestId})(Restaurant);
