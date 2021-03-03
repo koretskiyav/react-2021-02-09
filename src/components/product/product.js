@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
-import { useHistory } from 'react-router-dom';
 
 import { increment, decrement } from '../../redux/actions';
 
