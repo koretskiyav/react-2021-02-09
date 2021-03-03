@@ -4,7 +4,6 @@ import restaurants from './restaurants';
 import products from './products';
 import reviews from './reviews';
 import users from './users';
-import orderToRestaurant from './orderToRestaurant';
 
 export default combineReducers({
   order,
@@ -12,5 +11,4 @@ export default combineReducers({
   products,
   reviews,
   users,
-  orderToRestaurant
 });

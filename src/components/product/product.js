@@ -54,8 +54,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  increment: () => dispatch(increment(props.id, props.restaurantId)),
-  decrement: () => dispatch(decrement(props.id, props.restaurantId)),
+  increment: () => dispatch(increment(props.id)),
+  decrement: () => dispatch(decrement(props.id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
