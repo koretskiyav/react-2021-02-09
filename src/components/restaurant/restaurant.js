@@ -8,13 +8,15 @@ import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
+import { Route } from 'react-router-dom';
+import Restaurants from '../restaurants/restaurants';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({ restaurant, averageRating, mode}) => {
   const { id, name, menu, reviews } = restaurant;
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
+    { title: 'Menu', restId: id, path: 'menu', content: <Menu menu={menu} restaurantId={id} /> },
     {
-      title: 'Reviews',
+      title: 'Reviews', restId: id, path: 'reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
     },
   ];
@@ -24,7 +26,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
-      <Tabs tabs={tabs} />
+      <Tabs tabs={tabs} mode={mode}/>
     </div>
   );
 };

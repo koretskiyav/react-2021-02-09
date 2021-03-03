@@ -1,5 +1,29 @@
 import { createSelector } from 'reselect';
 
+export const restaurantIdSelector = (state, props) => {
+
+  const id = props.product.id;
+  const restaurantsFromState = Object.entries(restaurantsSelector(state));
+
+  const restaurants = restaurantsFromState.map(function(value) {
+    return value[1];
+  });
+
+  const tmp1 = restaurants.map(function(value) {
+    return value.menu;
+  });
+
+  const tmp2 = tmp1.map(function(value) {
+    return value.find(currentValue => currentValue === id);
+  });
+
+  const product = tmp2.find(currentValue => currentValue);
+  const index = (tmp2.indexOf(product));
+
+  return (restaurantsFromState[index][0]);
+}
+
+
 const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
