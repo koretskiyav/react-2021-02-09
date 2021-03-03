@@ -21,7 +21,7 @@ function BasketItem({
   return (
     <div className={styles.basketItem}>
       <div className={styles.name}>
-        <Link to={`/restaurants/${restaurantID}`}>
+        <Link to={`/restaurants/${restaurantID}/menu`}>
           <span>{product.name}</span>
         </Link>
       </div>
