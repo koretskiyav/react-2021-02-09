@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
 
-import { loadProducts } from '../../redux/actions';
+import {loadProducts} from '../../redux/actions';
 import {
-  productsLoadingSelector,
-  productsLoadedSelector,
+	productsLoadingSelector,
+	productsLoadedSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
@@ -16,63 +16,63 @@ import Basket from '../basket';
 import styles from './menu.module.css';
 
 class Menu extends React.Component {
-  static propTypes = {
-    menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  };
+	static propTypes = {
+		menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+	};
 
-  state = { error: null };
+	state = {error: null};
 
-  loadProductsIfNeeded = () => {
-    const { loadProducts, restaurantId, loading, loaded } = this.props;
-    if (!loading && !loaded) {
-      loadProducts(restaurantId);
-    }
-  };
+	loadProductsIfNeeded = () => {
+		const {loadProducts, restaurantId, loading, loaded, match} = this.props;
+		if (!loading && !loaded) {
+			loadProducts(restaurantId);
+		}
+	};
 
-  componentDidMount() {
-    this.loadProductsIfNeeded();
-  }
+	componentDidMount() {
+		this.loadProductsIfNeeded();
+	}
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.restaurantId !== this.props.restaurantId) {
-      this.loadProductsIfNeeded();
-    }
-  }
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.restaurantId !== this.props.restaurantId) {
+			this.loadProductsIfNeeded();
+		}
+	}
 
-  componentDidCatch(error) {
-    this.setState({ error });
-  }
+	componentDidCatch(error) {
+		this.setState({error});
+	}
 
-  render() {
-    const { menu, loading } = this.props;
+	render() {
+		const {menu, loading} = this.props;
 
-    if (loading) {
-      return <Loader />;
-    }
+		if (loading) {
+			return <Loader />;
+		}
 
-    if (this.state.error) {
-      return <p>Сейчас меню этого ресторана недоступно :(</p>;
-    }
+		if (this.state.error) {
+			return <p>Сейчас меню этого ресторана недоступно :(</p>;
+		}
 
-    return (
-      <div className={styles.menu}>
-        <div>
-          {menu.map((id) => (
-            <Product key={id} id={id} />
-          ))}
-        </div>
-        <div>
-          <Basket />
-        </div>
-      </div>
-    );
-  }
+		return (
+			<div className={styles.menu}>
+				<div>
+					{menu.map((id) => (
+						<Product key={id} id={id} />
+					))}
+				</div>
+				<div>
+					<Basket />
+				</div>
+			</div>
+		);
+	}
 }
 
 export default connect(
-  createStructuredSelector({
-    loading: productsLoadingSelector,
-    loaded: productsLoadedSelector,
-  }),
-  { loadProducts }
+	createStructuredSelector({
+		loading: productsLoadingSelector,
+		loaded: productsLoadedSelector,
+	}),
+	{loadProducts}
 )(Menu);
