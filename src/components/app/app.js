@@ -4,6 +4,8 @@ import Header from '../header';
 import Basket from '../basket';
 
 import RestaurantsPage from '../../pages/restaurants-page';
+import MenusPage from '../../pages/menus-page';
+import ReviewsPage from '../../pages/reviews-page';
 
 export default class App extends PureComponent {
   render() {
@@ -14,6 +16,8 @@ export default class App extends PureComponent {
           <Route path="/" exact component={() => 'Home page'} />
           <Route path="/checkout" component={Basket} />
           <Route path="/restaurants" component={RestaurantsPage} />
+          <Route path="/menus" component={MenusPage} />
+          <Route path="/reviews" component={ReviewsPage} />          
           <Route path="/" component={() => '404 - Not found :('} />
         </Switch>
       </div>
