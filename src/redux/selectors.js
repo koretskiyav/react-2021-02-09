@@ -70,3 +70,16 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const restaurantByProductSelector = createSelector(
+  restaurantsSelector,
+  (restaurants) =>
+    Object.values(restaurants)
+      .map((restaurant) =>
+        restaurant.menu.reduce(
+          (acc, id) => ({ ...acc, [id]: restaurant.id }),
+          {}
+        )
+      )
+      .reduce((acc, value) => ({ ...acc, ...value }), {})
+);
