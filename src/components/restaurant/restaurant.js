@@ -9,8 +9,41 @@ import Rate from '../rate';
 import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ restaurant, averageRating }) => {
+const Restaurant = ({ restaurant, averageRating, showReviewsOnly, showMenuOnly }) => {
   const { id, name, menu, reviews } = restaurant;
+
+  if (showReviewsOnly) {
+    const tabs = [
+      {
+        title: 'Reviews',
+        content: <Reviews reviews={reviews} restaurantId={id} />,
+      },
+    ];
+  
+    return (
+      <div>
+        <Banner heading={name}>
+          {!!averageRating && <Rate value={averageRating} />}
+        </Banner>
+        <Tabs tabs={tabs} />
+      </div>
+    );  
+  }
+  else if (showMenuOnly) {
+    const tabs = [
+      { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
+    ];
+  
+    return (
+      <div>
+        <Banner heading={name}>
+          {!!averageRating && <Rate value={averageRating} />}
+        </Banner>
+        <Tabs tabs={tabs} />
+      </div>
+    );    
+  }
+  else {
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
     {
@@ -27,6 +60,7 @@ const Restaurant = ({ restaurant, averageRating }) => {
       <Tabs tabs={tabs} />
     </div>
   );
+  }
 };
 
 Restaurant.propTypes = {
