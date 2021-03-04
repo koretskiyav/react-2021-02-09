@@ -32,16 +32,17 @@ function RestaurantsPage({
     url: `/restaurants/${id}`,
   }));
 
-  if (match.isExact) {
-    return (
-      <div>
-        <Tabs tabs={tabs} />
-        <h3>Please select a restaurant above</h3>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Tabs tabs={tabs} />
 
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+      {match.isExact ? (
+        <h3>Please select a restaurant above</h3>
+      ) : (
+        <Route path="/restaurants/:restId" component={Restaurants} />
+      )}
+    </div>
+  );
 }
 
 export default connect(
