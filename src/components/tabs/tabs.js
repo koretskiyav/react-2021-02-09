@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import styles from './tabs.module.css';
 
 const Tabs = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(0);
-
+  const [activeTab] = useState(0);
   const { content } = tabs[activeTab];
+  const url = useRouteMatch().url;
 
   return (
     <>
       <div className={styles.tabs}>
-        {tabs.map(({ title }, index) => (
-          <span
+        {tabs.map(({ title }) => (
+          <NavLink
             key={title}
-            className={cn(styles.tab, { [styles.active]: index === activeTab })}
-            onClick={() => setActiveTab(index)}
+            className={styles.tab}
+            activeClassName={styles.active}
+            to={url + `/${title.toLowerCase()}`}
           >
             {title}
-          </span>
+          </NavLink>
         ))}
       </div>
       {content}
