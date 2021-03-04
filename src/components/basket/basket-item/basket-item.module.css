@@ -73,3 +73,7 @@
 .info p:first-child {
   font-weight: bold;
 }
+
+.linkAtProduct {
+  border-bottom: 1px solid var(--black);
+}

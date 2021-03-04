@@ -70,3 +70,13 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const findRestIdByProductSelector = createSelector(
+  restaurantsSelector,
+  (state, props) => props.product.id,
+  (restaurants, id) => {
+    return Object.keys(restaurants).filter((el) =>
+      restaurants[el].menu.find((i) => i === id)
+    );
+  }
+);
