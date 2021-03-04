@@ -40,6 +40,13 @@ export const restaurantsListSelector = createSelector(
   Object.values
 );
 
+export const restaurantIdByProductSelector = createSelector(
+  restaurantsListSelector,
+  (_, { product: { id } }) => id,
+  (restaurants, productId) =>
+    restaurants.find((restaurant) => restaurant.menu?.includes(productId))?.id
+);
+
 export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
 export const productSelector = (state, { id }) => productsSelector(state)[id];
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
