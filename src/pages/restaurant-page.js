@@ -1,27 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import cn from 'classnames';
 import Menu from '../components/menu';
 import Reviews from '../components/reviews';
-import styles from '../components/tabs/tabs.module.css';
+import styles from '../components/restaurant/restaurant.module.css';
 
-const RestaurantPage = ({ restaurantId }) => {
-  const tabs = [
-    {
-      title: 'Menu',
-      content: <Menu />,
-    },
-    {
-      title: 'Reviews',
-      content: <Reviews />,
-    },
-  ];
+const RestaurantPage = ({
+  restaurant: { id: restaurantId, reviews, menu },
+}) => {
+  const tabs = ['Menu', 'Reviews'];
 
   return (
     <>
       <div className={styles.tabs}>
-        {tabs.map(({ title }) => (
+        {tabs.map((title) => (
           <NavLink
             key={title}
             to={`/restaurants/${restaurantId}/${title.toLocaleLowerCase()}`}
@@ -33,11 +25,21 @@ const RestaurantPage = ({ restaurantId }) => {
         ))}
       </div>
       <Switch>
-        <Route path="/restaurants/:restaurantId" exact component={Menu}>
+        <Route path="/restaurants/:restaurantId" exact>
           <Redirect to={`/restaurants/${restaurantId}/menu`} />
         </Route>
-        <Route path="/restaurants/:restaurantId/menu" component={Menu} />
-        <Route path="/restaurants/:restaurantId/reviews" component={Reviews} />
+        <Route
+          path="/restaurants/:restaurantId/menu"
+          render={(props) => (
+            <Menu {...props} restaurantId={restaurantId} menu={menu} />
+          )}
+        />
+        <Route
+          path="/restaurants/:restaurantId/reviews"
+          render={(props) => (
+            <Reviews {...props} restaurantId={restaurantId} reviews={reviews} />
+          )}
+        />
       </Switch>
     </>
   );

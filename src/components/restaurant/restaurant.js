@@ -4,18 +4,18 @@ import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import Banner from '../banner';
 import Rate from '../rate';
-import RestaurantPage from '../../pages/restaurant-content-page';
+import RestaurantPage from '../../pages/restaurant-page';
 import { averageRatingSelector } from '../../redux/selectors';
 
 const Restaurant = ({ restaurant, averageRating }) => {
-  const { name, id } = restaurant;
+  const { name } = restaurant;
 
   return (
     <div>
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
-      <RestaurantPage restaurantId={id} />
+      <RestaurantPage restaurant={restaurant} />
     </div>
   );
 };

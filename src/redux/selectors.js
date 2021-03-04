@@ -2,11 +2,10 @@ import { createSelector } from 'reselect';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
-const reviewsSelector = (state) => state.reviews.entities || {};
+const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 const orderSelector = (state) => state.order;
-const restaurantIdSelector = (_, props) =>
-  props.match?.params?.restaurantId || props.restaurantId;
+const restaurantIdSelector = (_, props) => props.restaurantId;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -33,28 +32,12 @@ export const reviewsLoadedSelector = createSelector(
   (restaurantId, reviewsLoaded) => reviewsLoaded[restaurantId]
 );
 
-export const restaurantReviewsSelector = createSelector(
-  reviewsSelector,
-  restaurantsSelector,
-  restaurantIdSelector,
-  (reviews, restaurants, restaurantId) =>
-    Object.values(reviews).filter((review) =>
-      restaurants[restaurantId].reviews.includes(review.id)
-    )
-);
-
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
-);
-export const restaurantMenuSelector = createSelector(
-  restaurantsListSelector,
-  restaurantIdSelector,
-  (restaurantsList, restaurantId) =>
-    restaurantsList.find((restaurant) => restaurant.id === restaurantId).menu
 );
 
 export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
