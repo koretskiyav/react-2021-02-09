@@ -1,44 +1,24 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Review from './review';
 
 import { restaurants } from '../../../fixtures';
 
-const review = restaurants[0].reviews[1];
+const {user, rating, text} = restaurants[0].reviews[0];
 
-const render = (data = {}) => mount(<Review {...data} />);
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('Review', () => {
-  let reviewsCount, name, text, rate;
-
-  beforeEach(() => {
-    const wrapper = render(review);
-    reviewsCount = wrapper.find('Review').length;
-    name = wrapper.find('[data-id="review-user"]').text();
-    text = wrapper.find('[data-id="review-text"]').text();
-    rate = wrapper.find('svg[data-id="full-star"]').length;
+  it('has username', () => {
+    const wrapper = mount(<Review rating={rating} text={text} user={user} />);
+    expect(wrapper.find('[data-id="review-name"]').length).toBeGreaterThan(0);
   });
-
-  it('should render review', () => {
-    expect(reviewsCount).toBe(1);
+  it('has rating', () => {
+    const wrapper = mount(<Review rating={rating} text={text} user={user} />);
+    expect(wrapper.find('[data-id="review-rate"]').length).toBeGreaterThan(0);
   });
-
-  it('should render user name', () => {
-    expect(name).toBe(review.user);
-  });
-
-  it('should render text', () => {
-    expect(text).toBe(review.text);
-  });
-
-  it(`should render ${review.rating} fulled stars`, () => {
-    expect(rate).toBe(review.rating);
-  });
-});
-
-describe('Anonymous Review', () => {
-  it('should render anonymous name', () => {
-    const wrapper = render();
-    expect(wrapper.find('[data-id="review-user"]').text()).toBe('Anonymous');
-  });
+  it('has text', () => {
+    const wrapper = mount(<Review rating={rating} text={text} user={user} />);
+    expect(wrapper.find('[data-id="review-text"]').length).toBeGreaterThan(0);
+  })
 });
