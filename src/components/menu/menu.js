@@ -44,7 +44,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { menu, loading, match } = this.props;
+    const { menu, loading } = this.props;
 
     if (loading) {
       return <Loader />;
@@ -53,7 +53,7 @@ class Menu extends React.Component {
     if (this.state.error) {
       return <p>Сейчас меню этого ресторана недоступно :(</p>;
     }
-    console.log(match);
+
     return (
       <div className={styles.menu}>
         <div>
