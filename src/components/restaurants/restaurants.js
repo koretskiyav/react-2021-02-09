@@ -9,8 +9,7 @@ import { restaurantsListSelector } from '../../redux/selectors';
 import styles from './restaurants.module.css';
 
 const Restaurants = ({ restaurants, match }) => {
-  const { restId } = match.params;
-
+  const { restId, mode } = match.params;
   const restaurant = restaurants.find((restaurant) => restaurant.id === restId);
 
   return (
@@ -27,7 +26,7 @@ const Restaurants = ({ restaurants, match }) => {
           </NavLink>
         ))}
       </div>
-      <Restaurant restaurant={restaurant} />
+      <Restaurant restaurant={restaurant} mode={mode} />
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
@@ -39,7 +39,13 @@ function RestaurantsPage({
     );
   }
 
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+  return (
+    <Switch>
+      <Route path="/restaurants/:restId/:mode" component={Restaurants} />
+      <Route path="/restaurants/:restId" component={Restaurants} />
+    </Switch>
+  );
+
 }
 
 export default connect(
