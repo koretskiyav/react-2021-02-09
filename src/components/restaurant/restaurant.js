@@ -14,12 +14,8 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 const Restaurant = ({ restaurant, averageRating }) => {
   const { id, name, menu, reviews } = restaurant;
   const tabs = [
-    { title: 'Menu', path: `/restaurants/${id}/menu`, content: <Menu menu={menu} restaurantId={id} /> },
-    {
-      title: 'Reviews',
-      path: `/restaurants/${id}/reviews`,
-      content: <Reviews reviews={reviews} restaurantId={id} />,
-    },
+    { title: 'Menu', path: `/restaurants/${id}/menu` },
+    { title: 'Reviews', path: `/restaurants/${id}/reviews` },
   ];
 
   return (
