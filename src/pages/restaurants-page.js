@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
 
 import Loader from '../components/loader';
+import Tabs from '../components/tabs';
 import {
   restaurantsListSelector,
   restaurantsLoadedSelector,
@@ -26,15 +27,16 @@ function RestaurantsPage({
   if (loading) return <Loader />;
   if (!loaded) return 'No data :(';
 
+  const tabs = restaurants.map(({ id, name }) => ({
+    title: name,
+    url: `/restaurants/${id}`,
+  }));
+
   if (match.isExact) {
     return (
       <div>
-        <div>select restaurant:</div>
-        {restaurants.map(({ id, name }) => (
-          <p key={id}>
-            <Link to={`/restaurants/${id}`}>{name}</Link>{' '}
-          </p>
-        ))}
+        <Tabs tabs={tabs} />
+        <h3>Please select a restaurant above</h3>
       </div>
     );
   }
