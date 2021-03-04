@@ -10,18 +10,21 @@ import { loadReviews, loadUsers } from '../../redux/actions';
 import {
   reviewsLoadedSelector,
   usersLoadedSelector,
+  restaurantReviewsSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
 
 const Reviews = ({
   reviews,
-  restaurantId,
   loadReviews,
   loadUsers,
   usersLoaded,
   reviewsLoaded,
+  match,
 }) => {
+  const { restaurantId } = match.params;
+
   useEffect(() => {
     loadUsers();
     loadReviews(restaurantId);
@@ -31,7 +34,7 @@ const Reviews = ({
 
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
+      {reviews.map(({ id }) => (
         <Review key={id} id={id} />
       ))}
       <ReviewForm restaurantId={restaurantId} />
@@ -40,11 +43,15 @@ const Reviews = ({
 };
 
 Reviews.propTypes = {
-  restaurantId: PropTypes.string,
-  reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  reviews: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
+  reviews: restaurantReviewsSelector,
   reviewsLoaded: reviewsLoadedSelector,
   usersLoaded: usersLoadedSelector,
 });

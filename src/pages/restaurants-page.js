@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
 
@@ -29,7 +30,7 @@ function RestaurantsPage({
   if (match.isExact) {
     return (
       <div>
-        <div>select restaurant:</div>
+        <div>Select restaurant:</div>
         {restaurants.map(({ id, name }) => (
           <p key={id}>
             <Link to={`/restaurants/${id}`}>{name}</Link>{' '}
@@ -39,8 +40,20 @@ function RestaurantsPage({
     );
   }
 
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+  return <Route path="/restaurants/:restaurantId" component={Restaurants} />;
 }
+
+RestaurantsPage.propTypes = {
+  loading: PropTypes.bool,
+  loaded: PropTypes.bool,
+  restaurants: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string,
+    })
+  ),
+  loadRestaurants: PropTypes.func.isRequired,
+};
 
 export default connect(
   createStructuredSelector({
