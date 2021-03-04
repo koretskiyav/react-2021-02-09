@@ -70,3 +70,22 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const restaurantByProduct = createSelector(
+  restaurantsSelector,
+  (_, {product}) => product,
+  (restaurants, product) => {
+
+    restaurants[Symbol.iterator] = function * () {
+      for (let key in this) { // Notice I know could be simpler (for in only), just using for practice
+        yield [key, this[key]]
+      }
+    }
+
+    for (const [res, restInfo] of restaurants) {
+      if (restInfo.menu.includes(product.id)) {
+        return res
+      }
+    }
+  }
+)
