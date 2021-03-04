@@ -23,7 +23,7 @@ class Menu extends React.Component {
 	state = {error: null};
 
 	loadProductsIfNeeded = () => {
-		const {loadProducts, restaurantId, loading, loaded, match} = this.props;
+		const {loadProducts, restaurantId, loading, loaded} = this.props;
 		if (!loading && !loaded) {
 			loadProducts(restaurantId);
 		}

@@ -19,13 +19,12 @@ function BasketItem({
 }) {
 	const history = useHistory();
 	const goToProduct = (productId) => {
-		restaurants.map((restaurant) => {
-			restaurant.menu.map((menuItem) => {
-				if (menuItem === productId) {
-					history.push(`/restaurants/${restaurant.id}/menu`);
-				}
-			})
-		});
+		restaurants.map((restaurant) => 
+			restaurant.menu.map((menuItem) =>
+				(menuItem === productId) ?
+					history.push(`/restaurants/${restaurant.id}/menu`) : false
+			)
+		);
 	}
 	return (
 		<div className={styles.basketItem}>
