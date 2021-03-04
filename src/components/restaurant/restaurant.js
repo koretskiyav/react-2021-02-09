@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, Redirect, useRouteMatch } from 'react-router-dom';
 
 import Menu from '../menu';
 import Reviews from '../reviews';
@@ -26,6 +26,9 @@ const Restaurant = ({ restaurant, averageRating }) => {
       </Banner>
       <Tabs tabs={tabs} />
       <Switch>
+        <Route exact path={path}>
+          <Redirect to={`${url}/menu`} />
+        </Route>
         <Route path={`${path}/menu`}>
           <Menu menu={menu} restaurantId={id} />
         </Route>
