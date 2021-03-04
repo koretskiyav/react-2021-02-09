@@ -31,6 +31,15 @@ export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
 export const productSelector = (state, { id }) => productsSelector(state)[id];
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
 
+export const productRestaurantIdSelector = createSelector(
+  restaurantsListSelector,
+  productSelector,
+  (restaurants, product) => 
+    restaurants.find(
+      (restaurant) => restaurant.menu.find((id) => id === product.id)
+    ).id
+)
+
 export const orderProductsSelector = createSelector(
   orderSelector,
   productsSelector,
