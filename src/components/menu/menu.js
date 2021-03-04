@@ -18,6 +18,10 @@ import styles from './menu.module.css';
 class Menu extends React.Component {
   static propTypes = {
     menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    loadProducts: PropTypes.func,
+    loading: PropTypes.bool,
+    loaded: PropTypes.bool,
+    restaurantId: PropTypes.string.isRequired,
   };
 
   state = { error: null };

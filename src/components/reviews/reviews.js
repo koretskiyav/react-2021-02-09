@@ -40,11 +40,12 @@ const Reviews = ({
 };
 
 Reviews.propTypes = {
-  reviews: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  restaurantId: PropTypes.string.isRequired,
+  loadReviews: PropTypes.func.isRequired,
+  loadUsers: PropTypes.func.isRequired,
+  usersLoaded: PropTypes.bool,
+  reviewsLoaded: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

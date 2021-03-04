@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Menu from '../components/menu';
 import Reviews from '../components/reviews';
 import styles from '../components/restaurant/restaurant.module.css';
@@ -45,13 +46,12 @@ const RestaurantPage = ({
   );
 };
 
-// Tabs.propTypes = {
-//   tabs: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       title: PropTypes.string.isRequired,
-//       content: PropTypes.element.isRequired,
-//     }).isRequired
-//   ).isRequired,
-// };
+RestaurantPage.propTypes = {
+  restaurant: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    reviews: PropTypes.array,
+    menu: PropTypes.array,
+  }).isRequired,
+};
 
 export default RestaurantPage;
