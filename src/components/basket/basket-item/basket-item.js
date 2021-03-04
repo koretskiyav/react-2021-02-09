@@ -19,6 +19,7 @@ function BasketItem({
 }) {
   const menuId = restaurants.find(item => item.menu.includes(product.id)).id;
   const url = `/restaurants/${menuId}/menu`;
+
   return (
     <div className={styles.basketItem}>
       <div className={styles.name}>
