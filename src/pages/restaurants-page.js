@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
@@ -32,14 +32,18 @@ function RestaurantsPage({
         <div>select restaurant:</div>
         {restaurants.map(({ id, name }) => (
           <p key={id}>
-            <Link to={`/restaurants/${id}`}>{name}</Link>{' '}
+            <Link to={`/restaurants/${id}/menu`}>{name}</Link>
           </p>
         ))}
       </div>
     );
   }
-
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+  return (
+    <Switch>
+      <Route path="/restaurants/:restId/:subpage" component={Restaurants} />;
+      <Route path="/" component={() => <Link to={`menu`}>View menu</Link>} />
+    </Switch>
+  );
 }
 
 export default connect(

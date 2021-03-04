@@ -70,3 +70,11 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const productRestaurantIDSelector = (state, { product }) => {
+  const { id } = product;
+  const oneRestaurant = restaurantsListSelector(state).filter(
+    (restaurant) => restaurant.menu.indexOf(id) !== -1
+  );
+  return oneRestaurant[0].id;
+};
