@@ -9,7 +9,7 @@ import Rate from '../rate';
 
 import styles from './restaurant.module.css';
 import { averageRatingSelector } from '../../redux/selectors';
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 
 const Restaurant = ({ restaurant, averageRating }) => {
   const { id, name, menu, reviews } = restaurant;
@@ -39,17 +39,19 @@ const Restaurant = ({ restaurant, averageRating }) => {
           </NavLink>
         ))}
       </div>
-      <Route path={`/restaurants/${id}`} exact>
-        <div>
-          {name} restaurant info
-        </div>
-      </Route>
-      <Route path={`/restaurants/${id}/menu`}>
-        <Menu menu={menu} restaurantId={id} />
-      </Route>
-      <Route path={`/restaurants/${id}/reviews`}>
-        <Reviews reviews={reviews} restaurantId={id} />
-      </Route>
+      <Switch>
+        <Route path={`/restaurants/${id}/menu`}>
+          <Menu menu={menu} restaurantId={id} />
+        </Route>
+        <Route path={`/restaurants/${id}/reviews`}>
+          <Reviews reviews={reviews} restaurantId={id} />
+        </Route>
+        <Route path={`/restaurants/${id}`}>
+          <div>
+            {name} restaurant info
+          </div>
+        </Route>
+      </Switch>
     </div>
   );
 };
