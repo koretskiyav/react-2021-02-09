@@ -31,15 +31,31 @@ export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
 export const productSelector = (state, { id }) => productsSelector(state)[id];
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
 
+const restaurantsByProductsSelector = createSelector(
+  restaurantsListSelector,
+  (restaurants) =>
+    restaurants.reduce(
+      (restaurantAcc, { id: restaurantId, menu }) => ({
+        ...restaurantAcc,
+        ...menu.reduce(
+          (menuAcc, productId) => ({ ...menuAcc, [productId]: restaurantId }),
+          {}
+        ),
+      }),
+      {}
+    )
+);
+
 export const orderProductsSelector = createSelector(
   orderSelector,
   productsSelector,
-  (order, products) =>
+  restaurantsByProductsSelector,
+  (order, products, restaurantsByProducts) =>
     Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
       .map((product) => ({
-        product,
+        product: { ...product, restaurant: restaurantsByProducts[product.id] },
         amount: order[product.id],
         subtotal: order[product.id] * product.price,
       }))
