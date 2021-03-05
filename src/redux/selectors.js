@@ -32,9 +32,9 @@ export const productSelector = (state, { id }) => productsSelector(state)[id];
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
 
 const restaurantsByProductsSelector = createSelector(
-  restaurantsSelector,
+  restaurantsListSelector,
   (restaurants) =>
-    Object.values(restaurants).reduce(
+    restaurants.reduce(
       (restaurantAcc, { id: restaurantId, menu }) => ({
         ...restaurantAcc,
         ...menu.reduce(
