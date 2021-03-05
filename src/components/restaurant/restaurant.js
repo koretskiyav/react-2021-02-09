@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
@@ -8,22 +8,30 @@ import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
 import { averageRatingSelector } from '../../redux/selectors';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 const Restaurant = ({ restaurant, averageRating }) => {
   const { id, name, menu, reviews } = restaurant;
-  const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
+  let { url } = useRouteMatch();
+  const tabs = useMemo(() => [
+    {
+      title: 'Menu',
+      content: <Menu menu={menu} restaurantId={id} />,
+      path: `${url}/menu`,
+    },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
+      path: `${url}/reviews`,
     },
-  ];
+  ]);
 
   return (
     <div>
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
+      <Link to="/restaurants">Back to all restaurants</Link>
       <Tabs tabs={tabs} />
     </div>
   );

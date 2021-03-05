@@ -15,7 +15,7 @@ const Restaurants = ({ restaurants, match }) => {
 
   return (
     <>
-      <div className={styles.tabs}>
+      {/*<div className={styles.tabs}>
         {restaurants.map(({ id, name }) => (
           <NavLink
             key={id}
@@ -26,7 +26,7 @@ const Restaurants = ({ restaurants, match }) => {
             {name}
           </NavLink>
         ))}
-      </div>
+      </div>*/}
       <Restaurant restaurant={restaurant} />
     </>
   );
