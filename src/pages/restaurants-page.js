@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import Restaurants from '../components/restaurants';
+import Restaurant from '../components/restaurants';
 
 import Loader from '../components/loader';
 import {
@@ -32,14 +32,14 @@ function RestaurantsPage({
         <div>select restaurant:</div>
         {restaurants.map(({ id, name }) => (
           <p key={id}>
-            <Link to={`/restaurants/${id}`}>{name}</Link>{' '}
+            <Link to={`/restaurants/${id}/menu`}>{name}</Link>{' '}
           </p>
         ))}
       </div>
     );
   }
 
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+  return <Route path="/restaurants/:restId" component={Restaurant} />;
 }
 
 export default connect(
