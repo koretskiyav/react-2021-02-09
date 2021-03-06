@@ -7,6 +7,8 @@ export const LOAD_RESTAURANTS = 'LOAD_RESTAURANTS';
 export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
 export const LOAD_REVIEWS = 'LOAD_REVIEWS';
 export const LOAD_USERS = 'LOAD_USERS';
+export const SAVE_ORDER = 'SAVE_ORDER';
+export const CLEAR_BASKET = 'CLEAR_BASKET';
 
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';

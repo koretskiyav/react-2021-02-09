@@ -9,7 +9,7 @@ const product = restaurants[0].menu[0];
 const getByDataId = (wrapper, dataId) => wrapper.find(`[data-id="${dataId}"]`);
 
 const getProductsCount = (wr) => getByDataId(wr, 'product').length;
-const getAmount = (wr) => getByDataId(wr, 'product-amount').text();
+const getAmount = (wr) => getByDataId(wr, 'product-cost').text();
 const increase = (wr) => getByDataId(wr, 'product-increment').simulate('click');
 const decrease = (wr) => getByDataId(wr, 'product-decrement').simulate('click');
 
@@ -19,12 +19,12 @@ describe('Product', () => {
     expect(getProductsCount(wrapper)).toBe(1);
   });
 
-  it('should init from 0 amount', () => {
+  it('should init from 0 cost', () => {
     const wrapper = mount(<Product product={product} />);
     expect(getAmount(wrapper)).toBe('0');
   });
 
-  it('should increment amount', () => {
+  it('should increment cost', () => {
     const wrapper = mount(<Product product={product} />);
     increase(wrapper);
     expect(getAmount(wrapper)).toBe('1');
@@ -36,18 +36,18 @@ describe('Product', () => {
     expect(fn).toBeCalledWith(product.id);
   });
 
-  it('should init with amount 2', () => {
+  it('should init with cost 2', () => {
     const wrapper = mount(<Product product={product} initialCount={2} />);
     expect(getAmount(wrapper)).toBe('2');
   });
 
-  it('should decrement amount', () => {
+  it('should decrement cost', () => {
     const wrapper = mount(<Product product={product} initialCount={4} />);
     decrease(wrapper);
     expect(getAmount(wrapper)).toBe('3');
   });
 
-  it("shouldn't decrement with 0 amount", () => {
+  it("shouldn't decrement with 0 cost", () => {
     const wrapper = mount(<Product product={product} />);
     decrease(wrapper);
     expect(getAmount(wrapper)).toBe('0');

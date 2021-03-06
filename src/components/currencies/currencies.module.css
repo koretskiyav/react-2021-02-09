@@ -1,0 +1,10 @@
+.currency {
+    margin-right: 15px;
+    width: 20px;
+    color: #e5e5e5;
+}
+.currency_active{
+    margin-right: 15px;
+    width: 20px;
+    color: #f0ad4e;
+}
