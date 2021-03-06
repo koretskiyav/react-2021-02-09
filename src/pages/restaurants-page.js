@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
@@ -12,7 +12,7 @@ import {
 } from '../redux/selectors';
 import { loadRestaurants } from '../redux/actions';
 
-function RestaurantsPage({ loading, loaded, loadRestaurants, match }) {
+function RestaurantsPage({ loading, loaded, loadRestaurants, match, restaurants }) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
@@ -21,10 +21,12 @@ function RestaurantsPage({ loading, loaded, loadRestaurants, match }) {
   if (!loaded) return 'No data :(';
 
   if (match.isExact) {
+    const firstRest = restaurants[0].id;
+
     return (
       <>
         <Restaurants match={match} />
-        <h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
+        <Redirect to={`/restaurants/${firstRest}/menu`} />
       </>
     );
   }
