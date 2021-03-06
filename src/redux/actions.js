@@ -72,3 +72,5 @@ export const sendOrder = (products) => ({
   CallAPI: '/api/order',
   data: products,
 });
+
+export const clearError = () => ({});
