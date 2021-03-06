@@ -47,14 +47,16 @@
 
 .button.primary:hover,
 .button.primary:focus,
-.button.primary:active {
+.button.primary:active,
+.button.primary[disabled] {
   border-color: var(--orange-light);
   background-color: var(--orange-light);
 }
 
 .button.secondary:hover,
 .button.secondary:focus,
-.button.secondary:active {
+.button.secondary:active,
+.button.secondary[disabled] {
   border-color: var(--grey);
   background-color: var(--grey);
 }
