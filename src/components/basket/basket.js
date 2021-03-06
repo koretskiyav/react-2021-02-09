@@ -10,7 +10,7 @@ import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
 import {
-  orderProductsSelector,
+  orderProductsListSelector,
   orderSendingSelector,
   orderProductsInfoSelector,
   totalSelector,
@@ -22,7 +22,7 @@ import Loader from '../loader';
 function Basket({
   title = 'Basket',
   total,
-  orderProducts,
+  orderProductsList,
   orderSending,
   orderProductsInfo,
   sendOrder,
@@ -33,7 +33,7 @@ function Basket({
   // Get url and depends on it generate diifrent buttons
   const onClickHandler = (event) => {
     event.preventDefault();
-    sendOrder(orderProducts);
+    sendOrder(orderProductsList);
     console.log('Click on button');
   };
 
@@ -108,7 +108,7 @@ Basket.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
-  orderProducts: orderProductsSelector,
+  orderProductsList: orderProductsListSelector,
   orderSending: orderSendingSelector,
   orderProductsInfo: orderProductsInfoSelector,
 });

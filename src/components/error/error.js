@@ -8,7 +8,7 @@ const Error = ({ errors }) => {
   return (
     errorsEntries.length > 0 &&
     errorsEntries.map(([action, error]) => (
-      <p>
+      <p key={action}>
         There is an exception in {action} action. {error && `${error}.`}
       </p>
     ))

@@ -10,6 +10,11 @@ export const orderProductsSelector = createSelector(
   orderSelector,
   (order) => order.products || {}
 );
+export const orderProductsListSelector = createSelector(
+  orderProductsSelector,
+  (order) =>
+    Object.entries(order).map(([key, value]) => ({ id: key, amount: value }))
+);
 export const orderSendingSelector = (state) => state.order.sending;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;

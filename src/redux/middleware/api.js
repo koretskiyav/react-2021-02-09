@@ -20,8 +20,22 @@ export default (store) => (next) => async (action) => {
       };
       fetchParams.push(request);
     }
-    const dataResponse = await fetch(CallAPI).then((res) => res.json());
-    next({ ...rest, type: type + SUCCESS, data: dataResponse });
+
+    let isValidResult = false;
+
+    await fetch(...fetchParams)
+      .then((result) => {
+        isValidResult = result.ok;
+        result.json().then((resultData) => {
+          if (!isValidResult) {
+            next({ ...rest, type: type + FAILURE, error: resultData });
+            next(replace('/error'));
+          } else {
+            next({ ...rest, type: type + SUCCESS, data: resultData });
+          }
+        });
+      })
+      .catch((error) => console.log(error));
   } catch (error) {
     next({ ...rest, type: type + FAILURE, error: error.message });
     next(replace('/error'));
