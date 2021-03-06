@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Header from '../header';
 import Basket from '../basket';
 
@@ -15,6 +15,7 @@ const App = () => {
         <Header />
         <Switch>
           <Route path="/checkout" component={Basket} />
+          <Redirect exact from="/" to="/restaurants" />
           <Route path="/restaurants" component={RestaurantsPage} />
           <Route path="/error" component={() => <h1>Error Page!</h1>} />
           <Route path="/" component={() => '404 - Not found :('} />
