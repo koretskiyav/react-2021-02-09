@@ -3,17 +3,39 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import PropTypes from 'prop-types';
 import './basket.css';
 import styles from './basket.module.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  orderSendingSelector,
+  orderProductsInfoSelector,
+  totalSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { sendOrder } from '../../redux/actions';
+import Loader from '../loader';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  orderSending,
+  orderProductsInfo,
+  sendOrder,
+  reset,
+}) {
   // const { name } = useContext(userContext);
+
+  // Get url and depends on it generate diifrent buttons
+  const onClickHandler = (event) => {
+    event.preventDefault();
+    sendOrder(orderProducts);
+    console.log('Click on button');
+  };
 
   if (!total) {
     return (
@@ -23,6 +45,10 @@ function Basket({ title = 'Basket', total, orderProducts }) {
     );
   }
 
+  if (orderSending) {
+    return <Loader />;
+  }
+
   return (
     <div className={styles.basket}>
       {/* <h4 className={styles.title}>{`${name}'s ${title}`}</h4> */}
@@ -30,20 +56,22 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         <UserConsumer>{({ name }) => `${name}'s ${title}`}</UserConsumer>
       </h4>
       <TransitionGroup>
-        {orderProducts.map(({ product, amount, subtotal, restaurantId }) => (
-          <CSSTransition
-            key={product.id}
-            timeout={500}
-            classNames="basket-animation"
-          >
-            <BasketItem
-              product={product}
-              amount={amount}
-              subtotal={subtotal}
-              restaurantId={restaurantId}
-            />
-          </CSSTransition>
-        ))}
+        {orderProductsInfo.map(
+          ({ product, amount, subtotal, restaurantId }) => (
+            <CSSTransition
+              key={product.id}
+              timeout={500}
+              classNames="basket-animation"
+            >
+              <BasketItem
+                product={product}
+                amount={amount}
+                subtotal={subtotal}
+                restaurantId={restaurantId}
+              />
+            </CSSTransition>
+          )
+        )}
       </TransitionGroup>
       <hr className={styles.hr} />
       <div className={itemStyles.basketItem}>
@@ -55,17 +83,39 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         </div>
       </div>
       <Link to="/checkout">
-        <Button primary block>
-          checkout
+        <Button primary block onClick={onClickHandler}>
+          {'Order' && 'checkout'}
         </Button>
       </Link>
     </div>
   );
 }
 
+Basket.propTypes = {
+  total: PropTypes.number.isRequired,
+  orderProducts: PropTypes.object,
+  orderProductsInfo: PropTypes.arrayOf(
+    PropTypes.shape({
+      product: PropTypes.object,
+      amount: PropTypes.number,
+      subtotal: PropTypes.number,
+      restaurantId: PropTypes.string,
+    }).isRequired
+  ),
+  sendOrder: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  orderSending: orderSendingSelector,
+  orderProductsInfo: orderProductsInfoSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  sendOrder: (orderProducts) => dispatch(sendOrder(orderProducts)),
+  reset: () => dispatch(sendOrder(ownProps.orderProducts)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);

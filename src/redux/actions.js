@@ -7,6 +7,7 @@ import {
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
+  SEND_ORDER,
 } from './constants';
 
 import {
@@ -40,7 +41,7 @@ export const loadProducts = (restaurantId) => ({
 
 const _loadReviews = (restaurantId) => ({
   type: LOAD_REVIEWS,
-  CallAPI: `/api/reviews?id=${restaurantId}`,
+  CallAPI: `/api/review?id=${restaurantId}`,
   restaurantId,
 });
 
@@ -65,3 +66,9 @@ export const loadUsers = () => async (dispatch, getState) => {
 
   dispatch(_loadUsers());
 };
+
+export const sendOrder = (products) => ({
+  type: SEND_ORDER,
+  CallAPI: '/api/order',
+  data: products,
+});
