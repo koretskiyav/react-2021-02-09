@@ -23,6 +23,22 @@ function Basket({ title = 'Basket', total, orderProducts }) {
     );
   }
 
+  const basketFetch = () => {
+    const orderProductJSON = orderProducts.map(product => {
+      return ({
+        amount: product.amount,
+        id: product.product.id
+      })
+    });
+
+    fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderProductJSON)
+    }).then(res => res.json()).then(console.log);
+
+  };
+
   return (
     <div className={styles.basket}>
       {/* <h4 className={styles.title}>{`${name}'s ${title}`}</h4> */}
@@ -55,7 +71,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         </div>
       </div>
       <Link to="/checkout">
-        <Button primary block>
+        <Button primary block onClick={basketFetch}>
           checkout
         </Button>
       </Link>
