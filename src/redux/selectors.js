@@ -96,3 +96,13 @@ export const isCheckoutSelector = createSelector(
   routerSelector,
   (a) => a.location.pathname === "/checkout"
 );
+
+export const errorMessageSelector = createSelector(
+  routerSelector,
+  (a) => {
+    const message = a.location.state?.errorMessage;
+    if (message) {
+      return message.slice(1, message.length-2)
+    }
+  }
+);

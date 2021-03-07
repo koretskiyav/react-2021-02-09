@@ -52,14 +52,19 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
         body: JSON.stringify(orderProductJSON)
       })
         .then(res => {
+          setLoader({ loader: null, basketClasses: styles.basket });
           if (res.ok) {
-            setLoader({loader: null, basketClasses: styles.basket});
             setRedirect(<Redirect to={'/success'}/>);
           } else {
-            setLoader({loader: null, basketClasses: styles.basket});
-            // setRedirect(<Redirect to={'/unsuccess'}/>);
+            res.text()
+              .then((res) => {
+                setRedirect(<Redirect to={{
+                  pathname: '/unsuccess',
+                  state: { errorMessage: res }
+                }}/>);
+              });
           }
-        })
+        });
     }
 
   };
