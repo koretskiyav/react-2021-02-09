@@ -85,3 +85,8 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const firstIdMenuSelector = createSelector(
+  restaurantsSelector,
+  (a) => Object.keys(a)[0]
+);

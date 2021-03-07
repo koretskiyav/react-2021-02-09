@@ -5,8 +5,11 @@ import Basket from '../basket';
 
 import RestaurantsPage from '../../pages/restaurants-page';
 import { UserProvider } from '../../contexts/user-context';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { firstIdMenuSelector } from '../../redux/selectors';
 
-const App = () => {
+const App = ({firstIdMenu}) => {
   const [name, setName] = useState('Igor');
 
   return (
@@ -17,11 +20,15 @@ const App = () => {
           <Route path="/checkout" component={Basket} />
           <Route path="/restaurants" component={RestaurantsPage} />
           <Route path="/error" component={() => <h1>Error Page!</h1>} />
-          <Redirect to="/restaurants" />
+          <Redirect to={`/restaurants${firstIdMenu}/menu`} />
         </Switch>
       </UserProvider>
     </div>
   );
 };
 
-export default App;
+export default connect(
+  createStructuredSelector({
+    firstIdMenu: firstIdMenuSelector
+  })
+)(App);

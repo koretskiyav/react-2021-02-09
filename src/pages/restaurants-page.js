@@ -6,13 +6,20 @@ import Restaurants from '../components/restaurants';
 
 import Loader from '../components/loader';
 import {
+  firstIdMenuSelector,
   restaurantsListSelector,
   restaurantsLoadedSelector,
-  restaurantsLoadingSelector,
+  restaurantsLoadingSelector
 } from '../redux/selectors';
 import { loadRestaurants } from '../redux/actions';
 
-function RestaurantsPage({ loading, loaded, loadRestaurants, match, restaurants }) {
+function RestaurantsPage({
+  loading,
+  loaded,
+  loadRestaurants,
+  match,
+  firstIdMenu
+}) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
@@ -21,12 +28,10 @@ function RestaurantsPage({ loading, loaded, loadRestaurants, match, restaurants 
   if (!loaded) return 'No data :(';
 
   if (match.isExact) {
-    const firstRest = restaurants[0].id;
-
     return (
       <>
         <Restaurants match={match} />
-        <Redirect to={`/restaurants/${firstRest}/menu`} />
+        <Redirect to={`/restaurants/${firstIdMenu}/menu`} />
       </>
     );
   }
@@ -39,6 +44,7 @@ export default connect(
     restaurants: restaurantsListSelector,
     loading: restaurantsLoadingSelector,
     loaded: restaurantsLoadedSelector,
+    firstIdMenu: firstIdMenuSelector,
   }),
   { loadRestaurants }
 )(RestaurantsPage);
