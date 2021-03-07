@@ -19,9 +19,9 @@ export const CURRENCIES = [
 ];
 
 export const currencyContext = createContext({
-  current: null,
+  currency: null,
   сurrencies: CURRENCIES,
-  setCurrent: () => {},
+  setCurrency: () => {},
 });
 
 export const CurrencyProvider = currencyContext.Provider;

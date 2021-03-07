@@ -11,11 +11,13 @@ import { CurrencyProvider, CURRENCIES } from '../../contexts/сurrency-context';
 const App = () => {
   const [dollars] = CURRENCIES;
   const [name, setName] = useState('Igor');
-  const [current, setCurrent] = useState(dollars);
+  const [currency, setCurrency] = useState(dollars);
 
   return (
     <div>
-      <CurrencyProvider value={{ current, setCurrent, сurrencies: CURRENCIES }}>
+      <CurrencyProvider
+        value={{ currency, setCurrency, сurrencies: CURRENCIES }}
+      >
         <UserProvider value={{ name, setName }}>
           <Header />
           <Switch>

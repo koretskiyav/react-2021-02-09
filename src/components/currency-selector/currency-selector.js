@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 import { currencyContext } from '../../contexts/сurrency-context';
 
 const CurrencySelector = () => {
-  const { сurrencies, current, setCurrent } = useContext(currencyContext);
+  const { сurrencies, сurrency: current, setCurrency } = useContext(
+    currencyContext
+  );
 
   const onChangeHandler = (e) => {
-    const current = сurrencies.find(
+    const сurrency = сurrencies.find(
       (сurrency) => сurrency.id === Number(e.target.value)
     );
-    setCurrent(current);
+    setCurrency(сurrency);
   };
 
   return (

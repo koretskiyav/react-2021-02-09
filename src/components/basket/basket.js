@@ -17,6 +17,7 @@ import {
 } from '../../redux/selectors';
 import { updateOrderStatus } from '../../redux/actions';
 import { UserConsumer } from '../../contexts/user-context';
+import Price from '../price';
 
 function Basket({
   title = 'Basket',
@@ -91,9 +92,7 @@ function Basket({
         <div className={itemStyles.name}>
           <p>Total</p>
         </div>
-        <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
-        </div>
+        <Price className={itemStyles.info} price={total} />
       </div>
       <Button primary block onClick={checkoutButtonClickHandler}>
         checkout
