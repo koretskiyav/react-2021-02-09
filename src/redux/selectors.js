@@ -22,6 +22,15 @@ export const reviewsLoadedSelector = (state, props) =>
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
+export const orderSubmittingSelector = (state) => state.order.submitting;
+
+export const orderToSubmitSelector = createSelector(orderSelector, (order) =>
+  Object.entries(order).map(([id, amount]) => ({ id, amount }))
+);
+
+export const isCheckoutSelector = (state) =>
+  state.router.location.pathname === '/checkout';
+
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values

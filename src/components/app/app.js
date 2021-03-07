@@ -20,6 +20,28 @@ const App = () => {
           <Route path="/checkout" component={Basket} />
           <Route path="/restaurants" component={RestaurantsPage} />
           <Route path="/error" component={() => <h1>Error Page!</h1>} />
+          <Route
+            path="/checkout-success"
+            render={(props) => {
+              const { message } = props.location;
+              return message ? (
+                <h1>Success: we received your order</h1>
+              ) : (
+                <Redirect to="/" />
+              );
+            }}
+          />
+          <Route
+            path="/checkout-failure"
+            render={(props) => {
+              const { message } = props.location;
+              return message ? (
+                <h1>Failure: {message}</h1>
+              ) : (
+                <Redirect to="/" />
+              );
+            }}
+          />
           <Route component={() => '404 - Not found :('} />
         </Switch>
       </UserProvider>

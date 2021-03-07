@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -9,10 +10,24 @@ import styles from './basket.module.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import Loader from '../loader';
+import {
+  orderProductsSelector,
+  totalSelector,
+  orderSubmittingSelector,
+  isCheckoutSelector,
+} from '../../redux/selectors';
+import { submitOrder } from '../../redux/actions';
 import { UserConsumer } from '../../contexts/user-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  submitting,
+  isCheckout,
+  submitOrder,
+}) {
   // const { name } = useContext(userContext);
 
   if (!total) {
@@ -22,6 +37,13 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       </div>
     );
   }
+
+  const handleSubmit = (event) => {
+    if (isCheckout) {
+      event.preventDefault();
+      submitOrder();
+    }
+  };
 
   return (
     <div className={styles.basket}>
@@ -41,6 +63,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
               amount={amount}
               subtotal={subtotal}
               restaurantId={restaurantId}
+              disabled={submitting}
             />
           </CSSTransition>
         ))}
@@ -54,18 +77,43 @@ function Basket({ title = 'Basket', total, orderProducts }) {
           <p>{`${total} $`}</p>
         </div>
       </div>
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      {submitting ? (
+        <Loader />
+      ) : (
+        <Link to="/checkout" onClick={handleSubmit}>
+          <Button primary block>
+            checkout
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }
 
+Basket.propTypes = {
+  title: PropTypes.string,
+  // from connect
+  total: PropTypes.number.isRequired,
+  orderProducts: PropTypes.arrayOf(
+    PropTypes.shape({
+      product: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      }).isRequired,
+      amount: PropTypes.number,
+      subtotal: PropTypes.number,
+      restaurantId: PropTypes.string,
+    })
+  ),
+  submitting: PropTypes.bool,
+  isCheckout: PropTypes.bool,
+  submitOrder: PropTypes.func,
+};
+
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  submitting: orderSubmittingSelector,
+  isCheckout: isCheckoutSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+export default connect(mapStateToProps, { submitOrder })(Basket);
