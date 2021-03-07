@@ -14,6 +14,7 @@ function BasketItem({
   increment,
   decrement,
   remove,
+  disabled,
 }) {
   return (
     <div className={styles.basketItem}>
@@ -24,12 +25,30 @@ function BasketItem({
       </div>
       <div className={styles.info}>
         <div className={styles.counter}>
-          <Button onClick={decrement} icon="minus" secondary small />
+          <Button
+            onClick={decrement}
+            icon="minus"
+            secondary
+            small
+            disabled={disabled}
+          />
           <span className={styles.count}>{amount}</span>
-          <Button onClick={increment} icon="plus" secondary small />
+          <Button
+            onClick={increment}
+            icon="plus"
+            secondary
+            small
+            disabled={disabled}
+          />
         </div>
         <p className={cn(styles.count, styles.price)}>{subtotal} $</p>
-        <Button onClick={remove} icon="delete" secondary small />
+        <Button
+          onClick={remove}
+          icon="delete"
+          secondary
+          small
+          disabled={disabled}
+        />
       </div>
     </div>
   );

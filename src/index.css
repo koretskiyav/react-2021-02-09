@@ -32,3 +32,11 @@ button {
   text-decoration: none;
   outline: none;
 }
+
+.text-center {
+  text-align: center;
+}
+
+.mt15 {
+  margin-top: 15px;
+}
