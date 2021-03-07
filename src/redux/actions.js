@@ -7,6 +7,7 @@ import {
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
+  UPDATE_ORDER_STATUS,
 } from './constants';
 
 import {
@@ -65,3 +66,8 @@ export const loadUsers = () => async (dispatch, getState) => {
 
   dispatch(_loadUsers());
 };
+
+export const updateOrderStatus = (data) => ({
+  type: UPDATE_ORDER_STATUS,
+  data,
+});
