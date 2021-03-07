@@ -69,7 +69,7 @@ export const loadUsers = () => async (dispatch, getState) => {
   dispatch(_loadUsers());
 };
 
-export const submitOrder = () => (dispatch, getState) => {
+export const submitOrder = (currency) => (dispatch, getState) => {
   const state = getState();
   const order = orderToSubmitSelector(state);
   const submitting = orderSubmittingSelector(state);
@@ -84,6 +84,7 @@ export const submitOrder = () => (dispatch, getState) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(order),
     },
+    currency, // we can send currency to the server to customize the message
     success: '/checkout-success',
     failure: '/checkout-failure',
   });

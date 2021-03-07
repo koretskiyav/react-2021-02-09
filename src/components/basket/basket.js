@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
 import Loader from '../loader';
+import Price from '../price';
 import {
   orderProductsSelector,
   totalSelector,
@@ -19,6 +20,7 @@ import {
 } from '../../redux/selectors';
 import { submitOrder } from '../../redux/actions';
 import { UserConsumer } from '../../contexts/user-context';
+import { currencyContext } from '../../contexts/currency-context';
 
 function Basket({
   title = 'Basket',
@@ -29,6 +31,7 @@ function Basket({
   submitOrder,
 }) {
   // const { name } = useContext(userContext);
+  const { currency } = useContext(currencyContext);
 
   if (!total) {
     return (
@@ -41,7 +44,7 @@ function Basket({
   const handleSubmit = (event) => {
     if (isCheckout) {
       event.preventDefault();
-      submitOrder();
+      submitOrder(currency);
     }
   };
 
@@ -74,7 +77,9 @@ function Basket({
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>
+            <Price value={total} />
+          </p>
         </div>
       </div>
       {submitting ? (

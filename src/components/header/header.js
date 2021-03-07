@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../contexts/user-context';
+import CurrenciesList from '../currencies-list';
 
 import { ReactComponent as Logo } from '../../icons/logo.svg';
 import styles from './header.module.css';
 
 const Header = () => {
-  const { name, setName } = useContext(userContext);
+  const { setName } = useContext(userContext);
 
   return (
     <header className={styles.header} onClick={() => setName('Ivan')}>
       <Link to="/restaurants">
         <Logo />
       </Link>
-      <h2>{name}</h2>
+      <CurrenciesList />
     </header>
   );
 };

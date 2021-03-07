@@ -13,3 +13,7 @@ export const SUBMIT_ORDER = 'SUBMIT_ORDER';
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';
 export const FAILURE = '_FAILURE';
+
+export const CURRENCY_USD = 'USD';
+export const CURRENCY_EUR = 'EUR';
+export const CURRENCY_RUR = 'RUR';
