@@ -16,8 +16,9 @@ import {
   isCheckoutSelector
 } from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { removeAll } from '../../redux/actions';
 
-function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
+function Basket({ title = 'Basket', total, orderProducts, isCheckout, removeAll }) {
   // const { name } = useContext(userContext);
 
   const [redirect, setRedirect] = useState(null);
@@ -55,6 +56,7 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
           setLoader({ loader: null, basketClasses: styles.basket });
           if (res.ok) {
             setRedirect(<Redirect to={'/success'}/>);
+            removeAll();
           } else {
             res.text()
               .then((res) => {
@@ -119,4 +121,8 @@ const mapStateToProps = createStructuredSelector({
   isCheckout: isCheckoutSelector
 });
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = (dispatch) => ({
+  removeAll: () => dispatch(removeAll()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);
