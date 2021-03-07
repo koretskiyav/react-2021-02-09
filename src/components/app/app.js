@@ -20,6 +20,7 @@ const App = ({firstIdMenu}) => {
           <Route path="/checkout" component={Basket} />
           <Route path="/restaurants" component={RestaurantsPage} />
           <Route path="/error" component={() => <h1>Error Page!</h1>} />
+          <Route path="/success" component={() => <h2>Спасибо за заказ!</h2>} />
           <Redirect to={`/restaurants${firstIdMenu}/menu`} />
         </Switch>
       </UserProvider>

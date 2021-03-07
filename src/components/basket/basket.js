@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
@@ -18,7 +18,8 @@ import { UserConsumer } from '../../contexts/user-context';
 
 function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
   // const { name } = useContext(userContext);
-  console.log(isCheckout);
+
+  const [redirect, setRedirect] = useState(null);
 
   if (!total) {
     return (
@@ -41,7 +42,14 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderProductJSON)
-      }).then(res => res.json()).then(console.log);
+      })
+        .then(res => {
+          if (res.ok) {
+            setRedirect(<Redirect to={'/success'}/>);
+          } else {
+            // setRedirect(<Redirect to={'/unsuccess'}/>);
+          }
+        })
     }
 
   };
@@ -82,6 +90,7 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
           checkout
         </Button>
       </Link>
+      {redirect}
     </div>
   );
 }
