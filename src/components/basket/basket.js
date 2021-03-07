@@ -9,11 +9,16 @@ import styles from './basket.module.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  totalSelector,
+  isCheckoutSelector
+} from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
   // const { name } = useContext(userContext);
+  console.log(isCheckout);
 
   if (!total) {
     return (
@@ -24,18 +29,20 @@ function Basket({ title = 'Basket', total, orderProducts }) {
   }
 
   const basketFetch = () => {
-    const orderProductJSON = orderProducts.map(product => {
-      return ({
-        amount: product.amount,
-        id: product.product.id
-      })
-    });
+    if (isCheckout) {
+      const orderProductJSON = orderProducts.map(product => {
+        return ({
+          amount: product.amount,
+          id: product.product.id
+        });
+      });
 
-    fetch('/api/order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderProductJSON)
-    }).then(res => res.json()).then(console.log);
+      fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderProductJSON)
+      }).then(res => res.json()).then(console.log);
+    }
 
   };
 
@@ -82,6 +89,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  isCheckout: isCheckoutSelector
 });
 
 export default connect(mapStateToProps)(Basket);
