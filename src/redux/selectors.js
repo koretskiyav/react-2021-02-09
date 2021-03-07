@@ -4,7 +4,7 @@ const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -85,3 +85,15 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const firstRestaurantSelector = createSelector(
+  restaurantsSelector,
+  (restaurants) => {
+    const [first] = Object.keys(restaurants);
+    return first;
+  }
+);
+
+export const isCheckoutRouteSelector = ({ router }) =>
+  router.location.pathname === '/checkout';
+export const orderMessageSelector = (state) => state.order.message;

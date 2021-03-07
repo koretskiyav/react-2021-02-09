@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
 
 import Loader from '../components/loader';
 import {
-  restaurantsListSelector,
+  firstRestaurantSelector,
   restaurantsLoadedSelector,
   restaurantsLoadingSelector,
 } from '../redux/selectors';
 import { loadRestaurants } from '../redux/actions';
 
-function RestaurantsPage({ loading, loaded, loadRestaurants, match }) {
+function RestaurantsPage({
+  loading,
+  loaded,
+  loadRestaurants,
+  firstRestaurant,
+}) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
@@ -20,21 +25,17 @@ function RestaurantsPage({ loading, loaded, loadRestaurants, match }) {
   if (loading) return <Loader />;
   if (!loaded) return 'No data :(';
 
-  if (match.isExact) {
-    return (
-      <>
-        <Restaurants match={match} />
-        <h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
-      </>
-    );
-  }
-
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+  return (
+    <Switch>
+      <Route path="/restaurants/:restId" component={Restaurants} />;
+      <Redirect to={`/restaurants/${firstRestaurant}`} />
+    </Switch>
+  );
 }
 
 export default connect(
   createStructuredSelector({
-    restaurants: restaurantsListSelector,
+    firstRestaurant: firstRestaurantSelector,
     loading: restaurantsLoadingSelector,
     loaded: restaurantsLoadedSelector,
   }),

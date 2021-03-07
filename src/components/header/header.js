@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../contexts/user-context';
+import CurrencySelector from '../currency-selector';
 
 import { ReactComponent as Logo } from '../../icons/logo.svg';
 import styles from './header.module.css';
@@ -14,6 +15,7 @@ const Header = () => {
         <Logo />
       </Link>
       <h2>{name}</h2>
+      <CurrencySelector />
     </header>
   );
 };
