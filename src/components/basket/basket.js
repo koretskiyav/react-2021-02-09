@@ -9,6 +9,7 @@ import styles from './basket.module.css';
 import itemStyles from './basket-item/basket-item.module.css';
 import BasketItem from './basket-item';
 import Button from '../button';
+import Loader from '../loader'
 import {
   orderProductsSelector,
   totalSelector,
@@ -20,6 +21,10 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
   // const { name } = useContext(userContext);
 
   const [redirect, setRedirect] = useState(null);
+  const [fetching, setLoader] = useState({
+    loader: null,
+    basketClasses: styles.basket
+  });
 
   if (!total) {
     return (
@@ -31,6 +36,9 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
 
   const basketFetch = () => {
     if (isCheckout) {
+
+      setLoader({loader: <Loader/>, basketClasses: styles.basket + ' ' + styles.hide});
+
       const orderProductJSON = orderProducts.map(product => {
         return ({
           amount: product.amount,
@@ -45,8 +53,10 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
       })
         .then(res => {
           if (res.ok) {
+            setLoader({loader: null, basketClasses: styles.basket});
             setRedirect(<Redirect to={'/success'}/>);
           } else {
+            setLoader({loader: null, basketClasses: styles.basket});
             // setRedirect(<Redirect to={'/unsuccess'}/>);
           }
         })
@@ -55,43 +65,46 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout }) {
   };
 
   return (
-    <div className={styles.basket}>
-      {/* <h4 className={styles.title}>{`${name}'s ${title}`}</h4> */}
-      <h4 className={styles.title}>
-        <UserConsumer>{({ name }) => `${name}'s ${title}`}</UserConsumer>
-      </h4>
-      <TransitionGroup>
-        {orderProducts.map(({ product, amount, subtotal, restaurantId }) => (
-          <CSSTransition
-            key={product.id}
-            timeout={500}
-            classNames="basket-animation"
-          >
-            <BasketItem
-              product={product}
-              amount={amount}
-              subtotal={subtotal}
-              restaurantId={restaurantId}
-            />
-          </CSSTransition>
-        ))}
-      </TransitionGroup>
-      <hr className={styles.hr} />
-      <div className={itemStyles.basketItem}>
-        <div className={itemStyles.name}>
-          <p>Total</p>
+    <>
+      {fetching.loader}
+      <div className={fetching.basketClasses}>
+        {/* <h4 className={styles.title}>{`${name}'s ${title}`}</h4> */}
+        <h4 className={styles.title}>
+          <UserConsumer>{({ name }) => `${name}'s ${title}`}</UserConsumer>
+        </h4>
+        <TransitionGroup>
+          {orderProducts.map(({ product, amount, subtotal, restaurantId }) => (
+            <CSSTransition
+              key={product.id}
+              timeout={500}
+              classNames="basket-animation"
+            >
+              <BasketItem
+                product={product}
+                amount={amount}
+                subtotal={subtotal}
+                restaurantId={restaurantId}
+              />
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
+        <hr className={styles.hr} />
+        <div className={itemStyles.basketItem}>
+          <div className={itemStyles.name}>
+            <p>Total</p>
+          </div>
+          <div className={itemStyles.info}>
+            <p>{`${total} $`}</p>
+          </div>
         </div>
-        <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
-        </div>
+        <Link to="/checkout">
+          <Button primary block onClick={basketFetch}>
+            checkout
+          </Button>
+        </Link>
+        {redirect}
       </div>
-      <Link to="/checkout">
-        <Button primary block onClick={basketFetch}>
-          checkout
-        </Button>
-      </Link>
-      {redirect}
-    </div>
+    </>
   );
 }
 
