@@ -8,6 +8,12 @@ export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
 export const LOAD_REVIEWS = 'LOAD_REVIEWS';
 export const LOAD_USERS = 'LOAD_USERS';
 
+export const SUBMIT_ORDER = 'SUBMIT_ORDER';
+
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';
 export const FAILURE = '_FAILURE';
+
+export const CURRENCY_USD = 'USD';
+export const CURRENCY_EUR = 'EUR';
+export const CURRENCY_RUR = 'RUR';

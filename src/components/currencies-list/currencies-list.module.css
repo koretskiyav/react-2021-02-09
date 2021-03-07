@@ -1,0 +1,18 @@
+.currency-list {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.currency {
+  color: #fff;
+  cursor: pointer;
+}
+
+.currency + .currency::before {
+  content: ' | ';
+}
+
+.currency_active {
+  font-weight: bold;
+}

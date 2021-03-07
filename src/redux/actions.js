@@ -7,13 +7,16 @@ import {
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
+  SUBMIT_ORDER,
 } from './constants';
 
 import {
+  orderToSubmitSelector,
   usersLoadingSelector,
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  orderSubmittingSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -64,4 +67,25 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+export const submitOrder = (currency) => (dispatch, getState) => {
+  const state = getState();
+  const order = orderToSubmitSelector(state);
+  const submitting = orderSubmittingSelector(state);
+
+  if (submitting || order.length === 0) return;
+
+  dispatch({
+    type: SUBMIT_ORDER,
+    CallAPI: '/api/order',
+    params: {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    },
+    currency, // we can send currency to the server to customize the message
+    success: '/checkout-success',
+    failure: '/checkout-failure',
+  });
 };

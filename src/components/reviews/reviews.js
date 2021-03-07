@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
@@ -31,9 +33,19 @@ const Reviews = ({
 
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
-        <Review key={id} id={id} />
-      ))}
+      <TransitionGroup>
+        {reviews.map((id) => (
+          <CSSTransition
+            key={id}
+            timeout={500}
+            classNames={{
+              enter: styles['review-animation-enter'],
+            }}
+          >
+            <Review id={id} />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
       <ReviewForm restaurantId={restaurantId} />
     </div>
   );
