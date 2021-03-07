@@ -12,12 +12,11 @@ import {
 const initialState = {
   entities: {},
   submitting: false,
-  submitted: false,
   error: false,
 };
 
 export default produce((draft, action) => {
-  const { type, id } = action;
+  const { type, id, ok } = action;
 
   switch (type) {
     case INCREMENT:
@@ -32,12 +31,14 @@ export default produce((draft, action) => {
       break;
     case SUBMIT_ORDER + REQUEST:
       draft.submitting = true;
-      draft.submitted = false;
       draft.error = null;
       break;
     case SUBMIT_ORDER + SUCCESS:
       draft.submitting = false;
-      draft.submitted = true;
+
+      if (ok) {
+        draft.entities = {};
+      }
       break;
     case SUBMIT_ORDER + FAILURE:
       draft.submitting = false;
