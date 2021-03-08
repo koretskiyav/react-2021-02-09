@@ -21,10 +21,6 @@ function Basket({ title = 'Basket', total, orderProducts, isProceedPage, postOrd
     if (isProceedPage) {
       event.preventDefault();
       postOrder();
-      console.log("yeah");
-    }
-    else {
-      console.log("not");
     }
   };
 
