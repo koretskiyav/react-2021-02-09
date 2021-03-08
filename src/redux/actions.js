@@ -7,6 +7,7 @@ import {
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
+  POST_ORDER
 } from './constants';
 
 import {
@@ -14,6 +15,8 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  currentBasketSelector,
+  postOrderIsInProgressSelector
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, id });
@@ -64,4 +67,30 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+export const postOrder = () => (dispatch, getState) => {
+  const state = getState();
+  const currentBasket = currentBasketSelector(state);
+  const postOrderIsInProgress = postOrderIsInProgressSelector(state);
+
+  if (currentBasket.length < 1) {
+    return;
+  }
+
+  if (postOrderIsInProgress) {
+    return;
+  }
+
+  dispatch({
+    type: POST_ORDER,
+    CallAPI: '/api/order',
+    params: {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentBasket),
+    },
+    success: "/postOrderFinished",
+    failure: "/postOrderError"
+  });
 };

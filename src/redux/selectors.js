@@ -4,7 +4,7 @@ const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -26,6 +26,18 @@ export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
 );
+
+export const mainRestaurantSelector = createSelector(
+  restaurantsListSelector,
+  (restaurants) => restaurants[0]
+);
+
+export const currentBasketSelector = createSelector(orderSelector, (order) =>
+  Object.entries(order).map(([id, amount]) => ({ id, amount }))
+);
+
+export const postOrderIsInProgressSelector = (state) => state.order.isUploading;
+export const isProceedPageSelector = (state) => state.router.location.pathname === "/checkout";
 
 export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
 export const productSelector = (state, { id }) => productsSelector(state)[id];
