@@ -4,16 +4,16 @@ import { userContext } from '../../contexts/user-context';
 
 import { ReactComponent as Logo } from '../../icons/logo.svg';
 import styles from './header.module.css';
+import Currencies from '../currencies';
 
 const Header = () => {
-  const { name, setName } = useContext(userContext);
 
   return (
-    <header className={styles.header} onClick={() => setName('Ivan')}>
+    <header className={styles.header}>
       <Link to="/restaurants">
         <Logo />
       </Link>
-      <h2>{name}</h2>
+      <Currencies/>
     </header>
   );
 };

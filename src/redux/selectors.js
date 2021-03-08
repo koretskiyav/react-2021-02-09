@@ -1,4 +1,6 @@
 import { createSelector } from 'reselect';
+import { useContext } from 'react';
+import { currencyContext } from '../contexts/currency-context';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
@@ -85,3 +87,14 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const savedOrderSelector = (state) => (state.order.saved);
+
+export const errorMessageSelector = (state) => (state.savingorder.message);
+
+export const currencySelector = () => {
+  return {"usd": 1, "eur": 2, "rub": 10}
+}
+export const currencySignSelector = () => {
+  return {"usd": '$', "eur": '€', "rub": '₽'}
+}

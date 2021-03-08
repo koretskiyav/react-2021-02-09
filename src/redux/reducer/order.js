@@ -1,8 +1,7 @@
-import { DECREMENT, INCREMENT, REMOVE } from '../constants';
+import { CLEAR_BASKET, DECREMENT, INCREMENT, REMOVE} from '../constants';
 
-// { [productId]: amount }
 export default (state = {}, action) => {
-  const { type, id } = action;
+  const { type, id} = action;
   switch (type) {
     case INCREMENT:
       return { ...state, [id]: (state[id] || 0) + 1 };
@@ -10,6 +9,8 @@ export default (state = {}, action) => {
       return { ...state, [id]: state[id] > 0 ? (state[id] || 0) - 1 : 0 };
     case REMOVE:
       return { ...state, [id]: 0 };
+    case CLEAR_BASKET:
+      return {};
     default:
       return state;
   }

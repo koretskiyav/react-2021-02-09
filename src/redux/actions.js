@@ -6,19 +6,17 @@ import {
   LOAD_RESTAURANTS,
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
-  LOAD_USERS,
+  LOAD_USERS, SAVE_ORDER, CLEAR_BASKET
 } from './constants';
 
 import {
   usersLoadingSelector,
   usersLoadedSelector,
   reviewsLoadingSelector,
-  reviewsLoadedSelector,
+  reviewsLoadedSelector, orderProductsSelector
 } from './selectors';
 
-export const increment = (id) => ({ type: INCREMENT, id });
-export const decrement = (id) => ({ type: DECREMENT, id });
-export const remove = (id) => ({ type: REMOVE, id });
+export const clearBasket = () => ({ type: CLEAR_BASKET });
 
 export const addReview = (review, restaurantId) => ({
   type: ADD_REVIEW,
@@ -64,4 +62,40 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch(_loadUsers());
+};
+
+const _savedUser = (init) => ({ type: SAVE_ORDER, CallAPI: '/api/order', init: init});
+
+export const saveOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  if (state.savingorder.saving === true) {
+    return;
+  };
+  const products = (orderProductsSelector(state)).map(function(obj) {
+    return {id: obj.product.id, amount: obj.amount}
+  });
+  const init = { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(products) };
+  dispatch(_savedUser(init));
+};
+
+
+export const increment = (id) => (dispatch, getState) => {
+  const state = getState();
+  if (state.savingorder.saving === false) {
+    dispatch({ type: INCREMENT, id });
+  }
+};
+
+export const decrement = (id) => (dispatch, getState) => {
+  const state = getState();
+  if (state.savingorder.saving === false) {
+    dispatch({ type: DECREMENT, id });
+  }
+};
+
+export const remove = (id) => (dispatch, getState) => {
+  const state = getState();
+  if (state.savingorder.saving === false) {
+    dispatch({ type: REMOVE, id });
+  }
 };

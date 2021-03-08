@@ -13,3 +13,31 @@
   right: 20px;
   top: 0;
 }
+
+.header span {
+  position: absolute;
+  color: var(--white);
+  right: 200px;
+  top: 0;
+}
+
+.header .usd {
+  position: absolute;
+  color: var(--white);
+  right: 200px;
+  top: 0;
+}
+
+.header .eur {
+  position: absolute;
+  color: var(--white);
+  right: 230px;
+  top: 0;
+}
+
+.header .rub {
+  position: absolute;
+  color: var(--white);
+  right: 260px;
+  top: 0;
+}
