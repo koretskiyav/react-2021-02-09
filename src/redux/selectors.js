@@ -16,6 +16,7 @@ export const orderProductsListSelector = createSelector(
     Object.entries(order).map(([key, value]) => ({ id: key, amount: value }))
 );
 export const orderSendingSelector = (state) => state.order.sending;
+export const orderSendedSelector = (state) => state.order.sended;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -99,3 +100,9 @@ export const averageRatingSelector = createSelector(
 );
 
 export const errorsSelector = (state) => state.errors || {};
+
+export const routerSelector = (state) => state.router;
+export const locationSelector = createSelector(
+  routerSelector,
+  (router) => router.location
+);

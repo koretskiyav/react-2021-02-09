@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
@@ -12,8 +13,10 @@ import Button from '../button';
 import {
   orderProductsListSelector,
   orderSendingSelector,
+  orderSendedSelector,
   orderProductsInfoSelector,
   totalSelector,
+  locationSelector,
 } from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 import { sendOrder } from '../../redux/actions';
@@ -24,17 +27,22 @@ function Basket({
   total,
   orderProductsList,
   orderSending,
+  orderSended,
   orderProductsInfo,
+  location,
+  goToSuccessPage,
   sendOrder,
   reset,
 }) {
   // const { name } = useContext(userContext);
+  const isOrderPage = () => location.pathname?.indexOf('/checkout') > -1;
 
-  // Get url and depends on it generate diifrent buttons
   const onClickHandler = (event) => {
-    event.preventDefault();
-    sendOrder(orderProductsList);
-    console.log('Click on button');
+    //event.stopPropagation();
+    if (isOrderPage()) {
+      event.preventDefault();
+      sendOrder(orderProductsList);
+    }
   };
 
   if (!total) {
@@ -47,6 +55,12 @@ function Basket({
 
   if (orderSending) {
     return <Loader />;
+  }
+
+  if (orderSended) {
+    // Handle click to back.
+    goToSuccessPage();
+    // Try update orderSended field to false
   }
 
   return (
@@ -84,7 +98,7 @@ function Basket({
       </div>
       <Link to="/checkout">
         <Button primary block onClick={onClickHandler}>
-          {'Order' && 'checkout'}
+          {isOrderPage() ? 'Order' : 'Go to order page'}
         </Button>
       </Link>
     </div>
@@ -110,12 +124,15 @@ const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProductsList: orderProductsListSelector,
   orderSending: orderSendingSelector,
+  orderSended: orderSendedSelector,
   orderProductsInfo: orderProductsInfoSelector,
+  location: locationSelector,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   sendOrder: (orderProducts) => dispatch(sendOrder(orderProducts)),
   reset: () => dispatch(sendOrder(ownProps.orderProducts)),
+  goToSuccessPage: () => dispatch(push('/success')),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Basket);

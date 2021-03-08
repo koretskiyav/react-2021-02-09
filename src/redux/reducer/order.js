@@ -37,11 +37,11 @@ export default (order = initialState, action) => {
     case REMOVE:
       return { ...order, products: { ...products, [id]: 0 } };
     case SEND_ORDER + REQUEST:
-      return { ...order, sending: true };
+      return { ...order, sending: true, sended: false };
     case SEND_ORDER + SUCCESS:
-      return { ...order, sending: false };
+      return { ...order, sending: false, sended: true };
     case SEND_ORDER + FAILURE:
-      return { ...order, sending: false };
+      return { ...order, sending: false, sended: false };
     default:
       return order;
   }
