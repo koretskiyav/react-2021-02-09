@@ -17,7 +17,7 @@ import {
 } from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 import { removeAll } from '../../redux/actions';
-import { CurrencyConsumer } from '../../contexts/currency-context';
+import Money from '../money/money';
 
 function Basket({ title = 'Basket', total, orderProducts, isCheckout, removeAll }) {
   // const { name } = useContext(userContext);
@@ -103,12 +103,7 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout, removeAll 
           </div>
           <div className={itemStyles.info}>
             <p>
-              <CurrencyConsumer>
-                {({activeCurrency, currencies}) => {
-                  const coeff = currencies.find(a => a.name === activeCurrency).coeff;
-                  return total * coeff + ' ' + activeCurrency
-                }}
-              </CurrencyConsumer>
+              <Money num={total} />
             </p>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { increment, decrement } from '../../redux/actions';
 
 import Button from '../button';
 import { amountSelector, productSelector } from '../../redux/selectors';
-import { CurrencyConsumer } from '../../contexts/currency-context';
+import Money from '../money/money';
 
 const Product = ({ product, amount, increment, decrement }) => {
   if (!product) return null;
@@ -20,12 +20,7 @@ const Product = ({ product, amount, increment, decrement }) => {
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
           <div className={styles.price}>
-            <CurrencyConsumer>
-              {({activeCurrency, currencies}) => {
-                const coeff = currencies.find(a => a.name === activeCurrency).coeff;
-                return product.price * coeff + " " + activeCurrency
-              }}
-            </CurrencyConsumer>
+            <Money num={product.price} />
           </div>
         </div>
         <div>

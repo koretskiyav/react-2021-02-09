@@ -7,7 +7,7 @@ import styles from './basket-item.module.css';
 import { Link } from 'react-router-dom';
 import { restaurantsListSelector } from '../../../redux/selectors';
 import { createStructuredSelector } from 'reselect';
-import { CurrencyConsumer } from '../../../contexts/currency-context';
+import Money from '../../money/money';
 
 function BasketItem({
   product,
@@ -32,12 +32,7 @@ function BasketItem({
           <Button onClick={increment} icon="plus" secondary small />
         </div>
         <p className={cn(styles.count, styles.price)}>
-          <CurrencyConsumer>
-            {({activeCurrency, currencies }) => {
-              const coeff = currencies.find(a => a.name === activeCurrency).coeff;
-              return subtotal * coeff + ' ' + activeCurrency
-            }}
-          </CurrencyConsumer>
+          <Money num={subtotal} />
         </p>
         <Button onClick={remove} icon="delete" secondary small />
       </div>
