@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Restaurants from '../components/restaurants';
@@ -24,7 +24,7 @@ function RestaurantsPage({ loading, loaded, loadRestaurants, match }) {
     return (
       <>
         <Restaurants match={match} />
-        <h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
+        <Redirect to="/restaurants/a757a0e9-03c1-4a2a-b384-8ac21dbe2fb2" />
       </>
     );
   }
