@@ -12,7 +12,13 @@ import {
 } from '../redux/selectors';
 import { loadRestaurants } from '../redux/actions';
 
-function RestaurantsPage({ loading, loaded, loadRestaurants, match }) {
+function RestaurantsPage({
+  restaurants,
+  loading,
+  loaded,
+  loadRestaurants,
+  match,
+}) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, [loading, loaded, loadRestaurants]);
@@ -24,7 +30,7 @@ function RestaurantsPage({ loading, loaded, loadRestaurants, match }) {
     return (
       <>
         <Restaurants match={match} />
-        <Redirect to="/restaurants/a757a0e9-03c1-4a2a-b384-8ac21dbe2fb2" />
+        <Redirect to={`/restaurants/${restaurants[0].id}`} />
       </>
     );
   }
