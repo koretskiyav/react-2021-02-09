@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../header';
 import Basket from '../basket';
@@ -8,15 +8,11 @@ import { UserProvider } from '../../contexts/user-context';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { errorMessageSelector, firstIdMenuSelector } from '../../redux/selectors';
-import { CurrencyProvider } from '../../contexts/currency-context';
+import { currencyContext, CurrencyProvider } from '../../contexts/currency-context';
 
 const App = ({firstIdMenu, errorMessage}) => {
   const [name, setName] = useState('Igor');
-  const currencies = [
-    {name: '$', coeff: 1},
-    {name: '₴', coeff: 25},
-    {name: '₽', coeff: 75}
-  ];
+  const { currencies } = useContext(currencyContext);
   const [activeCurrency, setActiveCurrency] = useState(currencies[0].name);
 
   return (
