@@ -7,6 +7,7 @@ import styles from './basket-item.module.css';
 import { Link } from 'react-router-dom';
 import { restaurantsListSelector } from '../../../redux/selectors';
 import { createStructuredSelector } from 'reselect';
+import { CurrencyConsumer } from '../../../contexts/currency-context';
 
 function BasketItem({
   product,
@@ -30,7 +31,12 @@ function BasketItem({
           <span className={styles.count}>{amount}</span>
           <Button onClick={increment} icon="plus" secondary small />
         </div>
-        <p className={cn(styles.count, styles.price)}>{subtotal} $</p>
+        <p className={cn(styles.count, styles.price)}>
+          {subtotal}
+          <CurrencyConsumer>
+            { ( { activeCurrency } ) => ' ' + activeCurrency}
+          </CurrencyConsumer>
+        </p>
         <Button onClick={remove} icon="delete" secondary small />
       </div>
     </div>

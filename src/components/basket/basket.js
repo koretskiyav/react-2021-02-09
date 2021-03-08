@@ -17,6 +17,7 @@ import {
 } from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
 import { removeAll } from '../../redux/actions';
+import { CurrencyConsumer } from '../../contexts/currency-context';
 
 function Basket({ title = 'Basket', total, orderProducts, isCheckout, removeAll }) {
   // const { name } = useContext(userContext);
@@ -101,7 +102,12 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout, removeAll 
             <p>Total</p>
           </div>
           <div className={itemStyles.info}>
-            <p>{`${total} $`}</p>
+            <p>
+              {total}
+              <CurrencyConsumer>
+                {({activeCurrency}) => ' ' + activeCurrency}
+              </CurrencyConsumer>
+            </p>
           </div>
         </div>
         <Link to="/checkout">
