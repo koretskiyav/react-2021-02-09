@@ -20,9 +20,11 @@ const Product = ({ product, amount, increment, decrement }) => {
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
           <div className={styles.price}>
-            {product.price}
             <CurrencyConsumer>
-              {({activeCurrency}) => " " + activeCurrency}
+              {({activeCurrency, currencies}) => {
+                const coeff = currencies.find(a => a.name === activeCurrency).coeff;
+                return product.price * coeff + " " + activeCurrency
+              }}
             </CurrencyConsumer>
           </div>
         </div>

@@ -12,8 +12,12 @@ import { CurrencyProvider } from '../../contexts/currency-context';
 
 const App = ({firstIdMenu, errorMessage}) => {
   const [name, setName] = useState('Igor');
-  const currencies = ['$', '₴', '₽'];
-  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
+  const currencies = [
+    {name: '$', coeff: 1},
+    {name: '₴', coeff: 25},
+    {name: '₽', coeff: 75}
+  ];
+  const [activeCurrency, setActiveCurrency] = useState(currencies[0].name);
 
   return (
     <div>

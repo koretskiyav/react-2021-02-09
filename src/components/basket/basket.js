@@ -103,9 +103,11 @@ function Basket({ title = 'Basket', total, orderProducts, isCheckout, removeAll 
           </div>
           <div className={itemStyles.info}>
             <p>
-              {total}
               <CurrencyConsumer>
-                {({activeCurrency}) => ' ' + activeCurrency}
+                {({activeCurrency, currencies}) => {
+                  const coeff = currencies.find(a => a.name === activeCurrency).coeff;
+                  return total * coeff + ' ' + activeCurrency
+                }}
               </CurrencyConsumer>
             </p>
           </div>

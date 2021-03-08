@@ -32,9 +32,11 @@ function BasketItem({
           <Button onClick={increment} icon="plus" secondary small />
         </div>
         <p className={cn(styles.count, styles.price)}>
-          {subtotal}
           <CurrencyConsumer>
-            { ( { activeCurrency } ) => ' ' + activeCurrency}
+            {({activeCurrency, currencies }) => {
+              const coeff = currencies.find(a => a.name === activeCurrency).coeff;
+              return subtotal * coeff + ' ' + activeCurrency
+            }}
           </CurrencyConsumer>
         </p>
         <Button onClick={remove} icon="delete" secondary small />

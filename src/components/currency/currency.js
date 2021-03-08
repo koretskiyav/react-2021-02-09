@@ -6,13 +6,15 @@ import cn from 'classnames';
 const Currency = () => {
   const {currencies, activeCurrency, setActiveCurrency} = useContext(currencyContext);
 
-  const abc = currencies.map(currency => (
+  const abc = currencies.map(currency => {
+    const currencyName = currency.name;
+    return (
     <button
-      key={currency}
-      className={cn(styles.currency__item, { [styles.active]: currency === activeCurrency })}
-      onClick={() => setActiveCurrency(currency)}
-    >{currency}</button>
-  ));
+      key={currencyName}
+      className={cn(styles.currency__item, { [styles.active]: currencyName === activeCurrency })}
+      onClick={() => setActiveCurrency(currencyName)}
+    >{currencyName}</button>
+  )});
 
   return (
     <>
