@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useContext } from 'react';
+import { currencyContext } from '../../contexts/currency-context'
 import styles from './currency.module.css';
 import cn from 'classnames';
 
 const Currency = () => {
-  const currencies = ['$', '₴', '₽'];
-  const [activeCurrency, setActiveCurrency] = useState(currencies[0]);
-  
+  const {currencies, activeCurrency, setActiveCurrency} = useContext(currencyContext);
+
   const abc = currencies.map(currency => (
     <button
       key={currency}
