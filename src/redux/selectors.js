@@ -4,7 +4,7 @@ const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -83,5 +83,33 @@ export const averageRatingSelector = createSelector(
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length
     );
+  }
+);
+
+export const orderLoadingSelector = (state) => state.order.loading;
+export const checkoutErrorSelector = (state) => state.order.error;
+export const orderedSelector = (state) => state.order.ordered;
+
+export const orderItemsSelector = createSelector(orderSelector, (items) => {
+  const itemsData = Object.entries(items)
+    .map((item) => {
+      return { id: item[0], amount: item[1] };
+    })
+    .filter((item) => item.amount);
+  return itemsData;
+});
+
+export const orderedListSelector = createSelector(
+  orderedSelector,
+  productsSelector,
+  (items, products) => {
+    return Object.entries(items)
+      .map(([id, amount]) => {
+        return {
+          name: products[id].name,
+          amount,
+        };
+      })
+      .filter((item) => item.amount);
   }
 );
