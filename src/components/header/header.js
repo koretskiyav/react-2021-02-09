@@ -5,7 +5,7 @@ import { userContext } from '../../contexts/user-context';
 import { ReactComponent as Logo } from '../../icons/logo.svg';
 import styles from './header.module.css';
 
-const Header = () => {
+const Header = ({ currency }) => {
   const { name, setName } = useContext(userContext);
 
   return (
@@ -14,6 +14,7 @@ const Header = () => {
         <Logo />
       </Link>
       <h2>{name}</h2>
+      {currency}
     </header>
   );
 };

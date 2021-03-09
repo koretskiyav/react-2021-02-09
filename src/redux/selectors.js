@@ -41,7 +41,8 @@ export const restaurantsListSelector = createSelector(
 
 export const amountSelector = (state, { id }) =>
   orderProductsSelector(state)[id] || 0;
-export const productSelector = (state, { id }) => productsSelector(state)[id];
+export const productSelector = (state, { id }) =>
+  productsSelector(state)[id] || {};
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
 
 const restaurantsIdsByProductsSelector = createSelector(

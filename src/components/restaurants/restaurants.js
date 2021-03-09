@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
@@ -20,6 +20,7 @@ const Restaurants = ({ restaurants, match }) => {
     <>
       <Tabs tabs={tabs} />
       {restaurant && <Restaurant restaurant={restaurant} />}
+      {/* <CurrencyConsumer>{({ currency }) => `${currency}`}</CurrencyConsumer> */}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { push } from 'connected-react-router';
@@ -19,6 +19,8 @@ import {
   locationSelector,
 } from '../../redux/selectors';
 import { UserConsumer } from '../../contexts/user-context';
+import { currencyContext } from '../../contexts/currency/currency-context';
+import { CountPrice } from '../../contexts/currency/currency-utils';
 import { sendOrder } from '../../redux/actions';
 import Loader from '../loader';
 
@@ -34,7 +36,11 @@ function Basket({
   sendOrder,
   reset,
 }) {
-  // const { name } = useContext(userContext);
+  const currency = useContext(currencyContext);
+  const totalPriceWithCurrency = useMemo(() => CountPrice(total, currency), [
+    total,
+    currency,
+  ]);
   const isOrderPage = () => location.pathname?.indexOf('/checkout') > -1;
 
   const onClickHandler = (event) => {
@@ -93,7 +99,7 @@ function Basket({
           <p>Total</p>
         </div>
         <div className={itemStyles.info}>
-          <p>{`${total} $`}</p>
+          <p>{`${totalPriceWithCurrency}`}</p>
         </div>
       </div>
       <Link to="/checkout">
