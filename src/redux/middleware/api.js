@@ -4,14 +4,38 @@ import { REQUEST, SUCCESS, FAILURE } from '../constants';
 export default (store) => (next) => async (action) => {
   if (!action.CallAPI) return next(action);
 
-  const { CallAPI, type, ...rest } = action;
+  const { data, CallAPI, type, ...rest } = action;
   next({ ...rest, type: type + REQUEST });
 
   try {
-    const data = await fetch(CallAPI).then((res) => res.json());
-    next({ ...rest, type: type + SUCCESS, data });
+    const fetchParams = [CallAPI];
+
+    if (data) {
+      const request = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      fetchParams.push(request);
+    }
+
+    let isValidResult = false;
+
+    await fetch(...fetchParams).then((result) => {
+      isValidResult = result.ok;
+      result.json().then((resultData) => {
+        if (!isValidResult) {
+          next({ ...rest, type: type + FAILURE, error: resultData });
+          next(replace('/error'));
+        } else {
+          next({ ...rest, type: type + SUCCESS, data: resultData });
+        }
+      });
+    });
   } catch (error) {
-    next({ ...rest, type: type + FAILURE, error });
+    next({ ...rest, type: type + FAILURE, error: error.message });
     next(replace('/error'));
   }
 };

@@ -7,6 +7,8 @@ import {
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
+  SEND_ORDER,
+  CLEAR_BASKET,
 } from './constants';
 
 import {
@@ -65,3 +67,13 @@ export const loadUsers = () => async (dispatch, getState) => {
 
   dispatch(_loadUsers());
 };
+
+export const sendOrder = (products) => ({
+  type: SEND_ORDER,
+  CallAPI: '/api/order',
+  data: products,
+});
+
+export const clearBasket = () => ({
+  type: CLEAR_BASKET,
+});

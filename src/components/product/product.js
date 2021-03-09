@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
-
 import { increment, decrement } from '../../redux/actions';
-
+import { CountPrice } from '../../contexts/currency/currency-utils';
+import { currencyContext } from '../../contexts/currency/currency-context';
 import Button from '../button';
 import { amountSelector, productSelector } from '../../redux/selectors';
 
 const Product = ({ product, amount, increment, decrement }) => {
+  const currency = useContext(currencyContext);
+  const priceWithCurrency = useMemo(() => CountPrice(product.price, currency), [
+    product.price,
+    currency,
+  ]);
+
   if (!product) return null;
 
   return (
@@ -17,8 +23,10 @@ const Product = ({ product, amount, increment, decrement }) => {
       <div className={styles.content}>
         <div>
           <h4 className={styles.title}>{product.name}</h4>
-          <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <p className={styles.description}>
+            {product?.ingredients?.join(', ')}
+          </p>
+          <div className={styles.price}>{priceWithCurrency}</div>
         </div>
         <div>
           <div className={styles.counter}>
@@ -40,7 +48,7 @@ Product.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string,
     price: PropTypes.number,
-    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired),
   }),
   // from connect
   amount: PropTypes.number,

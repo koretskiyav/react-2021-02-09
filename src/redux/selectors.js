@@ -6,6 +6,18 @@ const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 const orderSelector = (state) => state.order;
 
+export const orderProductsSelector = createSelector(
+  orderSelector,
+  (order) => order.products || {}
+);
+export const orderProductsListSelector = createSelector(
+  orderProductsSelector,
+  (order) =>
+    Object.entries(order).map(([key, value]) => ({ id: key, amount: value }))
+);
+export const orderSendingSelector = (state) => state.order.sending;
+export const orderSendedSelector = (state) => state.order.sended;
+
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
@@ -27,8 +39,10 @@ export const restaurantsListSelector = createSelector(
   Object.values
 );
 
-export const amountSelector = (state, { id }) => orderSelector(state)[id] || 0;
-export const productSelector = (state, { id }) => productsSelector(state)[id];
+export const amountSelector = (state, { id }) =>
+  orderProductsSelector(state)[id] || 0;
+export const productSelector = (state, { id }) =>
+  productsSelector(state)[id] || {};
 const reviewSelector = (state, { id }) => reviewsSelector(state)[id];
 
 const restaurantsIdsByProductsSelector = createSelector(
@@ -44,8 +58,8 @@ const restaurantsIdsByProductsSelector = createSelector(
       )
 );
 
-export const orderProductsSelector = createSelector(
-  orderSelector,
+export const orderProductsInfoSelector = createSelector(
+  orderProductsSelector,
   productsSelector,
   restaurantsIdsByProductsSelector,
   (order, products, restaurantsIds) =>
@@ -61,7 +75,7 @@ export const orderProductsSelector = createSelector(
 );
 
 export const totalSelector = createSelector(
-  orderProductsSelector,
+  orderProductsInfoSelector,
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
@@ -84,4 +98,12 @@ export const averageRatingSelector = createSelector(
       ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length
     );
   }
+);
+
+export const errorsSelector = (state) => state.errors || {};
+
+export const routerSelector = (state) => state.router;
+export const locationSelector = createSelector(
+  routerSelector,
+  (router) => router.location
 );
