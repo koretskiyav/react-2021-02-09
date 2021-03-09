@@ -44,7 +44,7 @@ export default (order = initialState, action) => {
     case SEND_ORDER + FAILURE:
       return { ...order, sending: false, sended: false };
     case CLEAR_BASKET:
-      return { ...order, products: {} };
+      return { ...order, products: {}, sended: false };
     default:
       return order;
   }
