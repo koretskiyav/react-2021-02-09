@@ -8,6 +8,7 @@ import {
   LOAD_REVIEWS,
   LOAD_USERS,
   SEND_ORDER,
+  CLEAR_BASKET,
 } from './constants';
 
 import {
@@ -73,4 +74,6 @@ export const sendOrder = (products) => ({
   data: products,
 });
 
-export const clearError = () => ({});
+export const clearBasket = () => ({
+  type: CLEAR_BASKET,
+});

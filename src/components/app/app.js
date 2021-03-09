@@ -40,7 +40,7 @@ const App = () => {
             <Route path="/error" component={Error} />
             <Route
               path="/success"
-              component={() => <p>The order has been successfully sended.</p>}
+              component={() => <p>Thanks for the order!</p>}
             />
             <Route path="/" exact>
               <Redirect to="/restaurants/" />

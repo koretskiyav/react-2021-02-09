@@ -6,6 +6,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  CLEAR_BASKET,
 } from '../constants';
 
 const initialState = {
@@ -42,6 +43,8 @@ export default (order = initialState, action) => {
       return { ...order, sending: false, sended: true };
     case SEND_ORDER + FAILURE:
       return { ...order, sending: false, sended: false };
+    case CLEAR_BASKET:
+      return { ...order, products: {} };
     default:
       return order;
   }

@@ -21,7 +21,7 @@ import {
 import { UserConsumer } from '../../contexts/user-context';
 import { currencyContext } from '../../contexts/currency/currency-context';
 import { CountPrice } from '../../contexts/currency/currency-utils';
-import { sendOrder } from '../../redux/actions';
+import { sendOrder, clearBasket } from '../../redux/actions';
 import Loader from '../loader';
 
 function Basket({
@@ -34,7 +34,7 @@ function Basket({
   location,
   goToSuccessPage,
   sendOrder,
-  reset,
+  clearBasket,
 }) {
   const currency = useContext(currencyContext);
   const totalPriceWithCurrency = useMemo(() => CountPrice(total, currency), [
@@ -64,9 +64,8 @@ function Basket({
   }
 
   if (orderSended) {
-    // Handle click to back.
+    clearBasket();
     goToSuccessPage();
-    // Try update orderSended field to false
   }
 
   return (
@@ -123,7 +122,7 @@ Basket.propTypes = {
     }).isRequired
   ),
   sendOrder: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+  clearBasket: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -135,9 +134,9 @@ const mapStateToProps = createStructuredSelector({
   location: locationSelector,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   sendOrder: (orderProducts) => dispatch(sendOrder(orderProducts)),
-  reset: () => dispatch(sendOrder(ownProps.orderProducts)),
+  clearBasket: () => dispatch(clearBasket()),
   goToSuccessPage: () => dispatch(push('/success')),
 });
 

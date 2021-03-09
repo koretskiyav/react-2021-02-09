@@ -8,6 +8,7 @@ export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';
 export const LOAD_REVIEWS = 'LOAD_REVIEWS';
 export const LOAD_USERS = 'LOAD_USERS';
 export const SEND_ORDER = 'SEND_ORDER';
+export const CLEAR_BASKET = 'CLEAR_BASKET';
 
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';
