@@ -1,5 +1,5 @@
 import { replace } from 'connected-react-router';
-import { REQUEST, SUCCESS, FAILURE, CLEAR_ERROR } from '../constants';
+import { REQUEST, SUCCESS, FAILURE } from '../constants';
 
 export default (store) => (next) => async (action) => {
   if (!action.CallAPI) return next(action);
