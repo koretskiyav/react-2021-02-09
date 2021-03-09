@@ -1,0 +1,14 @@
+.currency {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.currency__item {
+
+}
+
+.active {
+    background-color: lightcoral;
+}

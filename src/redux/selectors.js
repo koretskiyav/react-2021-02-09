@@ -5,6 +5,7 @@ const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 const orderSelector = (state) => state.order;
+const routerSelector = (state) => state.router;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -83,5 +84,25 @@ export const averageRatingSelector = createSelector(
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating, 0) / ratings.length
     );
+  }
+);
+
+export const firstIdMenuSelector = createSelector(
+  restaurantsSelector,
+  (a) => Object.keys(a)[0]
+);
+
+export const isCheckoutSelector = createSelector(
+  routerSelector,
+  (a) => a.location.pathname === "/checkout"
+);
+
+export const errorMessageSelector = createSelector(
+  routerSelector,
+  (a) => {
+    const message = a.location.state?.errorMessage;
+    if (message) {
+      return message.slice(1, message.length-2)
+    }
   }
 );

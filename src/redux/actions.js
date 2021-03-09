@@ -7,6 +7,7 @@ import {
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
   LOAD_USERS,
+  REMOVE_ALL
 } from './constants';
 
 import {
@@ -19,6 +20,7 @@ import {
 export const increment = (id) => ({ type: INCREMENT, id });
 export const decrement = (id) => ({ type: DECREMENT, id });
 export const remove = (id) => ({ type: REMOVE, id });
+export const removeAll = () => ({ type: REMOVE_ALL });
 
 export const addReview = (review, restaurantId) => ({
   type: ADD_REVIEW,
