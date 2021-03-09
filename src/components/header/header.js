@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../contexts/user-context';
+import Currency from '../currency';
 
 import { ReactComponent as Logo } from '../../icons/logo.svg';
 import styles from './header.module.css';
@@ -10,6 +11,7 @@ const Header = () => {
 
   return (
     <header className={styles.header} onClick={() => setName('Ivan')}>
+      <Currency/>
       <Link to="/restaurants">
         <Logo />
       </Link>
