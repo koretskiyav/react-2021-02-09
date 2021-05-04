@@ -1,0 +1,15 @@
+.rate {
+  display: flex;
+  padding: 10px 0;
+}
+
+.rate__item {
+  background: orange;
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+}
+
+.rate__item:first-child {
+  margin-left: 0;
+}
